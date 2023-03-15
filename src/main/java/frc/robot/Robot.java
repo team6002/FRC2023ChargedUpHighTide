@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+  // private Command m_autonomousCommand;
   private final SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   private RobotContainer m_robotContainer;
 
@@ -42,9 +42,9 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     m_robotContainer.SubsystemsInit();
     SmartDashboard.putNumber("AUTOKEY", 0);
-    m_Chooser.setDefaultOption("ChargeStation", m_robotContainer.getBalanceStation());
-    m_Chooser.addOption("CubeRunRed", m_robotContainer.getCubeRunRed());
-    m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
+    // m_Chooser.setDefaultOption("ChargeStation", m_robotContainer.getBalanceStation());
+    // m_Chooser.addOption("CubeRunRed", m_robotContainer.getCubeRunRed());
+    // m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
 
     // DataLogger.log("robotInit() done");
@@ -81,10 +81,10 @@ public class Robot extends TimedRobot {
     System.out.println((int)SmartDashboard.getNumber("AUTOKEY", 0));
     m_robotContainer.SubsystemsInit();
     m_robotContainer.zeroHeading();
-    m_autonomousCommand = 
+    // m_autonomousCommand = 
     // m_robotContainer.getAutonomousCommandManual();
     // m_robotContainer.getAutonomusCommand;
-    m_Chooser.getSelected();
+    // m_Chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -94,9 +94,9 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.schedule();
+    // }
 
     // DataLogger.log("autonomousInit() done");
   }
@@ -111,9 +111,9 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    // if (m_autonomousCommand != null) {
+    //   m_autonomousCommand.cancel();
+    // }
 
     // DataLogger.log("teleopInit() done");
   }
