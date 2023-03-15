@@ -15,13 +15,12 @@ import frc.robot.subsystems.SUB_Elevator;
 import frc.robot.subsystems.SUB_FiniteStateMachine;
 import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 import frc.robot.subsystems.SUB_Intake;
-import frc.robot.subsystems.SUB_Wrist;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CMD_IntakeShelfForwardsCube extends SequentialCommandGroup {
-  public CMD_IntakeShelfForwardsCube(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Wrist p_wrist,
+  public CMD_IntakeShelfForwardsCube(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake,
    SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables
    ) {
     addCommands(

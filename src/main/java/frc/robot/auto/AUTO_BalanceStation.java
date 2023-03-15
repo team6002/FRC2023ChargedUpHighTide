@@ -17,7 +17,6 @@ import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
 import frc.robot.subsystems.SUB_FiniteStateMachine;
 import frc.robot.subsystems.SUB_Intake;
-import frc.robot.subsystems.SUB_Wrist;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -26,7 +25,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
   /** Creates a new AUTO_BalanceStation. */
   public AUTO_BalanceStation(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain,
     SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, 
-    SUB_FiniteStateMachine p_finiteStateMachine, SUB_Wrist p_wrist, GlobalVariables p_variables,
+    SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables,
     CommandXboxController p_controller) {
 
     // Add your commands in the addCommands() call, e.g.
@@ -36,15 +35,15 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_setPickUpMode(p_variables, GlobalConstants.kPickBackGroundMode).withTimeout(3),
       new CMD_setIntakeMode(p_variables, GlobalConstants.kConeMode).withTimeout(3),
       new CMD_selectIntakeCommand(p_variables).withTimeout(3),
-      new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine, p_variables).withTimeout(3),
+      new CMD_PlaceForwardsCone(p_elevator, p_intake, p_elbow, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.3),
       new CMD_setIntakeMode(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
       new ParallelDeadlineGroup(
         new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
         new SequentialCommandGroup(
-          new CMD_StowGround(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine).withTimeout(3),
-          new CMD_IntakeGroundBackCube(p_elbow, p_elevator, p_intake, p_wrist, p_finiteStateMachine, p_variables).withTimeout(3),  
+          new CMD_StowGround(p_elevator, p_intake, p_elbow, p_finiteStateMachine).withTimeout(3),
+          new CMD_IntakeGroundBackCube(p_elbow, p_elevator, p_intake, p_finiteStateMachine, p_variables).withTimeout(3),  
           new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
         )
       ),
@@ -54,7 +53,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       ),
 
       new ParallelCommandGroup(
-        new CMD_BalanceStationHold(p_elevator, p_intake, p_elbow, p_wrist, p_finiteStateMachine).withTimeout(3),
+        new CMD_BalanceStationHold(p_elevator, p_intake, p_elbow, p_finiteStateMachine).withTimeout(3),
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
               new CMD_CheckOnCharge(p_drivetrain).withTimeout(3)

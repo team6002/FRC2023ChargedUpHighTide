@@ -9,12 +9,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.WristConstants;
 import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
 import frc.robot.subsystems.SUB_FiniteStateMachine;
 import frc.robot.subsystems.SUB_Intake;
-import frc.robot.subsystems.SUB_Wrist;
 import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -22,7 +20,7 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CMD_PrepIntakeGroundForwards extends SequentialCommandGroup {
   /** Creates a new CMD_PrepIntakeShelf. */
-  public CMD_PrepIntakeGroundForwards(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Wrist p_wrist,
+  public CMD_PrepIntakeGroundForwards(SUB_Elbow p_elbow, SUB_Elevator p_elevator,
   SUB_FiniteStateMachine p_finiteStatechine,SUB_Intake p_intake, GlobalVariables m_variables) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -33,7 +31,6 @@ public class CMD_PrepIntakeGroundForwards extends SequentialCommandGroup {
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome)
       ),
-      new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLift)
     );
   }

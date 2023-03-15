@@ -5,9 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.*;
 import frc.robot.subsystems.*;
@@ -17,7 +15,7 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CMD_PrepIntakeShelfBack extends SequentialCommandGroup {
-  public CMD_PrepIntakeShelfBack(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, SUB_Wrist p_wrist,
+  public CMD_PrepIntakeShelfBack(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake,
    SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables, SUB_Limelight p_cameras
    ) {
     addCommands(
@@ -26,15 +24,7 @@ public class CMD_PrepIntakeShelfBack extends SequentialCommandGroup {
       new CMD_IntakeOff(p_intake),
       new ParallelCommandGroup(
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfBack),
-        new ParallelDeadlineGroup(
-          new CMD_CheckWristPosition(p_wrist, WristConstants.kWristShelf),
-          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
-          new SequentialCommandGroup( 
-            new WaitCommand(.2),
-            new CMD_CheckWristSafe(p_elbow, p_elevator),
-            new CMD_WristSetPosition(p_wrist, WristConstants.kWristShelf)
-          )
-        )
+          new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp)
       ),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelfBackPrep)
     );

@@ -284,26 +284,6 @@ public final class Constants {
     ));
   }
 
-  public static final class WristConstants{
-    public static final int kWristMotorCanID = 10;
-    public static final double kWristP = 0.0097;
-    public static final double kWristI = 0;
-    public static final double kWristD = 0.0;
-    public static final double kWristF = 0.0;
-    public static final double kWristMaxOutput = 1;
-    public static final double kWristMinOutput = -1;
-
-    public static final double kWristGround = 87;//back
-    public static final double kWristShelf = 273;//front
-    
-    public static final double kWristTolerance = 5;
-   
-    public static final double kWristMaxVelocity = 600;
-    public static final double kWristMaxAcceleration = 600;
-    public static final double kWristTestVelocity = 1;
-    public static final double kWristTestAcceleration = 1;
-  }
-
   public static final class GlobalConstants{
     public static final int kUnknownPickMode = -1;
     public static final int kPickBackGroundMode = 0;
