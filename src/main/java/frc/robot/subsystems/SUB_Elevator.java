@@ -11,7 +11,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants.ElevatorConstants;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,7 +19,6 @@ public class SUB_Elevator extends SubsystemBase {
   private final CANSparkMax m_elevatorMotor;
   private final SparkMaxPIDController m_elevatorMotorPIDController;
   private final RelativeEncoder m_elevatorEncoder;
-  private SimpleMotorFeedforward m_feedForward;
   private TrapezoidProfile.Constraints m_constraints;
   private TrapezoidProfile.State m_goal;
   private TrapezoidProfile.State m_setpoint;
@@ -51,7 +49,6 @@ public class SUB_Elevator extends SubsystemBase {
       m_elevatorMotor.burnFlash();
       m_elevatorEncoder.setPosition(0);
           
-      m_feedForward = new SimpleMotorFeedforward(1, 1.5);
       m_constraints = new TrapezoidProfile.Constraints(ElevatorConstants.kElevatorMaxVelocity, ElevatorConstants.kElevatorMaxAcceleration);
       m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
       m_goal = m_setpoint;

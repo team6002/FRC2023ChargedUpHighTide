@@ -30,7 +30,6 @@ public class SUB_Elbow extends SubsystemBase {
     private TrapezoidProfile.State m_goal;
     private TrapezoidProfile.State m_setpoint;
     private static double deltaTime = 0.02;
-    private boolean m_elbowOn = false;
 
     public SUB_Elbow() {
         m_elbowMotor = new CANSparkMax(ElbowConstants.kElbowMotorCanID, MotorType.kBrushless);
@@ -73,7 +72,6 @@ public class SUB_Elbow extends SubsystemBase {
         m_constraints = new TrapezoidProfile.Constraints(ElbowConstants.kElbowMaxVelocity, ElbowConstants.kElbowMaxAcceleration);
         m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
         m_goal = m_setpoint;
-        m_elbowOn = false;
 
         m_elbowEncoder.setPosition(getAbsolutePosition());
         
@@ -105,9 +103,6 @@ public class SUB_Elbow extends SubsystemBase {
 
     public void setElbowConstraints(double p_velocity, double p_acceleration){
         m_constraints = new TrapezoidProfile.Constraints(p_velocity, p_acceleration);
-    }
-    public void setElbowOn(Boolean p_state){
-        m_elbowOn = p_state;
     }
     
     public void syncElbowPosition(){

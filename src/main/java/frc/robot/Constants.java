@@ -160,13 +160,14 @@ public final class Constants {
     public static final int kIntakeMotorCanID = 12;
     //intake powers
     public static final double kIntakeForwardPower = .7;
+    public static final double kIntakeBackwardPower = -.7;
     public static final double kIntakeHoldPower = .07;
     public static final double kIntakeDropCone = -.8;
     public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
     public static final double kIntakeShoot = .6;
     //intake currents
-    public static final double kIntakeCurrent = 50;
-    public static final double kHoldCurrent = 5;
+    public static final int kIntakeCurrent = 50;
+    public static final int kHoldCurrent = 5;
 
     public static final double kIntakeConeDetectedCurrent = 30;
 

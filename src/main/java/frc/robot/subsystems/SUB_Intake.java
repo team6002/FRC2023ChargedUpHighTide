@@ -29,18 +29,8 @@ public class SUB_Intake extends SubsystemBase {
     m_intakeMotor.burnFlash();
   }
 
-  public void setIntakeForward(){
-    // m_intakeMotorPIDController.setReference(IntakeConstants.kIntakeForward, CANSparkMax.ControlType.kVelocity);
-    m_intakeMotor.set(IntakeConstants.kIntakeForwardPower);
-  }
-
   public void setIntakeOff(){
     m_intakeMotorPIDController.setReference(0, ControlType.kVelocity);
-  }
-
-  public void setIntakeReverse(){
-    // m_intakeMotorPIDController.setReference(-IntakeConstants.kIntakeForward, CANSparkMax.ControlType.kVelocity);
-    m_intakeMotor.set(-IntakeConstants.kIntakeForwardPower);
   }
 
   public boolean getSensor(){
@@ -49,13 +39,8 @@ public class SUB_Intake extends SubsystemBase {
 
   public void Off(){}
 
-  public void setIntakeCurrent(){
-    m_intakeMotor.setSmartCurrentLimit(50);
-  }
-
-  public void setHoldCurrent(){
-    m_intakeMotor.setSmartCurrentLimit(5);
-    // System.out.println(m_intakeMotor.getOutputCurrent());
+  public void setCurrent(int p_current){
+    m_intakeMotor.setSmartCurrentLimit(p_current);
   }
 
   public void setPower(double speed){
