@@ -20,13 +20,13 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CMD_Place3rdLevel extends SequentialCommandGroup {
   /** Creates a new GroundIntake. */
-  public CMD_Place2ndLevel(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
+  public CMD_Place3rdLevel(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.SCORING),
       new ParallelCommandGroup(
-        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorSecondConeLevel),
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorThirdConeLevel),
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)    
       )
       
