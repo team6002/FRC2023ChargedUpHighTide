@@ -184,7 +184,7 @@ public final class Constants {
     public static final double kElevatorMax = 48;
     public static final double kElevatorShelfCone = 36;
     public static final double kElevatorShelfCube = 33.5;
-    public static final double kElevatorFirstConeLevel = 0;// for placeing forwards
+    public static final double kElevatorFirstConeLevel = 6;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 24;  
     public static final double kElevatorThirdConeLevel = 43;
     public static final double kElevatorFirstCubeLevel = 0;// for placeing forwards
@@ -221,24 +221,20 @@ public final class Constants {
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
-    public static final double kElbowStowBackwards = 215;//when wrist faces backwards(Ground)
-    public static final double kElbowStowForwards = 200;// when wrist faces forwards(Shelf)
-    public static final double kElbowSaftey = 190;//maximum safe value for rotating wrist
     public static final double kElbowLift = 190;// use to get elbow off elevator, it don't like 200 for some reason
     public static final double kElbowLifted = 200;// when the elbow is not resting on elevator
-    public static final double kElbowPlaceBack = 105; // for placing on ground
+    public static final double kElbowStow = 180;
     public static final double kElbowUp = 180;// about 90 degrees up
     public static final double kElbowForwards = 270;// stright forwards
     public static final double kElbowShelf = 260;// stright forwards
     public static final double kElbowPrepareDrop = 260;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 95;// straight back
-    public static final double kElbowThrow = 120;//BATTA BATTA SWING, swings it lower to the ground to throw it
-    public static final double kElbowGroundCone = 111;// straight back
-    public static final double kElbowGroundCube = 103;// straight back
+    public static final double kElbowGroundConeUpright = 111;// when the cone stands up straight
+    public static final double kElbowGroundConeDown = 100;// when the cone are knocked over
+    public static final double kElbowGroundCube = 103;// when picking up cube
     public static final double kElbowShootCube = 210;//for shooting cubes
     public static final double kElbowShelfBack = 95;
     public static final double kElbowShelfBackPrep = 85;
-    public static final double kElbowTolerance = 1;
   }
   
   public static final class LimeLightConstants{
@@ -290,7 +286,8 @@ public final class Constants {
     public static final int kPickBackGroundMode = 0;
     // public static final int kPickForwardsGroundMode = 1;
     public static final int kPickForwardsShelfMode = 1;
-    public static final int kPickBackShelfMode = 2;
+    public static final int kPickGroundConeDownMode = 2;
+    // public static final int kPickBackShelfMode = 2;
     
     public static final int kStowGroundMode = 0;
     public static final int kStowShelfMode = 1;
@@ -304,13 +301,11 @@ public final class Constants {
 
     public static final int kUnknownIntakeKey = -1;
     public static final int kGroundBackCube = 0;
-    public static final int kGroundBackCone = 1;
-    public static final int kGroundForwardsCone = 2;
+    public static final int kGroundBackConeUpright = 1;
+    public static final int kGroundBackConeDown = 2;
     public static final int kShelfForwardsCube = 3;
     public static final int kShelfForwardsCone = 4;
-    public static final int kShelfBackCone = 5;
-    public static final int kShelfBackCube = 6;
-
+    
     public static final int kUnknownExtendKey = -1;
     public static final int k1stLevelBackCone = 0;
     public static final int k1stLevelBackCube = 1;
