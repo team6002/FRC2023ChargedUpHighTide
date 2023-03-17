@@ -74,9 +74,11 @@ public class CMD_IntakeElementJanky extends CommandBase {
         if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeUpright){
           m_elbow.setReference(ElbowConstants.kElbowGroundConeDown);
           m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeDown);
+          m_variables.setPickMode(GlobalConstants.kPickConeDownMode);
         }else if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown){
           m_elbow.setReference(ElbowConstants.kElbowGroundConeUpright);
           m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeUpright);
+          m_variables.setPickMode(GlobalConstants.kPickBackGroundMode);
         }
       }
     }else{

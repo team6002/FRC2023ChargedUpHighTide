@@ -292,7 +292,7 @@ public final class Constants {
     public static final int kUnknownPickMode = -1;
     public static final int kPickBackGroundMode = 0;
     public static final int kPickForwardsShelfMode = 1;
-    public static final int kPickBackShelfMode = 2;
+    public static final int kPickConeDownMode = 2;
     
     public static final int kStowGroundMode = 0;
     public static final int kStowShelfMode = 1;
@@ -346,15 +346,17 @@ public final class Constants {
 
     public static final double kBlinkinConeGround = 0.69; // Yellow
     public static final double kBlinkinConeShelf = 0.11; // Color 1 Pattern Breath Fast
-    public static final double kBlinkinConeBackShelf = -0.01; // Color 1 Pattern Larson Scanner
+    public static final double kBlinkinConeDownGround = -0.01; // Color 1 Pattern Larson Scanner
 
     public static final double kBlinkinCubeGround = 0.91; // Violet
     public static final double kBlinkinCubeShelf = 0.31; // Color 2 Pattern Breath Fast
     public static final double kBlinkinCubeBackShelf = 0.19; // Color 2 Pattern Larson Scanner
 
+    public static final double kBlinkinHasItem = 0.77;
+
     public static final double kBlinkinBalanceCelebrate = -0.57; // Fire Large, flexing, use only when balanced
 
-    public static final double kBlinkinUnknownIntakeState = 0.75; /* Dark Green */
+    public static final double kBlinkinUnknownIntakeState = 0.62; /* Green */
   }
 
   public static final class CameraConstants{
