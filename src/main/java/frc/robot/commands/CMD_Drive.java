@@ -100,8 +100,8 @@ public class CMD_Drive extends CommandBase {
     // value = deadband(value, 0.2);
 
     // Square the axis
-    value = value * value * value;
-    //value = Math.copySign(value * value, value);
+    // value = value * value * value;
+    value = Math.copySign(value, value);
 
     return value;
   }
