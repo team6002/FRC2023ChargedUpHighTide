@@ -11,6 +11,7 @@ import frc.robot.Constants.AutoAlignConstants.*;
 public class GlobalVariables extends SubsystemBase {
   /** Creates a new GlobalVariables. */
   private boolean m_intakeState = true;// true for cone mode, false for cube mode
+  private boolean m_hasItem = false;//false is no item true is has item
   private int m_dropLevel = 2;// 1 is ground, 2 is second level, 3 is third level
   private int m_stowLocation = 1;// 0 is ground, 1 is shelf
   private int m_pickMode = -1;// 0 is groundBack, 1 is groundForwards, 2 shelfBack, 3 shelfForwards
@@ -29,6 +30,14 @@ public class GlobalVariables extends SubsystemBase {
 
   public boolean getIntakeState(){
     return m_intakeState;
+  }
+
+  public void setHasItem(boolean p_item){
+    m_hasItem = p_item;
+  }
+
+  public boolean getHasItem(){
+    return m_hasItem;
   }
 
   public void setAlignPosition(Constants.AutoAlignConstants.AlignPosition p_alignPosition){

@@ -1,28 +1,30 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
+// This is to swap between pickup mode of downed cones and upright cones
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.GlobalVariables;
+import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Intake;
 
-public class CMD_IntakeElement extends CommandBase {
+public class CMD_IntakeElementJanky extends CommandBase {
   /** Creates a new CMD_IntakeCheck. */
   SUB_Intake m_intake;
   GlobalVariables m_variables;
+  SUB_Elbow m_elbow;
   boolean m_detected = false;
   boolean m_pressed = false;
   double m_timer = 0;
   CommandXboxController m_driverController;
 
-  public CMD_IntakeElement(SUB_Intake p_intake, GlobalVariables p_variables, CommandXboxController p_driverController) {
+  public CMD_IntakeElementJanky(SUB_Intake p_intake, SUB_Elbow p_elbow, GlobalVariables p_variables, CommandXboxController p_driverController) {
     m_driverController = p_driverController;
     m_intake = p_intake;
+    m_elbow = p_elbow;
     m_timer = 0;
     m_variables = p_variables;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -35,7 +37,7 @@ public class CMD_IntakeElement extends CommandBase {
     m_timer = 0;
     m_pressed = false;
     m_detected = false;
-    m_intake.setIntakeCurrent();
+    m_intake.setCurrent(IntakeConstants.kIntakeCurrent);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -55,6 +57,7 @@ public class CMD_IntakeElement extends CommandBase {
       m_detected = false;
       m_timer = 0;
     }
+
     if (m_variables.getIntakeCommandKey() != -1){
       if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
         m_intake.setPower(IntakeConstants.kIntakeForwardPower);
@@ -62,10 +65,23 @@ public class CMD_IntakeElement extends CommandBase {
         m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
       }
     }else{
-      //not nothing
+      //not nothing cancels command
       m_pressed = true;
     }
-   
+    
+    if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
+      if (m_driverController.leftBumper().getAsBoolean()){
+        if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeUpright){
+          m_elbow.setReference(ElbowConstants.kElbowGroundConeDown);
+          m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeDown);
+        }else if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown){
+          m_elbow.setReference(ElbowConstants.kElbowGroundConeUpright);
+          m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeUpright);
+        }
+      }
+    }else{
+      //do nothing
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -73,8 +89,10 @@ public class CMD_IntakeElement extends CommandBase {
   public void end(boolean interrupted) {
     if (m_pressed == true){
       m_variables.setStage(GlobalConstants.kIntakeStage);
+      m_variables.setHasItem(false);
     }else {
       m_variables.setStage(GlobalConstants.kExtendStage);
+      m_variables.setHasItem(true);
     }
     m_detected = false;
     m_pressed = false;
@@ -84,5 +102,9 @@ public class CMD_IntakeElement extends CommandBase {
   @Override
   public boolean isFinished() {
     return m_detected || m_pressed;
+  }
+
+  public Command getInterruptionBehavior(Command intakeTestything) {
+    return null;
   }
 }

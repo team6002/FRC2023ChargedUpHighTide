@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.GlobalVariables;
@@ -35,7 +36,7 @@ public class CMD_IntakeElement extends CommandBase {
     m_timer = 0;
     m_pressed = false;
     m_detected = false;
-    m_intake.setIntakeCurrent();
+    m_intake.setCurrent(IntakeConstants.kIntakeCurrent);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -62,7 +63,7 @@ public class CMD_IntakeElement extends CommandBase {
         m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
       }
     }else{
-      //not nothing
+      //not nothing cancels command
       m_pressed = true;
     }
    
@@ -73,8 +74,10 @@ public class CMD_IntakeElement extends CommandBase {
   public void end(boolean interrupted) {
     if (m_pressed == true){
       m_variables.setStage(GlobalConstants.kIntakeStage);
+      m_variables.setHasItem(false);
     }else {
       m_variables.setStage(GlobalConstants.kExtendStage);
+      m_variables.setHasItem(true);
     }
     m_detected = false;
     m_pressed = false;
@@ -84,5 +87,9 @@ public class CMD_IntakeElement extends CommandBase {
   @Override
   public boolean isFinished() {
     return m_detected || m_pressed;
+  }
+
+  public Command getInterruptionBehavior(Command intakeTestything) {
+    return null;
   }
 }
