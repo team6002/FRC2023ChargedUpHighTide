@@ -4,16 +4,33 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.GlobalVariables;
+import frc.robot.Constants.ElbowConstants;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.subsystems.SUB_Elbow;
+import frc.robot.subsystems.SUB_Elevator;
+import frc.robot.subsystems.SUB_FiniteStateMachine;
+import frc.robot.subsystems.SUB_Intake;
+import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CMD_Stow extends SequentialCommandGroup {
-  /** Creates a new CMD_Stow. */
-  public CMD_Stow() {
+  /** Creates a new GroundIntake. */
+  public CMD_Stow(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(
+      new CMD_setState(p_finiteStateMachine, RobotState.STOW),
+      new CMD_IntakeStop(p_intake),
+      new ParallelCommandGroup(
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)    
+      )
+      
+    );
   }
 }

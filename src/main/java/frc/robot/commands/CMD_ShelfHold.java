@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.ElbowConstants;
@@ -19,14 +20,16 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CMD_ShelfHold extends SequentialCommandGroup {
   /** Creates a new GroundIntake. */
-  public CMD_GroundHold(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
+  public CMD_ShelfHold(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.STOW),
       new CMD_IntakeHold(p_intake, p_variables),
-      new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)
+      new ParallelCommandGroup(
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)    
+      )
       
     );
   }
