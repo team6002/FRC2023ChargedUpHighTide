@@ -286,8 +286,7 @@ public final class Constants {
     public static final int kPickBackGroundMode = 0;
     // public static final int kPickForwardsGroundMode = 1;
     public static final int kPickForwardsShelfMode = 1;
-    public static final int kPickGroundConeDownMode = 2;
-    // public static final int kPickBackShelfMode = 2;
+    public static final int kPickBackShelfMode = 2;
     
     public static final int kStowGroundMode = 0;
     public static final int kStowShelfMode = 1;
