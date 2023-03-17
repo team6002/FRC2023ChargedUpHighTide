@@ -269,22 +269,28 @@ public final class Constants {
     public static final double kAbortThreshold = 0.3;
 
     public static enum AlignPosition {
-      LEFT,
-      MIDDLE,
-      RIGHT
+      LEFTSCORE,
+      MIDDLESCORE,
+      RIGHTSCORE,
+      
+      LEFTSHELF,
+      MIDDLESHELF,// this isn't a pick up location but the middle in front of the apriltag
+      RIGHTSHELF,
     };
 
     public static final EnumMap<AlignPosition, Pose2d> goalPose = new EnumMap<>(Map.of(
-      AlignPosition.LEFT, new Pose2d(-0.8, 0.6, new Rotation2d()),
-      AlignPosition.MIDDLE, new Pose2d(-0.8, 0.0, new Rotation2d()),
-      AlignPosition.RIGHT, new Pose2d(-0.8, -0.6, new Rotation2d())
+      AlignPosition.LEFTSCORE, new Pose2d(-0.8, 0.6, new Rotation2d()),
+      AlignPosition.MIDDLESCORE, new Pose2d(-0.8, 0.0, new Rotation2d()),
+      AlignPosition.RIGHTSCORE, new Pose2d(-0.8, -0.6, new Rotation2d()),
+      AlignPosition.LEFTSHELF, new Pose2d(-1.3, .3, new Rotation2d()),
+      AlignPosition.MIDDLESHELF, new Pose2d(-1.3, 0, new Rotation2d()),
+      AlignPosition.RIGHTSHELF, new Pose2d(-1.3, -.3, new Rotation2d())
     ));
   }
 
   public static final class GlobalConstants{
     public static final int kUnknownPickMode = -1;
     public static final int kPickBackGroundMode = 0;
-    // public static final int kPickForwardsGroundMode = 1;
     public static final int kPickForwardsShelfMode = 1;
     public static final int kPickBackShelfMode = 2;
     
@@ -315,11 +321,18 @@ public final class Constants {
     public static final int k3rdLevelCone = 6;
     public static final int k3rdLevelCube = 7;
 
-
-
     public static final int kIntakeStage = 0;
     public static final int kExtendStage = 1;
     public static final int kDropStage = 2;
+
+    public static final int kLeftPickPosition = 1;
+    public static final int kRightPickPosition = 2;
+
+    public static final int kLeftPlacePosition = 1;
+    public static final int kMiddlePlacePosition = 2;
+    public static final int kRightPlacePosition = 3;
+
+    
   }
 
   public static final class BlinkinConstants {

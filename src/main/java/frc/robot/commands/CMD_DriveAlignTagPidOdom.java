@@ -1,4 +1,5 @@
 // lines up straight to tag
+//NOTE run this before running other auto aligns to set up odometry
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -57,7 +58,11 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
 
   @Override
   public void initialize() {
-    goalPose = Constants.AutoAlignConstants.goalPose.get(AutoAlignConstants.AlignPosition.MIDDLE);
+    if (m_variables.getHasItem() == true){
+      goalPose = Constants.AutoAlignConstants.goalPose.get(AutoAlignConstants.AlignPosition.MIDDLESHELF);
+    }else{
+      goalPose = Constants.AutoAlignConstants.goalPose.get(AutoAlignConstants.AlignPosition.MIDDLESCORE);
+    }
     robotOdom = m_drivetrain.getPose();
 
     end = false;
@@ -132,10 +137,9 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_drivetrain.drive(0.0, 0.0, 0.0, true, false);
-    // if (m_limeLight.hasTarget()) {
-    //   m_drivetrain.resetOdometry(new Pose2d(m_limeLight.getTargetX(), m_limeLight.getTargetY(), robotOdom.getRotation()));
-    // } 
-    if (m_limeLight.getTargetX() > -1.2){
+    // sets odometry to what the april tag says so we can align to left or right
+    // NOTE only sets odometry if we are close enough that its not that inaccurate
+    if (m_limeLight.getTargetX() > -1.4){
       m_drivetrain.resetOdometry(new Pose2d(m_limeLight.getTargetX(), m_limeLight.getTargetY(), robotOdom.getRotation()));
     }
 

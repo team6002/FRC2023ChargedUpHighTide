@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.GlobalConstants;
 import frc.robot.Constants.AutoAlignConstants.*;
 
 public class GlobalVariables extends SubsystemBase {
@@ -19,6 +20,8 @@ public class GlobalVariables extends SubsystemBase {
   private int m_stage = 0;// 0 is intake, 2 is drop, 3 is dropped
   private int m_autoKey = 0;
   private int m_extendKey = -1;
+  private int m_PickAlignPosition = -1;
+  private int m_PlaceAlignPosition = -1;
 
   private Constants.AutoAlignConstants.AlignPosition m_AlignPosition;
 
@@ -38,6 +41,22 @@ public class GlobalVariables extends SubsystemBase {
 
   public boolean getHasItem(){
     return m_hasItem;
+  }
+
+  public void setPickUpAlignPosition(int p_alignPosition){
+    m_PickAlignPosition = p_alignPosition;
+  }
+
+  public int getPickUpAlignPosition(){
+    return m_PickAlignPosition;
+  }
+
+  public void setPlaceUpAlignPosition(int p_alignPosition){
+    m_PlaceAlignPosition = p_alignPosition;
+  }
+
+  public int getPlaceAlignPosition(){
+    return m_PlaceAlignPosition;
   }
 
   public void setAlignPosition(Constants.AutoAlignConstants.AlignPosition p_alignPosition){
@@ -113,11 +132,32 @@ public class GlobalVariables extends SubsystemBase {
     SmartDashboard.putNumber("StowLocation", m_stowLocation);
     SmartDashboard.putNumber("PickMode", m_pickMode);
 
-    if(getAlignPosition() == AlignPosition.LEFT){
+    if (m_hasItem == true){
+      if (getPlaceAlignPosition() == GlobalConstants.kLeftPlacePosition){
+        SmartDashboard.putString("AlignPosition", "LeftPlace");  
+      }else 
+        if (getPlaceAlignPosition() == GlobalConstants.kMiddlePlacePosition){
+        SmartDashboard.putString("AlignPosition", "MiddlePlace");  
+      }else
+        if (getPlaceAlignPosition() == GlobalConstants.kRightPlacePosition){
+        SmartDashboard.putString("AlignPosition", "RightPlace");  
+        }
+      }else {
+      if (getPickUpAlignPosition() == GlobalConstants.kLeftPickPosition){
+        SmartDashboard.putString("AlignPosition", "LeftPick");
+      }else
+        if (getPickUpAlignPosition() == GlobalConstants.kRightPickPosition){
+        SmartDashboard.putString("AlignPosition", "RightPick");  
+        }
+      else {
+        SmartDashboard.putString("AlignPosition", "No Pick");
+      }
+    }      
+    if(getAlignPosition() == AlignPosition.LEFTSCORE){
       SmartDashboard.putString("AlignPosition", "LEFT");
-    }else if(getAlignPosition() == AlignPosition.MIDDLE){
+    }else if(getAlignPosition() == AlignPosition.MIDDLESCORE){
       SmartDashboard.putString("AlignPosition", "MIDDLE");
-    }else if(getAlignPosition() == AlignPosition.RIGHT){
+    }else if(getAlignPosition() == AlignPosition.RIGHTSCORE){
       SmartDashboard.putString("AlignPosition", "RIGHT");
     }else{
       SmartDashboard.putString("AlignPosition", "Not a valid align position");
