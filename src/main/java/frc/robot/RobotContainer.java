@@ -4,7 +4,6 @@ package frc.robot;
 import java.util.Map;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.*;
-import frc.robot.Constants.AutoAlignConstants.AlignPosition;
 import frc.robot.auto.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -59,6 +58,8 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
+
+
   }
 
   /**
@@ -100,6 +101,9 @@ public class RobotContainer {
     return m_variables.getIntakeCommandKey();
   }
 
+  private int getDropLevel(){
+    return m_variables.getDropLevel();
+  }
   private int getRobotStage(){
     return m_variables.getStage();
   }
@@ -107,146 +111,78 @@ public class RobotContainer {
   private boolean getIntakeState(){
     return m_variables.getIntakeState();
   }
-  
+
   private int getAutonomousCommandKey(){
     return m_variables.getAutoKey();
   }
-
-  private int getExtendKey(){
-    return m_variables.getExtendKey();
-  }
+  
   public final Command getAutonomusCommand =
   new SelectCommand(
     Map.ofEntries(
       // Map.entry(AutoConstants.kBalanceStationKey, new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController)),
       // Map.entry(AutoConstants.kCubeRunKey, new AUTO_CubeRun(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController))
-    
       Map.entry(AutoConstants.kBalanceStationKey, new PrintCommand("1")),
       Map.entry(AutoConstants.kCubeRunKey, new PrintCommand("2"))
     ), 
     this::getAutonomousCommandKey
   );
 
-  // public final Command PrepIntakeCommand  = 
-  // new SelectCommand(
-  //   Map.ofEntries(
-  //     Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-  //     Map.entry(GlobalConstants.kGroundBackCube, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_finiteStateMachine, m_intake, m_variables)),
-  //     Map.entry(GlobalConstants.kGroundBackCone, new CMD_PrepIntakeGroundBack(m_elbow, m_elevator, m_finiteStateMachine, m_intake, m_variables)),
-  //     Map.entry(GlobalConstants.kGroundForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_finiteStateMachine, m_intake, m_variables, m_limelight)),
-  //     Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_finiteStateMachine, m_intake, m_variables, m_limelight)),
-  //     Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_PrepIntakeShelfForwards(m_elbow, m_elevator, m_finiteStateMachine, m_intake, m_variables, m_limelight)),
-  //     Map.entry(GlobalConstants.kShelfBackCone, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_limelight)),
-  //     Map.entry(GlobalConstants.kShelfBackCube, new CMD_PrepIntakeShelfBack(m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_limelight))
-  //   )
-  //   ,this::getIntakeType
-  // );
+  public final Command getIntakeCommand =
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kGroundBackCube, new CMD_GroundCubeIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kGroundBackConeUpright, new CMD_GroundConeUprightIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kGroundBackConeDown, new CMD_GroundConeDownIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_ShelfIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_ShelfIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine))
+    ), 
+    this::getIntakeType
+  );
 
-  // public final Command DeployIntakeCommand  = 
-  //   new SelectCommand(
-  //     Map.ofEntries(
-  //       Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-  //       Map.entry(GlobalConstants.kGroundBackCube, new CMD_IntakeGroundBackCube(m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables)),
-  //       Map.entry(GlobalConstants.kGroundBackCone, new CMD_IntakeGroundBackCone(m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables)),
-  //       Map.entry(GlobalConstants.kGroundForwardsCone, new PrintCommand("2")),
-  //       Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_IntakeShelfForwardsCube(m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables)),
-  //       Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_IntakeShelfForwardsCone(m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables)),
-  //       Map.entry(GlobalConstants.kShelfBackCone, new CMD_IntakeShelfBackCone(m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables)),
-  //       Map.entry(GlobalConstants.kShelfBackCube, new CMD_IntakeShelfBackCone(m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables))
-  //       )
-  //     ,this::getIntakeType
-  //   );
+  public final Command getHoldCommand =
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kGroundBackCube, new CMD_GroundHold(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kGroundBackConeUpright, new CMD_GroundHold(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kGroundBackConeDown, new CMD_GroundHold(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_ShelfHold(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_ShelfHold(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables))
+    ), 
+    this::getIntakeState
+  );
 
-  //   public final Command HoldIntakeCommand  = 
-  // new SelectCommand(
-  //   Map.ofEntries(
-  //     Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-  //     Map.entry(GlobalConstants.kGroundBackCube, new CMD_HoldGroundBack(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.kGroundBackCone, new CMD_HoldGroundBack(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.kGroundForwardsCone, new PrintCommand("2")),
-  //     Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_HoldShelfForwards(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_HoldShelfForwards(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.kShelfBackCone, new CMD_HoldShelfBack(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.kShelfBackCube, new CMD_HoldShelfBack(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables))
-  //   )
-  //   ,this::getIntakeType
-  // );
-
-  // public final Command StowIntakeCommand  = 
-  // new SelectCommand(
-  //   Map.ofEntries(
-  //     Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-  //     Map.entry(GlobalConstants.kGroundBackCube, new CMD_StowGround(m_elevator, m_intake, m_elbow, m_finiteStateMachine)),
-  //     Map.entry(GlobalConstants.kGroundBackCone, new CMD_StowGround(m_elevator, m_intake, m_elbow, m_finiteStateMachine)),
-  //     Map.entry(GlobalConstants.kGroundForwardsCone, new PrintCommand("2")),
-  //     Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_Stow(m_elevator, m_intake, m_elbow, m_finiteStateMachine)),
-  //     Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_Stow(m_elevator, m_intake, m_elbow, m_finiteStateMachine)),
-  //     Map.entry(GlobalConstants.kShelfBackCone, new CMD_StowShelfBack(m_elevator, m_intake, m_elbow, m_finiteStateMachine)),
-  //     Map.entry(GlobalConstants.kShelfBackCube, new CMD_StowShelfBack(m_elevator, m_intake, m_elbow, m_finiteStateMachine))
-  //   )
-  //   ,this::getIntakeType
-  // );
   
-  // public final Command ExtendCommand  = 
-  // new SelectCommand(
-  //   Map.ofEntries(
-  //     Map.entry(GlobalConstants.kUnknownExtendKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-  //     Map.entry(GlobalConstants.k1stLevelForwardCone, new CMD_PlaceForwardsGroundCone(m_elevator, m_intake, m_elbow, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.k1stLevelForwardCube, new CMD_PlaceForwardsGroundCube(m_elevator, m_intake, m_elbow, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.k2ndLevelCone, new CMD_PlaceForwardsCone(m_elevator, m_intake, m_elbow, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.k2ndLevelCube, new CMD_PlaceSecondLevelCube(m_elevator, m_intake, m_elbow, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.k3rdLevelCone, new CMD_PlaceForwardsCone(m_elevator, m_intake, m_elbow, m_finiteStateMachine, m_variables)),
-  //     Map.entry(GlobalConstants.k3rdLevelCube, new CMD_PlaceForwardsCube(m_elevator, m_intake, m_elbow, m_finiteStateMachine, m_variables))
-  //   )
-  //   ,this::getExtendKey
-  //   );
-
-  //   public final Command setIntakeCamera  = 
-  //   new SelectCommand(
-  //     Map.ofEntries(
-  //       Map.entry(GlobalConstants.kUnknownIntakeKey, new PrintCommand("I HAVE NO IDEA WHAT YOU ARE TRYING TO DO")),
-  //       Map.entry(GlobalConstants.kShelfBackCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
-  //       Map.entry(GlobalConstants.kShelfBackCube, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
-  //       Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
-  //       Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
-  //       Map.entry(GlobalConstants.kGroundBackCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
-  //       Map.entry(GlobalConstants.kGroundBackCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam)),
-  //       Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_setCamera(m_limelight, CameraConstants.kDriveCam))
-  //       )
-  //     ,this::getIntakeType
-  //   );
+  public final Command getLevelCommand =
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kElevator1stLevel, new CMD_Place1stLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kElevator2ndLevel, new CMD_Place2ndLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kElevator3rdLevel, new CMD_Place3rdLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables))
+    ), 
+    this::getDropLevel
+  );
   
-
-  // public final Command CycleCommand = 
-  // new SelectCommand(
-  //   Map.ofEntries(   
-  //     Map.entry(GlobalConstants.kIntakeStage,
-  //       new SequentialCommandGroup(
-  //         setIntakeCamera,
-  //         DeployIntakeCommand,
-  //         new CMD_IntakeElement(m_intake, m_variables, m_driverController),
-  //         HoldIntakeCommand,
-  //         new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
-  //       )
-  //     ),
-  //     Map.entry(GlobalConstants.kExtendStage,
-  //       new SequentialCommandGroup(
-  //         new CMD_setCamera(m_limelight, CameraConstants.kLimelight),
-  //         new CMD_SelectExtendCommand(m_variables),
-  //         ExtendCommand,
-  //         new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
-  //       )
-  //     ),    
-  //     Map.entry(GlobalConstants.kDropStage, 
-  //       new SequentialCommandGroup(
-  //         new CMD_IntakeDrop(m_intake, m_variables),
-  //         new WaitCommand(.3),
-  //         StowIntakeCommand,
-  //         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage)
-  //       )
-  //     )  
-  //   ), 
-  //   this::getRobotStage
-  //   );
+  public final Command getCycleCommand =
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kIntakeStage, new SequentialCommandGroup(
+        getIntakeCommand,
+        new CMD_IntakeElement(m_intake, m_variables, m_driverController),
+        getHoldCommand,
+        new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
+      )),
+      Map.entry(GlobalConstants.kExtendStage,new SequentialCommandGroup(
+      getLevelCommand,
+      new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
+      )),
+      Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
+        new CMD_IntakeDrop(m_intake, m_variables),
+        new WaitCommand(.2),
+        new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables),
+        new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage)
+      ))
+    ), 
+    this::getRobotStage
+  );
 
 }
