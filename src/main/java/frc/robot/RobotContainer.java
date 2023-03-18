@@ -208,7 +208,7 @@ public class RobotContainer {
     Map.ofEntries(
       Map.entry(GlobalConstants.kIntakeStage, new SequentialCommandGroup(
         getIntakeCommand,
-        new CMD_IntakeElement(m_intake, m_variables, m_driverController),
+        new CMD_IntakeElementJanky(m_intake, m_elbow, m_variables, m_driverController),
         getHoldCommand,
         new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
       )),
