@@ -7,11 +7,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.GlobalVariables;
 
-public class CMD_setIntakeMode extends CommandBase {
+public class CMD_setIntakeState extends CommandBase {
   GlobalVariables m_variables;
   boolean m_intakeMode;
   /** Creates a new CMD_PickUpMode. */
-  public CMD_setIntakeMode(GlobalVariables p_variables, boolean p_intakeMode) {
+  public CMD_setIntakeState(GlobalVariables p_variables, boolean p_intakeMode) {
     m_variables = p_variables;
     m_intakeMode = p_intakeMode;
     // Use addRequirements() here to declare subsystem dependencies.
