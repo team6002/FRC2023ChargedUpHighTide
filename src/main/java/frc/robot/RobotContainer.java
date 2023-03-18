@@ -2,12 +2,15 @@
 package frc.robot;
 
 import java.util.Map;
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants.*;
 import frc.robot.auto.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -37,6 +40,8 @@ public class RobotContainer {
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
+
+  private final BooleanSupplier HasItem = () -> m_variables.getHasItem();
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -45,6 +50,9 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Configure default commands
+    //changes blinking codes hopefully >I<
+    // m_blinkin.setDefaultCommand(new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables));
+    //this drives
     m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController));
   }
 
@@ -58,7 +66,40 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    
+    // the main command that cycles through the robot sequence
+    m_driverController.leftBumper().onTrue(getCycleCommand);  
+    //This command send you all the way back to the intake sequence
+    m_driverController.rightBumper().onTrue(new SequentialCommandGroup(
+      new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
+      new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)
+    ));
+    //changes intake 
+    m_driverController.b().onTrue(new SequentialCommandGroup(
+      new CMD_ToggleIntakeState(m_variables),
+      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
+    ));
+    //AUTO ALIGN BABY
+    m_driverController.a().onTrue(new SequentialCommandGroup(
+      new CMD_SelectAlignPosition(m_variables),
+      new CMD_DriveAlignScoring(m_drivetrain, m_limelight, m_variables, m_driverController), 
+      new ConditionalCommand(
+        new CMD_DriveForwardsSlowly(m_drivetrain), 
+        new PrintCommand("Scoring"),
+        HasItem) 
+    ));
+    // toggles which shelf it will align to
+    m_driverController.y().onTrue(new CMD_TogglePickPosition(m_variables));
+    // toggle which pick up mode it will do (Ground or shelf)
+    m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
+
+    //resets gyro and sync the elbow to absoulute encoders
+    m_driverController.pov(270).onTrue(
+      new SequentialCommandGroup(
+        new CMD_SyncElbowPosition(m_elbow),
+        new CMD_ResetGyro(m_drivetrain)
+    ));
+    //Just in case the operator is unable to perform
+    m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
 
   }
 
@@ -133,7 +174,7 @@ public class RobotContainer {
       Map.entry(GlobalConstants.kGroundBackCube, new CMD_GroundCubeIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
       Map.entry(GlobalConstants.kGroundBackConeUpright, new CMD_GroundConeUprightIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
       Map.entry(GlobalConstants.kGroundBackConeDown, new CMD_GroundConeDownIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
-      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_ShelfIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_ShelfIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
       Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_ShelfIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine))
     ), 
     this::getIntakeType
