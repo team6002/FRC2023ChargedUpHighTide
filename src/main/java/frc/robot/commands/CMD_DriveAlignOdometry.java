@@ -6,16 +6,21 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.*;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.AutoAlignConstants;
 import frc.robot.subsystems.SUB_Drivetrain;
+import frc.robot.subsystems.SUB_Limelight;
 //This only uses Odometry to align itself
 public class CMD_DriveAlignOdometry extends CommandBase {
   private SUB_Drivetrain m_drivetrain;
   private GlobalVariables m_variables;
+  private SUB_Limelight m_limelight;
 
   private final ProfiledPIDController xController;
   private final ProfiledPIDController yController;
@@ -30,9 +35,10 @@ public class CMD_DriveAlignOdometry extends CommandBase {
 
   private CommandXboxController m_driverController;
 //This only uses Odometry to align itself
-  public CMD_DriveAlignOdometry(SUB_Drivetrain p_drivetrain, GlobalVariables p_variables, CommandXboxController p_driverController) {
+  public CMD_DriveAlignOdometry(SUB_Drivetrain p_drivetrain, GlobalVariables p_variables, SUB_Limelight p_limelight, CommandXboxController p_driverController) {
     m_drivetrain = p_drivetrain;
     m_variables = p_variables;
+    m_limelight = p_limelight;
     m_driverController = p_driverController;
 
     xController = new ProfiledPIDController(Constants.AutoAlignConstants.driveKp,
@@ -54,7 +60,17 @@ public class CMD_DriveAlignOdometry extends CommandBase {
 
   @Override
   public void initialize() {
-    goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition());
+    double CurrentGrid = m_limelight.readGrid();
+    double WantedGrid = m_variables.getGrid();
+    double GridAdjustment = ((CurrentGrid - WantedGrid)*1.8);
+    Transform2d GridTransformation = new Transform2d(new Translation2d(0, GridAdjustment),new Rotation2d(0));
+
+
+    if (m_variables.getHasItem() == true){
+      goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition()).plus(GridTransformation);
+    }else{
+      goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition());
+    }
     robotOdom = m_drivetrain.getPose();
 
     end = false;

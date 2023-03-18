@@ -270,9 +270,9 @@ public final class Constants {
     public static final double kAbortThreshold = 0.3;
 
     public static enum AlignPosition {
-      LEFTSCORE,
-      MIDDLESCORE,
-      RIGHTSCORE,
+      LEFTSCORE, //april tagids:3 red, 8 blue 
+      MIDDLESCORE, //april tagids:2 red, 7 blue
+      RIGHTSCORE, //april tagids:1 red, 6 blue
       
       LEFTSHELF,
       MIDDLESHELF,// this isn't a pick up location but the middle in front of the apriltag
@@ -332,6 +332,10 @@ public final class Constants {
     public static final int kLeftPlacePosition = 1;
     public static final int kMiddlePlacePosition = 2;
     public static final int kRightPlacePosition = 3;
+
+    public static final int kRightGrid = 1;
+    public static final int kMiddleGrid = 2;
+    public static final int kLeftGrid = 3;
 
     
   }

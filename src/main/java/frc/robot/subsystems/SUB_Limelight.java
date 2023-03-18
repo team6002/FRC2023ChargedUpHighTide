@@ -12,6 +12,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CameraConstants;
+import frc.robot.Constants.GlobalConstants;
 
 public class SUB_Limelight extends SubsystemBase {
   public SUB_Limelight() {
@@ -58,6 +59,18 @@ public class SUB_Limelight extends SubsystemBase {
 
   public double getTargetID(){
     return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
+  }
+
+  public int readGrid(){
+    double m_id = getTargetID();
+    if (m_id == 3 ||m_id == 8){
+      return GlobalConstants.kLeftGrid;
+    }else if (m_id == 2 ||m_id == 7){
+      return GlobalConstants.kMiddleGrid;
+    }else if (m_id == 1 ||m_id == 6){
+      return GlobalConstants.kRightGrid;
+    } else
+    return -1;
   }
 
   public Pose2d getRobotPoseInTargetSpace() {

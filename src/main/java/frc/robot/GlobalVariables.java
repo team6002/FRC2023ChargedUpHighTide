@@ -15,6 +15,7 @@ public class GlobalVariables extends SubsystemBase {
   private boolean m_hasItem = false;//false is no item true is has item
   private int m_dropLevel = 2;// 1 is ground, 2 is second level, 3 is third level
   private int m_stowLocation = 1;// 0 is ground, 1 is shelf
+  private int m_gridposition = -1;
   private int m_pickMode = -1;// 0 is groundBack, 1 is groundForwards, 2 shelfBack, 3 shelfForwards
   private int m_intakeCommandKey = -1;
   private int m_stage = 0;// 0 is intake, 2 is drop, 3 is dropped
@@ -80,6 +81,14 @@ public class GlobalVariables extends SubsystemBase {
 
   public int getStowLocaton(){
     return m_stowLocation;
+  }
+
+  public void setGrid(int p_position){
+    m_gridposition = p_position;
+  } 
+
+  public int getGrid(){
+    return m_gridposition;
   }
 
   public void setPickMode(int p_mode){
@@ -152,15 +161,14 @@ public class GlobalVariables extends SubsystemBase {
       else {
         SmartDashboard.putString("AlignPosition", "No Pick");
       }
-    }      
-    if(getAlignPosition() == AlignPosition.LEFTSCORE){
-      SmartDashboard.putString("AlignPosition", "LEFT");
-    }else if(getAlignPosition() == AlignPosition.MIDDLESCORE){
-      SmartDashboard.putString("AlignPosition", "MIDDLE");
-    }else if(getAlignPosition() == AlignPosition.RIGHTSCORE){
-      SmartDashboard.putString("AlignPosition", "RIGHT");
-    }else{
-      SmartDashboard.putString("AlignPosition", "Not a valid align position");
     }
+    if (m_gridposition == GlobalConstants.kLeftGrid){
+      SmartDashboard.putString("GoalPosition", "LeftGrid");
+    }else if (m_gridposition == GlobalConstants.kMiddleGrid){
+      SmartDashboard.putString("GoalPosition", "MiddleGrid");
+    }else if (m_gridposition == GlobalConstants.kRightGrid){
+      SmartDashboard.putString("GoalPosition", "RightGrid");
+    }
+
   }
 }

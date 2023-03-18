@@ -80,10 +80,12 @@ public class RobotContainer {
     ));
     //AUTO ALIGN BABY
     m_driverController.a().onTrue(new SequentialCommandGroup(
-      new CMD_SelectAlignPosition(m_variables),
-      new CMD_DriveAlignScoring(m_drivetrain, m_limelight, m_variables, m_driverController), 
       new ConditionalCommand(
-        new CMD_DriveForwardsSlowly(m_drivetrain), 
+        new SequentialCommandGroup(
+          new CMD_SelectAlignPosition(m_variables),
+          new CMD_DriveAlignPicking(m_drivetrain, m_limelight, m_variables, m_driverController), 
+          new CMD_DriveForwardsSlowly(m_drivetrain)
+        ),
         new PrintCommand("Scoring"),
         HasItem) 
     ));
