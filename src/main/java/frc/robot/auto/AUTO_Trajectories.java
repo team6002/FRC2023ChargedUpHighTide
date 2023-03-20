@@ -115,11 +115,11 @@ public class AUTO_Trajectories {
         LinkRunTrajectoryRed1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(Units.inchesToMeters(0), 0, new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(-210), Units.inchesToMeters(-20), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(-200), Units.inchesToMeters(-20), new Rotation2d(0)),
             configReversed);
     
         LinkPlaceTrajectoryRed1 = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.inchesToMeters(-210), Units.inchesToMeters(-20), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(-200), Units.inchesToMeters(-20), new Rotation2d(0)),
             List.of(),
             new Pose2d(Units.inchesToMeters(0), Units.inchesToMeters(-26), new Rotation2d(0)),
             config);
@@ -135,7 +135,9 @@ public class AUTO_Trajectories {
             List.of(new Translation2d(Units.inchesToMeters(-130), Units.inchesToMeters(-20)),
             new Translation2d(Units.inchesToMeters(-110), Units.inchesToMeters(-20))
             ),
-            new Pose2d(Units.inchesToMeters(-0), Units.inchesToMeters(-30), new Rotation2d(Units.degreesToRadians(0))),
+            
+            new Pose2d(Units.inchesToMeters(-0), Units.inchesToMeters(-20), new Rotation2d(Units.degreesToRadians(0))),
+            // new Pose2d(Units.inchesToMeters(-0), Units.inchesToMeters(-30), new Rotation2d(Units.degreesToRadians(0))),
             config);
 
         // Link Run blue side trajectories    
