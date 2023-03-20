@@ -20,7 +20,6 @@ public class CMD_ElevatorSetPosition extends CommandBase {
 
   @Override
   public void initialize() {
-    m_elevator.setElevatorOn(true);
     m_elevator.setReference(m_wantedPosition);
   }
 

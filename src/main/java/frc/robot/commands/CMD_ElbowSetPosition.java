@@ -12,7 +12,7 @@ public class CMD_ElbowSetPosition extends CommandBase {
     
   SUB_Elbow m_elbow;
   double m_position;
-  double m_tolerance = 5;
+  double m_tolerance = 2;
 
   public CMD_ElbowSetPosition(SUB_Elbow p_elbow, double p_position) {
     m_elbow = p_elbow;
@@ -32,6 +32,7 @@ public class CMD_ElbowSetPosition extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
+  
   }
 
   @Override

@@ -17,15 +17,15 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CMD_ShelfIntake extends SequentialCommandGroup {
+public class CMD_ShelfCubeIntake extends SequentialCommandGroup {
   /** Creates a new GroundIntake. */
-  public CMD_ShelfIntake(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine) {
+  public CMD_ShelfCubeIntake(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.INTAKE),
       new ParallelCommandGroup(
-        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfCone),
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorShelfCube),
         new SequentialCommandGroup(
           new CMD_ElevatorCheck(p_elevator, ElevatorConstants.kElevatorSafety),
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowShelf)

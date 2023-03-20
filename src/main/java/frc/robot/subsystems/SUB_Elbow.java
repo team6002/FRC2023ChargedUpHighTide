@@ -1,24 +1,24 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+    // Copyright (c) FIRST and other WPILib contributors.
+    // Open Source Software; you can modify and/or share it under the terms of
+    // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+    package frc.robot.subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+    import com.revrobotics.AbsoluteEncoder;
+    import com.revrobotics.CANSparkMax;
+    import com.revrobotics.RelativeEncoder;
+    import com.revrobotics.SparkMaxPIDController;
+    import com.revrobotics.CANSparkMax.IdleMode;
+    import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+    import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
-import frc.robot.Constants.ElbowConstants;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+    import frc.robot.Constants.ElbowConstants;
+    import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+    import edu.wpi.first.math.trajectory.TrapezoidProfile;
+    import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+    import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class SUB_Elbow extends SubsystemBase {
+    public class SUB_Elbow extends SubsystemBase {
 
     private final CANSparkMax m_elbowMotor;
     private final SparkMaxPIDController m_elbowMotorPIDController;
@@ -42,9 +42,9 @@ public class SUB_Elbow extends SubsystemBase {
         m_elbowAbsoluteEncoder.setVelocityConversionFactor(6);
         m_elbowAbsoluteEncoder.setInverted(true);
         
-        m_elbowEncoder.setPositionConversionFactor(5.12);
-        m_elbowEncoder.setVelocityConversionFactor(5.12/60);
-      
+        m_elbowEncoder.setPositionConversionFactor(5.07);
+        m_elbowEncoder.setVelocityConversionFactor(5.07/60);
+        
 
         m_elbowMotorPIDController.setP(ElbowConstants.kElbowP,1);
         m_elbowMotorPIDController.setI(ElbowConstants.kElbowI,1);
@@ -60,9 +60,9 @@ public class SUB_Elbow extends SubsystemBase {
         m_elbowMotorPIDController.setSmartMotionMaxVelocity(10, 1);
         m_elbowMotorPIDController.setSmartMotionMinOutputVelocity(-0, 1);
         m_elbowMotorPIDController.setSmartMotionMaxAccel(10, 1);
-        m_elbowMotorPIDController.setSmartMotionAllowedClosedLoopError(1, 1);
+        m_elbowMotorPIDController.setSmartMotionAllowedClosedLoopError(.5, 1);
         m_elbowMotorPIDController.setSmartMotionAccelStrategy(SparkMaxPIDController.AccelStrategy.kTrapezoidal, 1);
-   
+
         // SmartDashboard.putNumber("Elbow P", ElbowConstants.kElbowP);
         // SmartDashboard.putNumber("Elbow I", ElbowConstants.kElbowI);
         // SmartDashboard.putNumber("Elbow D", ElbowConstants.kElbowD);
@@ -104,9 +104,13 @@ public class SUB_Elbow extends SubsystemBase {
     public void setElbowConstraints(double p_velocity, double p_acceleration){
         m_constraints = new TrapezoidProfile.Constraints(p_velocity, p_acceleration);
     }
-    
+
     public void syncElbowPosition(){
         m_elbowEncoder.setPosition(getAbsolutePosition());
+    }
+
+    public double getElbowVelocity(){
+        return m_elbowEncoder.getVelocity();
     }
 
     @Override
@@ -123,7 +127,7 @@ public class SUB_Elbow extends SubsystemBase {
         );
     }
 
-    
+
     // double m_P = 0;//elbowConstants.kelbowP;
     // double m_I = 0;//elbowConstants.kelbowI;
     // double m_D = 0;//elbowConstants.kelbowD;
@@ -133,8 +137,9 @@ public class SUB_Elbow extends SubsystemBase {
     // double m_velocity = 0;
     public void telemetry(){
 
-      SmartDashboard.putNumber("elbow position", m_elbowEncoder.getPosition());
-      SmartDashboard.putNumber("absoluteElbow postion", m_elbowAbsoluteEncoder.getPosition());
+        SmartDashboard.putNumber("elbow setpoint position", m_setpoint.position);
+        SmartDashboard.putNumber("elbow position", m_elbowEncoder.getPosition());
+        SmartDashboard.putNumber("absoluteElbow postion", m_elbowAbsoluteEncoder.getPosition());
     //   m_P = SmartDashboard.getNumber("P", m_P);
     //   m_I = SmartDashboard.getNumber("I", m_I);
     //   m_D = SmartDashboard.getNumber("D", m_D);
@@ -143,7 +148,7 @@ public class SUB_Elbow extends SubsystemBase {
     //   m_acceleration = SmartDashboard.getNumber("acceleration", m_acceleration);
     //   m_velocity = SmartDashboard.getNumber("velocity", m_velocity);
     //   m_wantedPosition = SmartDashboard.getNumber("wantedPosition", m_wantedPosition);
-  
+
     //   SmartDashboard.putNumber("P", m_P);
     //   SmartDashboard.putNumber("I", m_I);
     //   SmartDashboard.putNumber("D", m_D);
@@ -152,14 +157,14 @@ public class SUB_Elbow extends SubsystemBase {
     //   SmartDashboard.putNumber("acceleration", m_acceleration);
     //   SmartDashboard.putNumber("velocity", m_velocity);
     //   SmartDashboard.putNumber("wantedPosition", m_wantedPosition);
-     
+        
     //   m_elbowMotorPIDController.setP(m_P,1);
     //   m_elbowMotorPIDController.setI(m_I,1);
     //   m_elbowMotorPIDController.setD(m_D,1);
     //   m_feedForward = new SimpleMotorFeedforward(m_S, m_V);
     //   m_constraints = new TrapezoidProfile.Constraints(m_velocity, m_acceleration);
     //   m_goal = new TrapezoidProfile.State(m_wantedPosition, 0);
-      
+        
     //   SmartDashboard.putNumber("output", m_elbowMotor.getAppliedOutput());//   SmartDashboard.putNumber("elbowSetpoint", m_wantedPosition);
     }
-}
+    }

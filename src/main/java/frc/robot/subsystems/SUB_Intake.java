@@ -29,6 +29,11 @@ public class SUB_Intake extends SubsystemBase {
     m_intakeMotor.burnFlash();
   }
 
+  public void intakeInit(){
+    m_intakeMotor.set(0);
+    m_intakeMotorPIDController.setReference(0, ControlType.kVelocity);
+  }
+
   public void setIntakeOff(){
     m_intakeMotorPIDController.setReference(0, ControlType.kVelocity);
   }
@@ -36,8 +41,6 @@ public class SUB_Intake extends SubsystemBase {
   public boolean getSensor(){
     return m_sensor.get();
   }
-
-  public void Off(){}
 
   public void setCurrent(int p_current){
     m_intakeMotor.setSmartCurrentLimit(p_current);

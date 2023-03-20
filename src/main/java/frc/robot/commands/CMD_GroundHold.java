@@ -24,6 +24,7 @@ public class CMD_GroundHold extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.STOW),
+      new CMD_IntakeReadjust(p_intake, p_variables).withTimeout(.5),
       new CMD_IntakeHold(p_intake, p_variables),
       new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)

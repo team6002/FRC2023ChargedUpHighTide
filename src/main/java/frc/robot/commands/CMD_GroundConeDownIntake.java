@@ -25,6 +25,7 @@ public class CMD_GroundConeDownIntake extends SequentialCommandGroup {
       new CMD_setState(p_finiteStateMachine, RobotState.INTAKE),
       new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowGroundConeDown)
+      // new CMD_SyncElbowPosition(p_elbow)
       
     );
   }

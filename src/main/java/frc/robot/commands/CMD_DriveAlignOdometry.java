@@ -62,7 +62,7 @@ public class CMD_DriveAlignOdometry extends CommandBase {
   public void initialize() {
     double CurrentGrid = m_limelight.readGrid();
     double WantedGrid = m_variables.getGrid();
-    double GridAdjustment = ((CurrentGrid - WantedGrid)*1.8);
+    double GridAdjustment = (-(CurrentGrid - WantedGrid)*1.8);
     Transform2d GridTransformation = new Transform2d(new Translation2d(0, GridAdjustment),new Rotation2d(0));
 
 

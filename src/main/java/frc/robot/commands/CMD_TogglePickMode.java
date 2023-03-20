@@ -18,7 +18,7 @@ public class CMD_TogglePickMode extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (m_variables.getPickMode() >= 2){
+    if (m_variables.getPickMode() >= 1){
       m_variables.setPickMode(0);
     }else m_variables.setPickMode(m_variables.getPickMode()+1);
   }

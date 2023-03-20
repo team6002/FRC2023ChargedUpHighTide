@@ -86,20 +86,19 @@ public class RobotContainer {
           new CMD_DriveAlignPicking(m_drivetrain, m_limelight, m_variables, m_driverController), 
           new CMD_DriveForwardsSlowly(m_drivetrain)
         ),
-        new PrintCommand("Scoring"),
+        new SequentialCommandGroup(
+          new CMD_SelectAlignPosition(m_variables),
+          new CMD_DriveAlignScoring(m_drivetrain, m_limelight, m_variables, m_driverController)
+        ),
         HasItem) 
     ));
-    // toggles which shelf it will align to
+    // toggles which shelf it will align to (left or right)
     m_driverController.y().onTrue(new CMD_TogglePickPosition(m_variables));
     // toggle which pick up mode it will do (Ground or shelf)
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
 
-    //resets gyro and sync the elbow to absoulute encoders
-    m_driverController.pov(270).onTrue(
-      new SequentialCommandGroup(
-        new CMD_SyncElbowPosition(m_elbow),
-        new CMD_ResetGyro(m_drivetrain)
-    ));
+    //resets gyro to absoulute encoders
+    m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
     //Just in case the operator is unable to perform
     m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
 
@@ -120,10 +119,9 @@ public class RobotContainer {
   //   return new AUTO_CubeRunBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   // }
 
-  // public Command getCubeRunRed() {
-  //   return new AUTO_CubeRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  // }
-
+  public Command getLinkRunRed() {
+    return new AUTO_FullLinkRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
   // public Command getBalanceStation() {
   //   return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
   // }
@@ -138,6 +136,7 @@ public class RobotContainer {
   public void SubsystemsInit(){
     m_elbow.elbowInit();
     m_elevator.elevatorInit();
+    m_intake.intakeInit();
   }
 
   private int getIntakeType() {
@@ -176,8 +175,8 @@ public class RobotContainer {
       Map.entry(GlobalConstants.kGroundBackCube, new CMD_GroundCubeIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
       Map.entry(GlobalConstants.kGroundBackConeUpright, new CMD_GroundConeUprightIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
       Map.entry(GlobalConstants.kGroundBackConeDown, new CMD_GroundConeDownIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
-      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_ShelfIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
-      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_ShelfIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine))
+      Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_ShelfConeIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine)),
+      Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_ShelfCubeIntake(m_intake, m_elbow, m_elevator, m_finiteStateMachine))
     ), 
     this::getIntakeType
   );
@@ -191,7 +190,7 @@ public class RobotContainer {
       Map.entry(GlobalConstants.kShelfForwardsCone, new CMD_ShelfHold(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
       Map.entry(GlobalConstants.kShelfForwardsCube, new CMD_ShelfHold(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables))
     ), 
-    this::getIntakeState
+    this::getIntakeType
   );
 
   
@@ -209,6 +208,7 @@ public class RobotContainer {
   new SelectCommand(
     Map.ofEntries(
       Map.entry(GlobalConstants.kIntakeStage, new SequentialCommandGroup(
+        new CMD_selectIntakeCommandKey(m_intake, m_variables),
         getIntakeCommand,
         new CMD_IntakeElementJanky(m_intake, m_elbow, m_variables, m_driverController),
         getHoldCommand,
@@ -219,6 +219,7 @@ public class RobotContainer {
       new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
       )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
+        new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop),
         new CMD_IntakeDrop(m_intake, m_variables),
         new WaitCommand(.2),
         new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables),

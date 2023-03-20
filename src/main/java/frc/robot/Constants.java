@@ -159,8 +159,8 @@ public final class Constants {
   public static final class IntakeConstants{
     public static final int kIntakeMotorCanID = 12;
     //intake powers
-    public static final double kIntakeForwardPower = .7;
-    public static final double kIntakeBackwardPower = -.7;
+    public static final double kIntakeForwardPower = .8;// for cones
+    public static final double kIntakeBackwardPower = -.8;// for cubes
     public static final double kIntakeHoldPower = .07;
     public static final double kIntakeDropCone = -.8;
     public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
@@ -182,11 +182,11 @@ public final class Constants {
     public static final double kElevatorOffset = -.487;
 
     public static final double kElevatorMax = 48;
-    public static final double kElevatorShelfCone = 36;
-    public static final double kElevatorShelfCube = 33.5;
-    public static final double kElevatorFirstConeLevel = 6;// for placeing forwards
-    public static final double kElevatorSecondConeLevel = 24;  
-    public static final double kElevatorThirdConeLevel = 43;
+    public static final double kElevatorShelfCone = 51;
+    public static final double kElevatorShelfCube = 49;
+    public static final double kElevatorFirstConeLevel = 12;// for placeing forwards
+    public static final double kElevatorSecondConeLevel = 35;  
+    public static final double kElevatorThirdConeLevel = 55;
     public static final double kElevatorFirstCubeLevel = 0;// for placeing forwards
     public static final double kElevatorSecondCubeLevel = 10;  
     public static final double kElevatorThirdCubeLevel = 28;
@@ -201,7 +201,7 @@ public final class Constants {
 
     public static final double kElevatorHomeCurrent = 10;
 
-    public static final double kElevatorMaxVelocity = 60;
+    public static final double kElevatorMaxVelocity = 80;
     public static final double kElevatorMaxAcceleration = 80;
     public static final double kElevatorHomeAcceleration = 3;
     public static final double kElevatorHomeVelocity = 3;
@@ -210,7 +210,7 @@ public final class Constants {
 
   public static final class ElbowConstants{
     public static final int kElbowMotorCanID = 11;
-    public static final double kElbowP = 0.012817;//.008;
+    public static final double kElbowP = 0.04;//.008;
     public static final double kElbowI = 0;
     public static final double kElbowD = 0.0049261;
     public static final double kElbowF = 0.00;
@@ -221,23 +221,26 @@ public final class Constants {
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
-    public static final double kElbowLift = 190;// use to get elbow off elevator, it don't like 200 for some reason
-    public static final double kElbowLifted = 200;// when the elbow is not resting on elevator
-    public static final double kElbowStow = 180;
-    public static final double kElbowUp = 180;// about 90 degrees up
-    public static final double kElbowForwards = 270;// stright forwards
-    public static final double kElbowShelf = 260;// stright forwards
-    public static final double kElbowPrepareDrop = 260;// Not quite all the way forwards, allows cones to clear the pole
-    public static final double kElbowBackwards = 95;// straight back
-    public static final double kElbowThrow = 120;//for throwing the cubes for MAXIMUM distance
-    public static final double kElbowGroundConeUpright = 111;// when the cone stands up straight
-    public static final double kElbowGroundConeDown = 100;// when the cone are knocked over
-    public static final double kElbowGroundCube = 103;// when picking up cube
-    public static final double kElbowShootCube = 210;//for shooting cubes
-    public static final double kElbowShelfBack = 95;
-    public static final double kElbowShelfBackPrep = 85;
+    public static final double kElbowLift = 153;// use to get elbow off elevator, it don't like 200 for some reason
+    public static final double kElbowLifted = 153;// when the elbow is not resting on elevator
+    public static final double kElbowStow = 153;
+    public static final double kElbowUp = 130;// about 90 degrees up
+    public static final double kElbowForwards = 153;// stright forwards
+    public static final double kElbowShelf = 165;// stright forwards
+    public static final double kElbowPrepareDrop = 155;// Not quite all the way forwards, allows cones to clear the pole
+    public static final double kElbowDrop = 165;// Not quite all the way forwards, allows cones to clear the pole
+    public static final double kElbowBackwards = 40;// straight back
+    public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
+    public static final double kElbowGroundConeUpright = 54;// when the cone stands up straight
+    public static final double kElbowGroundConeDown = 21;// when the cone are knocked over
+    public static final double kElbowGroundCube = 23;// when picking up cube
+    //depricated
+    // public static final double kElbowShootCube = 210;//for shooting cubes
+    // public static final double kElbowShelfBack = 95;
+    // public static final double kElbowShelfBackPrep = 85;
   }
   
+
   public static final class LimeLightConstants{
     public static final double[] kTarget1Constants = {1, 1, 0};
     public static final double[] kTarget2Constants = {2, 2, 0};

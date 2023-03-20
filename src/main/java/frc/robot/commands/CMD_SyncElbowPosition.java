@@ -10,6 +10,8 @@ import frc.robot.subsystems.SUB_Elbow;
 public class CMD_SyncElbowPosition extends CommandBase {
   /** Creates a new CMD_SyncElbowPosition. */
   SUB_Elbow m_elbow;
+  boolean m_finished;
+  double m_timer;
   public CMD_SyncElbowPosition(SUB_Elbow p_elbow) {
     m_elbow = p_elbow;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -17,21 +19,33 @@ public class CMD_SyncElbowPosition extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    m_elbow.syncElbowPosition();
+  public void initialize() {  
+    m_timer = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (Math.abs(m_elbow.getElbowVelocity()) <= 1 ){
+      m_timer += 1;
+    }else m_timer = 0;
+    if (m_timer >= 40){
+      m_finished = true;
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    if (Math.abs(m_elbow.getPosition() - m_elbow.getAbsolutePosition()) > 2){
+      m_elbow.syncElbowPosition();
+      System.out.println(+1);
+    }
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return m_finished;
   }
 }
