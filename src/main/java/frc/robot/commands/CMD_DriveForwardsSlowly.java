@@ -34,6 +34,6 @@ public class CMD_DriveForwardsSlowly extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_timer > 100);
+    return (m_timer > 25);
   }
 }

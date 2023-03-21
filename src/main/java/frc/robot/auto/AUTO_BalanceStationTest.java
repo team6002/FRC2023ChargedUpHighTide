@@ -22,9 +22,9 @@ import frc.robot.subsystems.SUB_Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AUTO_BalanceStation extends SequentialCommandGroup {
+public class AUTO_BalanceStationTest extends SequentialCommandGroup {
   /** Creates a new AUTO_BalanceStation. */
-  public AUTO_BalanceStation(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain,
+  public AUTO_BalanceStationTest(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain,
     SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, 
     SUB_FiniteStateMachine p_finiteStateMachine,GlobalVariables p_variables,
     CommandXboxController p_controller) {

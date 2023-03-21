@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.subsystems.SUB_Drivetrain;
 
 
-public class CMD_AdjustBalance extends CommandBase {
+public class CMD_AdjustBalanceOutside extends CommandBase {
   SUB_Drivetrain m_drivetrain;
   Timer m_timer = new Timer();
   double m_timeLimit;
-  public CMD_AdjustBalance(SUB_Drivetrain p_drivetrain) {
+  public CMD_AdjustBalanceOutside(SUB_Drivetrain p_drivetrain) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_drivetrain = p_drivetrain;
     
@@ -27,7 +27,7 @@ public class CMD_AdjustBalance extends CommandBase {
     if (Math.abs(m_drivetrain.getRoll()) < 5){
       m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.04);  
     } else{ 
-    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.07);  
+    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.08);  
     }
   }
 

@@ -73,25 +73,25 @@ public class CMD_IntakeElementJanky extends CommandBase {
       m_pressed = true;
     }
     
-    if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
-      if (m_driverController.leftBumper().getAsBoolean()){
-        m_debouncer -= 1;
-        if (m_debouncer <= 0){
-          if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeUpright){
-            m_elbow.setReference(ElbowConstants.kElbowGroundConeDown);
-            m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeDown);
-            m_variables.setPickMode(GlobalConstants.kPickConeDownMode);
-          }else if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown){
-            m_elbow.setReference(ElbowConstants.kElbowGroundConeUpright);
-            m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeUpright);
-            m_variables.setPickMode(GlobalConstants.kPickBackGroundMode);
-        }
-        m_debouncer = 10;
-        }
-      }
-    }else{
-      //do nothing
-    }
+    // if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
+    //   if (m_driverController.leftBumper().getAsBoolean()){
+    //     m_debouncer -= 1;
+    //     if (m_debouncer <= 0){
+    //       if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeUpright){
+    //         m_elbow.setReference(ElbowConstants.kElbowGroundConeDown);
+    //         m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeDown);
+    //         m_variables.setPickMode(GlobalConstants.kPickConeDownMode);
+    //       }else if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown){
+    //         m_elbow.setReference(ElbowConstants.kElbowGroundConeUpright);
+    //         m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeUpright);
+    //         m_variables.setPickMode(GlobalConstants.kPickBackGroundMode);
+    //     }
+    //     m_debouncer = 10;
+    //     }
+    //   }
+    // }else{
+    //   //do nothing
+    // }
   }
 
   // Called once the command ends or is interrupted.

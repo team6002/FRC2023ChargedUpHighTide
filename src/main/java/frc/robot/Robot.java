@@ -43,9 +43,10 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
     m_robotContainer.SubsystemsInit();
     SmartDashboard.putNumber("AUTOKEY", 0);
-    m_Chooser.setDefaultOption("ChargeStation", new PrintCommand("1"));
-    // m_robotContainer.getBalanceStation());
+    m_Chooser.setDefaultOption("ChargeStation", m_robotContainer.getBalanceStation());
     m_Chooser.addOption("CubeRunRed", m_robotContainer.getLinkRunRed());
+    m_Chooser.addOption("2ElementBalanceRed", m_robotContainer.get2ElementBalanceStationRed());
+    m_Chooser.addOption("2ElementBalanceBlue", m_robotContainer.get2ElementBalanceStationBlue());
     // m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
 

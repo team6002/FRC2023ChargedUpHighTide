@@ -62,12 +62,12 @@ public class CMD_DriveAlignOdometry extends CommandBase {
   public void initialize() {
     double CurrentGrid = m_limelight.readGrid();
     double WantedGrid = m_variables.getGrid();
-    double GridAdjustment = (-(CurrentGrid - WantedGrid)*1.8);
-    Transform2d GridTransformation = new Transform2d(new Translation2d(0, GridAdjustment),new Rotation2d(0));
+    // double GridAdjustment = (-(CurrentGrid - WantedGrid)*1.8);
+    // Transform2d GridTransformation = new Transform2d(new Translation2d(0, GridAdjustment),new Rotation2d(0));
 
 
     if (m_variables.getHasItem() == true){
-      goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition()).plus(GridTransformation);
+      goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition());
     }else{
       goalPose = Constants.AutoAlignConstants.goalPose.get(m_variables.getAlignPosition());
     }
@@ -81,17 +81,17 @@ public class CMD_DriveAlignOdometry extends CommandBase {
     /* Set the goals as an offset of the robot's current odometry */
     xController.setGoal(goalPose.getX());
     yController.setGoal(goalPose.getY());
-    turnController.setSetpoint(goalPose.getRotation().getDegrees());
+    // turnController.setSetpoint(goalPose.getRotation().getDegrees());
 
     xController.setTolerance(AutoAlignConstants.kXTolerance);
     yController.setTolerance(AutoAlignConstants.kYTolerance);
-    turnController.setTolerance(AutoAlignConstants.kTurnTolerance);
+    // turnController.setTolerance(AutoAlignConstants.kTurnTolerance);
 
     xController.reset(robotOdom.getX());
     yController.reset(robotOdom.getY());
-    turnController.reset();
+    // turnController.reset();
 
-    turnController.enableContinuousInput(-180, 180);
+    // turnController.enableContinuousInput(-180, 180);
   }
 
   @Override
@@ -119,8 +119,8 @@ public class CMD_DriveAlignOdometry extends CommandBase {
       ySpeed = 0.0;
     }
 
-    // turnSpeed = 0;
-    turnSpeed = MathUtil.clamp(turnController.calculate(m_drivetrain.getAngle()), -0.5, 0.5);
+    turnSpeed = 0;  
+    // turnSpeed = MathUtil.clamp(turnController.calculate(m_drivetrain.getAngle()), -0.5, 0.5);
 
     SmartDashboard.putNumber("AutoAlignXSpeed: ", xSpeed);
     SmartDashboard.putNumber("AutoAlignYSpeed: ", ySpeed);

@@ -16,7 +16,7 @@ public class CMD_Drive extends CommandBase {
   // private final SlewRateLimiter yspeedLimiter = new SlewRateLimiter(0.5);
   // private final SlewRateLimiter rotLimiter = new SlewRateLimiter(0.2);
   public boolean fieldMode = false;
-  double deadzone = 0.15;	//variable for amount of deadzone
+  double deadzone = 0.2;	//variable for amount of deadzone
   double y = 0;           //variable for forward/backward movement
   double x = 0;           //variable for side to side movement
   double turn = 0;        //variable for turning movement
