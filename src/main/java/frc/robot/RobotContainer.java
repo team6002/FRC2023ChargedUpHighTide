@@ -61,7 +61,7 @@ public class RobotContainer {
 
     // Configure default commands
     //changes blinking codes hopefully >I<
-    // m_blinkin.setDefaultCommand(new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables));
+    m_blinkin.setDefaultCommand(new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables));
     //this drives
     m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController));
   }

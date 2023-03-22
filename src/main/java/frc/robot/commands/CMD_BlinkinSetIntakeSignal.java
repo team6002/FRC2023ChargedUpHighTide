@@ -26,7 +26,7 @@ public class CMD_BlinkinSetIntakeSignal extends CommandBase {
   public void initialize() {
     state = m_variables.getIntakeState();
     
-    if (m_variables.getHasItem() == false){
+    if (m_variables.getHasItem() == true){
       m_blinkin.set(Constants.BlinkinConstants.kBlinkinHasItem);
     }else {
       switch(m_variables.getPickMode()) {  
@@ -51,7 +51,29 @@ public class CMD_BlinkinSetIntakeSignal extends CommandBase {
   }
 
   @Override
-  public void execute() {}
+  public void execute() {
+    if (m_variables.getHasItem() == true){
+      m_blinkin.set(Constants.BlinkinConstants.kBlinkinHasItem);
+    }else {
+      switch(m_variables.getPickMode()) {  
+        /* GROUND */
+        case GlobalConstants.kPickBackGroundMode:
+          m_blinkin.set((state == GlobalConstants.kConeMode) ? Constants.BlinkinConstants.kBlinkinConeGround : Constants.BlinkinConstants.kBlinkinCubeGround);
+          break;
+        /* DOUBLE SUBSTATION */
+        case GlobalConstants.kPickForwardsShelfMode:
+          m_blinkin.set((state == GlobalConstants.kConeMode) ? Constants.BlinkinConstants.kBlinkinConeShelf : Constants.BlinkinConstants.kBlinkinCubeShelf);
+          break;
+        case GlobalConstants.kPickConeDownMode:
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinConeDownGround);
+        break;
+        /* WHAT IZ YOU DOING */
+        default:    
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinUnknownIntakeState);
+          break;
+      }
+    }
+  }
 
   @Override
   public void end(boolean interrupted) {}

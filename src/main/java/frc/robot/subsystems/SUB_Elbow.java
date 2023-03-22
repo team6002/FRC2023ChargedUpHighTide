@@ -41,9 +41,10 @@
         m_elbowAbsoluteEncoder.setPositionConversionFactor(360);
         m_elbowAbsoluteEncoder.setVelocityConversionFactor(6);
         m_elbowAbsoluteEncoder.setInverted(true);
-        
-        m_elbowEncoder.setPositionConversionFactor(4.99);
-        m_elbowEncoder.setVelocityConversionFactor(4.99/60);
+        //5.4 is the originial position conversion factor
+        //NOTE figure out why position conversion factor keeps changing
+        m_elbowEncoder.setPositionConversionFactor(5.4);
+        m_elbowEncoder.setVelocityConversionFactor(5.4/60);
         
 
         m_elbowMotorPIDController.setP(ElbowConstants.kElbowP,1);
