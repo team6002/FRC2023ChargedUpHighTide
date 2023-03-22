@@ -85,7 +85,7 @@ public class CMD_DriveAlignOdometry extends CommandBase {
 
     xController.setTolerance(AutoAlignConstants.kXTolerance);
     yController.setTolerance(AutoAlignConstants.kYTolerance);
-    // turnController.setTolerance(AutoAlignConstants.kTurnTolerance);
+    turnController.setTolerance(AutoAlignConstants.kTurnTolerance);
 
     xController.reset(robotOdom.getX());
     yController.reset(robotOdom.getY());
@@ -127,7 +127,7 @@ public class CMD_DriveAlignOdometry extends CommandBase {
     SmartDashboard.putNumber("AutoAlignTurnSpeed: ", turnSpeed);
     SmartDashboard.putNumber("AutoAlignTurnGoal", turnController.getSetpoint());
 
-    if (xController.atGoal() && yController.atGoal() && turnController.atSetpoint()) {
+    if (xController.atGoal() && yController.atGoal()) {
       System.out.println("At Goal " + Timer.getFPGATimestamp());
       end = true;
       return;

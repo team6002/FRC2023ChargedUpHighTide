@@ -1,4 +1,5 @@
 // lines up straight to tag
+//NOTES CHANGE the mid align to be further out then move in
 //NOTE run this before running other auto aligns to set up odometry
 package frc.robot.commands;
 
@@ -58,16 +59,16 @@ public class CMD_DriveAlignTagPidOdom extends CommandBase {
 
   @Override
   public void initialize() {
-    if (m_variables.getHasItem() == true){
-      goalPose = Constants.AutoAlignConstants.goalPose.get(AutoAlignConstants.AlignPosition.MIDDLESHELF);
-    }else{
+    // if (m_variables.getHasItem() == true){
       goalPose = Constants.AutoAlignConstants.goalPose.get(AutoAlignConstants.AlignPosition.MIDDLESCORE);
-    }
+    // }else{
+      // goalPose = Constants.AutoAlignConstants.goalPose.get(AutoAlignConstants.AlignPosition.MIDDLESHELF);
+    // }
     robotOdom = m_drivetrain.getPose();
 
     end = false;
 
-    if (!m_limeLight.hasTarget() || (m_limeLight.getTargetX() < -1.7)) {
+    if (!m_limeLight.hasTarget() || (m_limeLight.getTargetX() < -2)) {
       System.out.println("no limelight targets found, bailing");
       // System.out.println("TARGET MISSING SWITCHING TO NOSE");
       end = true;

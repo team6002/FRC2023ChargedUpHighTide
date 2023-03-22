@@ -47,13 +47,13 @@ public class CMD_Drive extends CommandBase {
 
     // final var xSpeed = xspeedLimiter.calculate(MathUtil.applyDeadband(-controller.getLeftY(), deadzone));
     // final var xSpeed = MathUtil.applyDeadband(-controller.getLeftY(), deadzone);  
-    final var xSpeed = modifyAxis(MathUtil.applyDeadband(-controller.getLeftY(),deadzone));    
+    final var xSpeed = modifyAxis(MathUtil.applyDeadband(controller.getLeftY(),deadzone));    
     // Get the y speed or sideways/strafe speed. We are inverting this because
     // we want a positive value when we pull to the left. Xbox controllers
     // return positive values when you pull to the right by default.
     // final var ySpeed = yspeedLimiter.calculate(MathUtil.applyDeadband(-controller.getLeftX(), deadzone));
     // final var ySpeed = MathUtil.applyDeadband(-controller.getLeftX(), deadzone);
-    final var ySpeed = modifyAxis(MathUtil.applyDeadband(-controller.getLeftX(),deadzone));
+    final var ySpeed = modifyAxis(MathUtil.applyDeadband(controller.getLeftX(),deadzone));
  
     // Get the rate of angular rotation. We are inverting this because we want a
     // positive value when we pull to the left (remember, CCW is positive in
