@@ -136,6 +136,7 @@ public class GlobalVariables extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("IntakeCommandKey", m_intakeCommandKey);
+    SmartDashboard.putBoolean("Element?", m_hasItem);
     SmartDashboard.putBoolean("IntakeMode", m_intakeState);
     SmartDashboard.putNumber("DropLevel", m_dropLevel);
     SmartDashboard.putNumber("StowLocation", m_stowLocation);

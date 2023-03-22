@@ -61,7 +61,7 @@ public class AUTO_2BalanceRed extends SequentialCommandGroup {
         new ParallelDeadlineGroup(
           new SequentialCommandGroup(
             new CMD_CheckOnCharge(p_drivetrain).withTimeout(3),
-            new WaitCommand(1)
+            new WaitCommand(.75)
           ),
           new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
           p_trajectories.driveTrajectory(p_trajectories.LinkBalanceTrajectoryRed)

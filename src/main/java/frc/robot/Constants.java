@@ -163,6 +163,7 @@ public final class Constants {
     //intake powers
     public static final double kIntakeForwardPower = .6;// for cones
     public static final double kIntakeBackwardPower = -.6;// for cubes
+    public static final double kIntakeConeDownPower = -.4;
     public static final double kIntakeHoldPower = .07;
     public static final double kIntakeDropCone = -.6;
     public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
@@ -184,11 +185,11 @@ public final class Constants {
     public static final double kElevatorOffset = -.487;
 
     public static final double kElevatorMax = 48;
-    public static final double kElevatorShelfCone = 51;
-    public static final double kElevatorShelfCube = 49;
+    public static final double kElevatorShelfCone = 46;
+    public static final double kElevatorShelfCube = 46;
     public static final double kElevatorFirstConeLevel = 12;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 35;  
-    public static final double kElevatorThirdConeLevel = 55;
+    public static final double kElevatorThirdConeLevel = 54;
     public static final double kElevatorFirstCubeLevel = 0;// for placeing forwards
     public static final double kElevatorSecondCubeLevel = 10;  
     public static final double kElevatorThirdCubeLevel = 28;
@@ -223,19 +224,19 @@ public final class Constants {
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
-    public static final double kElbowLift = 153;// use to get elbow off elevator, it don't like 200 for some reason
-    public static final double kElbowLifted = 153;// when the elbow is not resting on elevator
-    public static final double kElbowStow = 153;
+    public static final double kElbowLift = 149;// use to get elbow off elevator, it don't like 200 for some reason
+    public static final double kElbowLifted = 149;// when the elbow is not resting on elevator
+    public static final double kElbowStow = 149;
     public static final double kElbowUp = 130;// about 90 degrees up
-    public static final double kElbowForwards = 153;// stright forwards
-    public static final double kElbowShelf = 165;// stright forwards
-    public static final double kElbowPrepareDrop = 155;// Not quite all the way forwards, allows cones to clear the pole
-    public static final double kElbowDrop = 165;// Not quite all the way forwards, allows cones to clear the pole
+    public static final double kElbowForwards = 149;// stright forwards
+    public static final double kElbowShelf = 149;// stright forwards
+    public static final double kElbowPrepareDrop = 149;// Not quite all the way forwards, allows cones to clear the pole
+    public static final double kElbowDrop = 149;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 40;// straight back
-    public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
-    public static final double kElbowGroundConeUpright = 52;// when the cone stands up straight
+    // public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
+    public static final double kElbowGroundConeUpright = 32;// when the cone stands up straight
     // public static final double kElbowGroundConeDown = 21;// when the cone are knocked over
-    public static final double kElbowGroundCube = 52;// when picking up cube
+    public static final double kElbowGroundCube = 32;// when picking up cube
     //depricated
     // public static final double kElbowShootCube = 210;//for shooting cubes
     // public static final double kElbowShelfBack = 95;
@@ -256,10 +257,10 @@ public final class Constants {
 
   public static final class AutoAlignConstants{
     /* X and Y drive constraints. Output ranges [-1, 1] */
-    public static final double kXTolerance = 0.01;
-    public static final double kYTolerance = 0.01;
+    public static final double kXTolerance = 0.05;
+    public static final double kYTolerance = 0.05;
 
-    public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(1, 1);
+    public static final TrapezoidProfile.Constraints driveConstraints = new TrapezoidProfile.Constraints(1.25, 1.25);
     public static final double driveKp = 1.5;
     public static final double driveKi = 0.;
     public static final double driveKd = 0.;
@@ -272,7 +273,7 @@ public final class Constants {
     public static final double turnKd = 0.;
 
     /* Absolute joystick threshold for driver abort */
-    public static final double kAbortThreshold = 0.3;
+    public static final double kAbortThreshold = 0.2;
 
     public static enum AlignPosition {
       LEFTSCORE, //april tagids:3 red, 8 blue 
@@ -285,9 +286,9 @@ public final class Constants {
     };
 
     public static final EnumMap<AlignPosition, Pose2d> goalPose = new EnumMap<>(Map.of(
-      AlignPosition.LEFTSCORE, new Pose2d(-0.8, 0.6, new Rotation2d()),
-      AlignPosition.MIDDLESCORE, new Pose2d(-0.8, 0.0, new Rotation2d()),
-      AlignPosition.RIGHTSCORE, new Pose2d(-0.8, -0.6, new Rotation2d()),
+      AlignPosition.LEFTSCORE, new Pose2d(-0.85, 0.5, new Rotation2d()),
+      AlignPosition.MIDDLESCORE, new Pose2d(-0.85, 0.0, new Rotation2d()),
+      AlignPosition.RIGHTSCORE, new Pose2d(-0.85, -0.5, new Rotation2d()),
       AlignPosition.LEFTSHELF, new Pose2d(-1.3, .3, new Rotation2d()),
       AlignPosition.MIDDLESHELF, new Pose2d(-1.3, 0, new Rotation2d()),
       AlignPosition.RIGHTSHELF, new Pose2d(-1.3, -.3, new Rotation2d())

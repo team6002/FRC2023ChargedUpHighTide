@@ -62,7 +62,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
               new CMD_CheckOnCharge(p_drivetrain).withTimeout(3)
-              ,new WaitCommand(1.73)//1.03 was tournament
+              ,new WaitCommand(1.73)//1.03 was St Joe // 1.73 is td
             ),
             new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
         )

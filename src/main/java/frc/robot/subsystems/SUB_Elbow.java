@@ -42,8 +42,8 @@
         m_elbowAbsoluteEncoder.setVelocityConversionFactor(6);
         m_elbowAbsoluteEncoder.setInverted(true);
         
-        m_elbowEncoder.setPositionConversionFactor(5.07);
-        m_elbowEncoder.setVelocityConversionFactor(5.07/60);
+        m_elbowEncoder.setPositionConversionFactor(4.99);
+        m_elbowEncoder.setVelocityConversionFactor(4.99/60);
         
 
         m_elbowMotorPIDController.setP(ElbowConstants.kElbowP,1);

@@ -12,6 +12,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -81,17 +82,20 @@ public class RobotContainer {
     ));
     //AUTO ALIGN BABY
     m_driverController.a().onTrue(new SequentialCommandGroup(
-      new ConditionalCommand(
+      // new ConditionalCommand(
         new SequentialCommandGroup(
-          new CMD_SelectAlignPosition(m_variables),
-          new CMD_DriveAlignPicking(m_drivetrain, m_limelight, m_variables, m_driverController), 
-          new CMD_DriveForwardsSlowly(m_drivetrain)
-        ),
-        new SequentialCommandGroup(
-          new CMD_SelectAlignPosition(m_variables),
+          // new CMD_SelectAlignPosition(m_variables),
           new CMD_DriveAlignScoring(m_drivetrain, m_limelight, m_variables, m_driverController)
-        ),
-        HasItem) 
+        )
+        // new SequentialCommandGroup(
+        //   new CMD_SelectAlignPosition(m_variables),
+        //   new CMD_DriveAlignPicking(m_drivetrain, m_limelight, m_variables, m_driverController), 
+        //   new ParallelDeadlineGroup(
+        //     new CMD_IntakeCheck(m_intake, m_driverController),
+        //     new CMD_DriveForwardsSlowly(m_drivetrain)
+        //   )
+        // ),
+        // HasItem) 
     ));
     // toggles which shelf it will align to (left or right)
     m_driverController.y().onTrue(new CMD_TogglePickPosition(m_variables));

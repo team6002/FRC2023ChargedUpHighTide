@@ -34,13 +34,13 @@ public class AUTO_2BalanceBlue extends SequentialCommandGroup {
           new WaitCommand(.3),
           new CMD_IntakeStop(p_intake).withTimeout(3),
           new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel).withTimeout(3),
-          new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode).withTimeout(3),
+          new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
           new ParallelDeadlineGroup(
             new SequentialCommandGroup(
               new WaitCommand(.5),
               p_trajectories.driveTrajectory(p_trajectories.LinkRunTrajectoryBlue1)   
             ),
-            new CMD_GroundConeUprightIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
+            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
             new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
           ),
           new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryBlue1).withTimeout(3),
