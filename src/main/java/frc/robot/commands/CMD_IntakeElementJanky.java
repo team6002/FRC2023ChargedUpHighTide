@@ -64,7 +64,10 @@ public class CMD_IntakeElementJanky extends CommandBase {
 
     if (m_variables.getIntakeCommandKey() != -1){
       if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
-        m_intake.setPower(IntakeConstants.kIntakeForwardPower);
+        if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown){
+          m_intake.setPower(IntakeConstants.kIntakeConeDownPower);
+        }else
+          m_intake.setPower(IntakeConstants.kIntakeForwardPower);
       }else if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
         m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
       }
