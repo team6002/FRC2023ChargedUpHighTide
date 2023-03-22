@@ -97,3 +97,23 @@ wpi.java.configureTestTasks(test)
 tasks.withType(JavaCompile) {
     options.compilerArgs.add '-XDstringConcat=inline'
 }
+
+tasks.register("writeBuildInfoFile") {
+    def buildDate = new Date().format('hh:mm a MM-dd-yyyy')
+
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe', '--abbrev=8', '--dirty', '--always', '--exclude=*'
+        standardOutput = stdout
+    }
+    def commitHash = stdout.toString().trim()
+
+    def buildInfoText = commitHash + "\n" + buildDate
+    println buildInfoText
+    new File(
+      projectDir.toString() + "/src/main/deploy",
+      "buildInfo.txt"
+   ).text = buildInfoText
+}
+
+deploy.targets.roborio.artifacts.frcStaticFileDeploy.dependsOn(writeBuildInfoFile)

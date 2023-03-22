@@ -160,3 +160,6 @@ bin/
 
 # Simulation GUI and other tools window save file
 *-window.json
+
+### Ignore build info text file
+src/main/deploy/buildInfo.txt

@@ -41,7 +41,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    m_robotContainer.loadSoftwareBuildInfo();
     m_robotContainer.SubsystemsInit();
+
     SmartDashboard.putNumber("AUTOKEY", 0);
     m_Chooser.setDefaultOption("ChargeStation", m_robotContainer.getBalanceStation());
     m_Chooser.addOption("CubeRunRed", m_robotContainer.getLinkRunRed());

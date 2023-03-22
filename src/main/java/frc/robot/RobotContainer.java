@@ -1,10 +1,15 @@
 //NOTE THE RADIO IS LOOSING  CONNECTION
 package frc.robot;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.function.BooleanSupplier;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
 import frc.robot.Constants.AutoAlignConstants.AlignPosition;
 import frc.robot.auto.*;
@@ -44,6 +49,9 @@ public class RobotContainer {
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
   private final BooleanSupplier HasItem = () -> m_variables.getHasItem();
+
+  private final String buildInfoFilename = "buildInfo.txt";
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -314,4 +322,18 @@ public class RobotContainer {
     this::getRobotStage
   );
 
+  public void loadSoftwareBuildInfo() {
+    File deployDir = Filesystem.getDeployDirectory();
+    File buildInfoFile = new File(deployDir, buildInfoFilename);
+
+    try {
+      Scanner sc = new Scanner(buildInfoFile);
+      String latestCommit = sc.nextLine();
+      String buildDate = sc.nextLine();
+
+      SmartDashboard.putString("BuildInfo", latestCommit + " [" + buildDate + "]");
+    } catch (FileNotFoundException ex) {
+      System.out.println("ERROR: CANNOT READ BUILD INFO");
+    }
+  }
 }
