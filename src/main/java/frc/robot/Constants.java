@@ -234,9 +234,9 @@ public final class Constants {
     public static final double kElbowDrop = 153;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 23;// straight back
     // public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
-    public static final double kElbowGroundConeUpright = 23;// when the cone stands up straight
+    public static final double kElbowGroundConeUpright = 9;// when the cone stands up straight
     // public static final double kElbowGroundConeDown = 21;// when the cone are knocked over
-    public static final double kElbowGroundCube = 23;// when picking up cube
+    public static final double kElbowGroundCube = 9;// when picking up cube
     //depricated
     // public static final double kElbowShootCube = 210;//for shooting cubes
     // public static final double kElbowShelfBack = 95;

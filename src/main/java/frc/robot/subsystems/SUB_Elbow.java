@@ -31,21 +31,22 @@
     private TrapezoidProfile.State m_setpoint;
     private static double deltaTime = 0.02;
 
+    private final double mRelPosConversion = 6;
+
     public SUB_Elbow() {
         m_elbowMotor = new CANSparkMax(ElbowConstants.kElbowMotorCanID, MotorType.kBrushless);
         m_elbowMotorPIDController = m_elbowMotor.getPIDController();
         m_elbowMotor.restoreFactoryDefaults();
         m_elbowAbsoluteEncoder = m_elbowMotor.getAbsoluteEncoder(Type.kDutyCycle);
         m_elbowEncoder = m_elbowMotor.getEncoder();
-        
+
         m_elbowAbsoluteEncoder.setPositionConversionFactor(360);
         m_elbowAbsoluteEncoder.setVelocityConversionFactor(6);
         m_elbowAbsoluteEncoder.setInverted(true);
         //5.4 is the originial position conversion factor
         //NOTE figure out why position conversion factor keeps changing
-        m_elbowEncoder.setPositionConversionFactor(5.4);
-        m_elbowEncoder.setVelocityConversionFactor(5.4/60);
-        
+        m_elbowEncoder.setPositionConversionFactor(mRelPosConversion);
+        m_elbowEncoder.setVelocityConversionFactor(mRelPosConversion/60);
 
         m_elbowMotorPIDController.setP(ElbowConstants.kElbowP,1);
         m_elbowMotorPIDController.setI(ElbowConstants.kElbowI,1);
@@ -54,7 +55,7 @@
         m_elbowMotorPIDController.setFeedbackDevice(m_elbowEncoder);
 
         m_elbowMotor.setIdleMode(IdleMode.kCoast);
-        m_elbowMotor.setSmartCurrentLimit(50);
+        m_elbowMotor.setSmartCurrentLimit(20);
 
         m_elbowMotorPIDController.setPositionPIDWrappingEnabled(false);
         m_elbowMotorPIDController.setOutputRange(ElbowConstants.kElbowMinOutput, ElbowConstants.kElbowMaxOutput, 1);
@@ -75,14 +76,14 @@
         m_goal = m_setpoint;
 
         m_elbowEncoder.setPosition(getAbsolutePosition());
-        
+
         m_elbowMotor.burnFlash();
     }
 
     public void elbowInit(){
         m_elbowEncoder.setPosition(getAbsolutePosition());
         m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
-        m_goal = m_setpoint;  
+        m_goal = m_setpoint;
     }
     public void setReference(double p_reference){
         m_wantedPosition = p_reference;
@@ -118,7 +119,7 @@
     public void periodic() {
         telemetry();
         var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
-        
+
         m_setpoint = profile.calculate(deltaTime);
 
         m_elbowMotorPIDController.setReference(
@@ -141,6 +142,7 @@
         SmartDashboard.putNumber("elbow setpoint position", m_setpoint.position);
         SmartDashboard.putNumber("elbow position", m_elbowEncoder.getPosition());
         SmartDashboard.putNumber("absoluteElbow postion", m_elbowAbsoluteEncoder.getPosition());
+        SmartDashboard.putNumber("elbow current", m_elbowMotor.getOutputCurrent());
     //   m_P = SmartDashboard.getNumber("P", m_P);
     //   m_I = SmartDashboard.getNumber("I", m_I);
     //   m_D = SmartDashboard.getNumber("D", m_D);
