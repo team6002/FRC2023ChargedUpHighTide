@@ -331,6 +331,8 @@ public class RobotContainer {
       String latestCommit = sc.nextLine();
       String buildDate = sc.nextLine();
 
+      sc.close();
+
       SmartDashboard.putString("BuildInfo", latestCommit + " [" + buildDate + "]");
     } catch (FileNotFoundException ex) {
       System.out.println("ERROR: CANNOT READ BUILD INFO");
