@@ -15,7 +15,6 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 
-import frc.robot.DataLogger;
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule {
@@ -30,8 +29,6 @@ public class SwerveModule {
 
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
-
-  private double m_drivingId;
 
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
@@ -111,8 +108,6 @@ public class SwerveModule {
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
     m_drivingEncoder.setPosition(0);
-
-    m_drivingId = drivingCANId;
   }
 
   /**
@@ -158,8 +153,6 @@ public class SwerveModule {
     // Command driving and turning SPARKS MAX towards their respective setpoints.
     m_drivingPIDController.setReference(optimizedDesiredState.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
     m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
-
-    DataLogger.log("DriveMotorSetpoint " + m_drivingId, m_chassisAngularOffset);
 
     m_desiredState = desiredState;
   }

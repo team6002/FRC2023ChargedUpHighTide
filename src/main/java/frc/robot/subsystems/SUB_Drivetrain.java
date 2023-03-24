@@ -17,7 +17,6 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.DataLogger;
 import frc.robot.Constants.DriveConstants;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -86,11 +85,6 @@ public class SUB_Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("X", m_odometry.getPoseMeters().getX());
     SmartDashboard.putNumber("Y", m_odometry.getPoseMeters().getY());
     SmartDashboard.putNumber("Yaw", m_odometry.getPoseMeters().getRotation().getDegrees());
-
-    DataLogger.log("frontLeftDriveMotor", m_frontLeft.getVelocity());
-    DataLogger.log("frontRightDriveMotor", m_frontRight.getVelocity());
-    DataLogger.log("m_rearLeftDriveMotor", m_rearLeft.getVelocity());
-    DataLogger.log("m_rearRightDriveMotor", m_rearRight.getVelocity());
   }
 
   /**
