@@ -167,6 +167,7 @@ public final class Constants {
     public static final double kIntakeHoldPower = .07;
     public static final double kIntakeDropCone = -.6;
     public static final double kIntakeDropCube = 0.3;// the cubes are lighter than cones
+    public static final double kIntakeDropGroundCube = 0.1;// the cubes are lighter than cones
     public static final double kIntakeShoot = .4;
     //intake currents
     public static final int kIntakeCurrent = 50;

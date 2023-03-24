@@ -167,8 +167,8 @@ public class AUTO_Trajectories {
         
         LinkPlaceTrajectoryBlue1 = TrajectoryGenerator.generateTrajectory(
         new Pose2d(Units.inchesToMeters(-200), Units.inchesToMeters(18), new Rotation2d(0)),
-        List.of(new Translation2d(Units.inchesToMeters(-30), Units.inchesToMeters(30))),
-        new Pose2d(Units.inchesToMeters(-10), Units.inchesToMeters(50), new Rotation2d(0)),
+        List.of(),
+        new Pose2d(Units.inchesToMeters(-10), Units.inchesToMeters(25), new Rotation2d(0)),
         config);
         // LinkPlaceTrajectoryBlue1 = TrajectoryGenerator.generateTrajectory(
         //     new Pose2d(Units.inchesToMeters(-200), Units.inchesToMeters(18), new Rotation2d(0)),
@@ -177,7 +177,7 @@ public class AUTO_Trajectories {
         //     config);
 
         LinkBalanceTrajectoryBlue = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.inchesToMeters(-10), Units.inchesToMeters(33), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(-10), Units.inchesToMeters(25), new Rotation2d(0)),
             List.of(new Translation2d(Units.inchesToMeters(-30), Units.inchesToMeters(70))),
             new Pose2d(Units.inchesToMeters(-140), Units.inchesToMeters(80), new Rotation2d(Units.degreesToRadians(0))),
             LinkChargeStationConfigReversed);
@@ -188,6 +188,7 @@ public class AUTO_Trajectories {
             List.of(new Translation2d(Units.inchesToMeters(-110), Units.inchesToMeters(20))),
             new Pose2d(Units.inchesToMeters(-207), Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(45))),
             configReversed);
+
 
         LinkPlaceTrajectoryBlue2 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(Units.inchesToMeters(-207), Units.inchesToMeters(65), new Rotation2d(Units.degreesToRadians(45))),
