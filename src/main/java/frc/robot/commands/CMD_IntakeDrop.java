@@ -43,7 +43,9 @@ public class CMD_IntakeDrop extends CommandBase {
   public void execute() {}
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_variables.setHasItem(false);
+  }
 
   @Override
   public boolean isFinished() {
