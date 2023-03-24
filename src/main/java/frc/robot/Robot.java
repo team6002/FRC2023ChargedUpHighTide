@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,6 +23,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private final SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   private RobotContainer m_robotContainer;
+  private boolean m_loggingEnabled = false;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -30,7 +32,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    // DataLogger.start();
+    SmartDashboard.putBoolean("Logging Enabled", false);
+
     /*
      * Forward limelight ports to allow access with USB tether.
      */
@@ -79,7 +82,14 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    if (DriverStation.isFMSAttached() && !m_loggingEnabled) {
+      DataLogger.start();
+      m_loggingEnabled = true;
+      SmartDashboard.putBoolean("Logging Enabled", m_loggingEnabled);
+      System.out.println("ENABLED");
+    }
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
