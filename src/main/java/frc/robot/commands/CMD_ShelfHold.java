@@ -28,8 +28,9 @@ public class CMD_ShelfHold extends SequentialCommandGroup {
       new CMD_IntakeHold(p_intake, p_variables),
       new ParallelCommandGroup(
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)    
-      )
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp)
+      ),
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)    
       
     );
   }

@@ -43,8 +43,6 @@
         m_elbowAbsoluteEncoder.setPositionConversionFactor(360);
         m_elbowAbsoluteEncoder.setVelocityConversionFactor(6);
         m_elbowAbsoluteEncoder.setInverted(true);
-        //5.4 is the originial position conversion factor
-        //NOTE figure out why position conversion factor keeps changing
         m_elbowEncoder.setPositionConversionFactor(mRelPosConversion);
         m_elbowEncoder.setVelocityConversionFactor(mRelPosConversion/60);
 

@@ -112,7 +112,9 @@ public class RobotContainer {
 
     //resets gyro to absoulute encoders
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
-    //Just in case the operator is unable to perform
+
+    m_driverController.pov(90).onTrue(new CMD_SyncElbowPosition(m_elbow));
+    //Just in case the operator is unable toc perform
     m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
 
     //autodrive right, bottom, numpad 1
@@ -217,6 +219,14 @@ public class RobotContainer {
 
   public Command getBalanceStation() {
     return new AUTO_BalanceStationTest(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
+  }
+
+  public Command getNothing() {
+    return new AUTO_NOTHING();
+  }
+  
+  public Command getWirebridge() {
+    return new AUTO_WireBridge(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
   }
   
   public void zeroHeading(){

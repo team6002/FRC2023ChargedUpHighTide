@@ -121,6 +121,7 @@ public class AUTO_Trajectories {
             new Pose2d(Units.inchesToMeters(-70), 0, new Rotation2d(Units.degreesToRadians(180))),
             ChargeStationConfigReversed); //-68 was twisted devil -86 was strykforce
         
+        
         // Full Link Run Red side trajectories (goes Negative)
         LinkRunTrajectoryRed1 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(Units.inchesToMeters(0), 0, new Rotation2d(0)),
