@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -30,6 +31,7 @@ public class CMD_Stow extends SequentialCommandGroup {
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop)    
       ),
+      new WaitCommand(0.1),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)
     );
   }

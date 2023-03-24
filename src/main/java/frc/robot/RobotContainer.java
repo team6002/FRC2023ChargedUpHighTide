@@ -218,7 +218,7 @@ public class RobotContainer {
   }
 
   public Command getBalanceStation() {
-    return new AUTO_BalanceStationTest(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
+    return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
   }
 
   public Command getNothing() {
