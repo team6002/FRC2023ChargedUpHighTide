@@ -49,6 +49,7 @@ public class RobotContainer {
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
   private final BooleanSupplier HasItem = () -> m_variables.getHasItem();
+  private final BooleanSupplier IntakeState = () -> m_variables.getIntakeState();
 
   private final String buildInfoFilename = "buildInfo.txt";
 
@@ -117,10 +118,13 @@ public class RobotContainer {
     //Just in case the operator is unable toc perform
     m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
 
+
+    
+    m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
+
     //autodrive right, bottom, numpad 1
     m_operatorController.a().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kCubeMode),
       new CMD_setAlignPosition(m_variables, AlignPosition.RIGHTSCORE),
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
@@ -128,7 +132,6 @@ public class RobotContainer {
     //autodrive middle, bottom, numpad 2
     m_operatorController.b().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kCubeMode),
       new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLESCORE),
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
@@ -136,7 +139,6 @@ public class RobotContainer {
     //autodrive left, bottom, numpad 3
     m_operatorController.x().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kCubeMode),
       new CMD_setAlignPosition(m_variables, AlignPosition.LEFTSCORE),
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
@@ -302,7 +304,7 @@ public class RobotContainer {
     Map.ofEntries(
       Map.entry(GlobalConstants.kElevator1stLevel, new CMD_Place1stLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
       Map.entry(GlobalConstants.kElevator2ndLevel, new CMD_Place2ndLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kElevator3rdLevel, new CMD_Place3rdLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables))
+      Map.entry(GlobalConstants.kElevator3rdLevel, new CMD_Place3rdConeLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables))
     ), 
     this::getDropLevel
   );

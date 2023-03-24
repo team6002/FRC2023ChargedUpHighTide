@@ -29,11 +29,11 @@ public class CMD_IntakeDrop extends CommandBase {
     m_intake.setCurrent(IntakeConstants.kIntakeCurrent);
     if (m_variables.getIntakeCommandKey() != -1){
       if(m_variables.getIntakeState() == GlobalConstants.kConeMode){
-        if (m_variables.getDropLevel() == GlobalConstants.kElevator1stLevel){
-          m_intake.setPower(IntakeConstants.kIntakeDropGroundCube);
-        }else
           m_intake.setPower(IntakeConstants.kIntakeDropCone);
       }else{
+        if (m_variables.getDropLevel() == GlobalConstants.kElevator1stLevel){
+          m_intake.setPower(IntakeConstants.kIntakeDropGroundCube);
+        }
         m_intake.setPower(IntakeConstants.kIntakeShoot);
         // m_intake.setPower(IntakeConstants.kIntakeDropCube);
       }

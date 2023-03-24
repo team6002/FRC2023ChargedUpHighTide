@@ -37,11 +37,11 @@ public class AUTO_WireBridge extends SequentialCommandGroup {
       new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode).withTimeout(3),
       new CMD_selectIntakeCommandKey(p_intake, p_variables),
       new CMD_IntakeHold(p_intake, p_variables),
-      new CMD_Place3rdLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop),
       new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.2),
-      new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode).withTimeout(3),
+      new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
       new ParallelDeadlineGroup(
         new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
         new SequentialCommandGroup(

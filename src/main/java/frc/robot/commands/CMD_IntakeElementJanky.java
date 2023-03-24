@@ -64,14 +64,15 @@ public class CMD_IntakeElementJanky extends CommandBase {
 
     if (m_variables.getIntakeCommandKey() != -1){
       if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
-        if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown){
+        if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown || m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeUpright){
           m_intake.setPower(IntakeConstants.kIntakeConeDownPower);
-        }else
+      }else
           m_intake.setPower(IntakeConstants.kIntakeForwardPower);
-      }else if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
+      }
+      if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
         m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
       }
-    }else{
+      }else{
       //not nothing cancels command
       m_pressed = true;
     }

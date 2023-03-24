@@ -37,17 +37,17 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode).withTimeout(3),
       new CMD_selectIntakeCommandKey(p_intake, p_variables),
       new CMD_IntakeHold(p_intake, p_variables),
-      new CMD_Place3rdLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop),
       new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.2),
-      new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode).withTimeout(3),
+      new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
       new ParallelDeadlineGroup(
         new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
         new SequentialCommandGroup(
           new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
-          new WaitCommand(1),
-          new CMD_GroundConeUprightIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+          new WaitCommand(1.5),
+          new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
           new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
         )
       ),
@@ -55,14 +55,14 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
         new CMD_SpinInPlace(p_drivetrain, 180).withTimeout(3),
         new CMD_IntakeCheck(p_intake, p_controller).withTimeout(3)
       ),
-
+      new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.BackOnChargeStationTrajectory),
       new ParallelCommandGroup(
         new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
         //do a until hit angle and then run the set distance
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
               new CMD_CheckOnCharge(p_drivetrain).withTimeout(3)
-              ,new WaitCommand(1.03)//1.03 was St Joe // 1.73 is td
+              ,new WaitCommand(1.06)//1.03 was St Joe // 1.73 is td
             ),
             new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
         )
