@@ -21,7 +21,8 @@ public class CMD_IntakeElementJanky extends CommandBase {
   boolean m_detected = false;
   boolean m_pressed = false;
   double m_timer = 0;
-  double m_debouncer;
+  boolean m_previousState;
+  boolean m_state;
   CommandXboxController m_driverController;
 
   public CMD_IntakeElementJanky(SUB_Intake p_intake, SUB_Elbow p_elbow, GlobalVariables p_variables, CommandXboxController p_driverController) {
@@ -34,14 +35,36 @@ public class CMD_IntakeElementJanky extends CommandBase {
     // addRequirements(m_intake);
   }
 
+  private void setIntakeMode() {
+    if (m_variables.getIntakeCommandKey() != -1){
+      if (m_state == GlobalConstants.kConeMode){
+        if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown || m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeUpright){
+          /* Cone ground */
+          m_intake.setPower(IntakeConstants.kIntakeConeDownPower);
+        } else {
+          /* Cone shelf */
+          m_intake.setPower(IntakeConstants.kIntakeForwardPower);
+        }
+      } else if (m_state == GlobalConstants.kCubeMode) {
+        /* Cube shelf and ground */
+        m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
+      }
+    } else{
+      //not nothing cancels command
+      m_pressed = true;
+    }
+  }
+
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_timer = 0;
-    m_debouncer = 0;
     m_pressed = false;
     m_detected = false;
+    m_state = m_variables.getIntakeState();
     m_intake.setCurrent(IntakeConstants.kIntakeCurrent);
+
+    setIntakeMode();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -61,41 +84,12 @@ public class CMD_IntakeElementJanky extends CommandBase {
       m_detected = false;
       m_timer = 0;
     }
-
-    if (m_variables.getIntakeCommandKey() != -1){
-      if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
-        if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown || m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeUpright){
-          m_intake.setPower(IntakeConstants.kIntakeConeDownPower);
-      }else
-          m_intake.setPower(IntakeConstants.kIntakeForwardPower);
-      }
-      if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
-        m_intake.setPower(-IntakeConstants.kIntakeForwardPower);
-      }
-      }else{
-      //not nothing cancels command
-      m_pressed = true;
+    m_state = m_variables.getIntakeState();
+    if (m_state != m_previousState){
+        setIntakeMode();
     }
-    
-    // if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
-    //   if (m_driverController.leftBumper().getAsBoolean()){
-    //     m_debouncer -= 1;
-    //     if (m_debouncer <= 0){
-    //       if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeUpright){
-    //         m_elbow.setReference(ElbowConstants.kElbowGroundConeDown);
-    //         m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeDown);
-    //         m_variables.setPickMode(GlobalConstants.kPickConeDownMode);
-    //       }else if (m_variables.getIntakeCommandKey() == GlobalConstants.kGroundBackConeDown){
-    //         m_elbow.setReference(ElbowConstants.kElbowGroundConeUpright);
-    //         m_variables.setIntakeCommandKey(GlobalConstants.kGroundBackConeUpright);
-    //         m_variables.setPickMode(GlobalConstants.kPickBackGroundMode);
-    //     }
-    //     m_debouncer = 10;
-    //     }
-    //   }
-    // }else{
-    //   //do nothing
-    // }
+  
+    m_previousState = m_state;
   }
 
   // Called once the command ends or is interrupted.

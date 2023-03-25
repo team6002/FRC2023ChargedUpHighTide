@@ -16,13 +16,13 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
 
-public class AUTO_FullLinkRunRed extends SequentialCommandGroup {
-  public AUTO_FullLinkRunRed(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
+public class AUTO_FullLinkRunBlue extends SequentialCommandGroup {
+  public AUTO_FullLinkRunBlue(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
    SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables, SUB_Intake p_intake, CommandXboxController p_controller) {
     addCommands(
       // new ParallelRaceGroup(
         new SequentialCommandGroup(
-          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkRunTrajectoryRed1),
+          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkRunTrajectoryBlue1),
           new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode),
           new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel),
           new CMD_setPickUpMode(p_variables, GlobalConstants.kPickBackGroundMode),
@@ -38,14 +38,14 @@ public class AUTO_FullLinkRunRed extends SequentialCommandGroup {
           new ParallelDeadlineGroup(
             new SequentialCommandGroup(
               new WaitCommand(.5),
-              p_trajectories.driveTrajectory(p_trajectories.LinkRunTrajectoryRed1)   
+              p_trajectories.driveTrajectory(p_trajectories.LinkRunTrajectoryBlue1)   
             ),
             new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
             new CMD_IntakeOn(p_intake, p_variables)
           ),
-          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryRed1),
+          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryBlue1),
           new ParallelDeadlineGroup(
-            p_trajectories.driveTrajectory(p_trajectories.LinkPlaceTrajectoryRed1),
+            p_trajectories.driveTrajectory(p_trajectories.LinkPlaceTrajectoryBlue1),
             new SequentialCommandGroup(
               new WaitCommand(.5),
               new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables) 
@@ -58,11 +58,11 @@ public class AUTO_FullLinkRunRed extends SequentialCommandGroup {
         new CMD_IntakeStop(p_intake),
         new CMD_setDropLevel(p_variables, GlobalConstants.kElevator1stLevel),
         new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
-        new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkRunTrajectoryRed2),
+        new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkRunTrajectoryBlue2),
         new ParallelDeadlineGroup(
           new SequentialCommandGroup(
             new WaitCommand(.5),
-            p_trajectories.driveTrajectory(p_trajectories.LinkRunTrajectoryRed2)
+            p_trajectories.driveTrajectory(p_trajectories.LinkRunTrajectoryBlue2)
           ),
           new SequentialCommandGroup(
             new CMD_IntakeOn(p_intake, p_variables),
@@ -71,8 +71,8 @@ public class AUTO_FullLinkRunRed extends SequentialCommandGroup {
           )
         ),
         new ParallelCommandGroup(
-          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryRed2),
-          p_trajectories.driveTrajectory(p_trajectories.LinkPlaceTrajectoryRed2),
+          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryBlue2),
+          p_trajectories.driveTrajectory(p_trajectories.LinkPlaceTrajectoryBlue2),
           new SequentialCommandGroup(
             new WaitCommand(.2),
             new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)

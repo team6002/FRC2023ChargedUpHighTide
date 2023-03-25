@@ -49,6 +49,8 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("CubeRunRed", m_robotContainer.getLinkRunRed());
     m_Chooser.addOption("2ElementBalanceRed", m_robotContainer.get2ElementBalanceStationRed());
     m_Chooser.addOption("2ElementBalanceBlue", m_robotContainer.get2ElementBalanceStationBlue());
+    m_Chooser.addOption("3ElementRed", m_robotContainer.get3ElementRed());
+    m_Chooser.addOption("3ElementBlue", m_robotContainer.get3ElementBlue());
     m_Chooser.addOption("NOTHING!", m_robotContainer.getNothing());
     m_Chooser.addOption("WireBridge", m_robotContainer.getWirebridge());
     // m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
