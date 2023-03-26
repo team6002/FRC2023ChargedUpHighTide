@@ -27,7 +27,7 @@ public class CMD_AdjustBalanceOutside extends CommandBase {
     if (Math.abs(m_drivetrain.getRoll()) < 5){
       m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.04);  
     } else{ 
-    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.08);  
+    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.07);  
     }
   }
 

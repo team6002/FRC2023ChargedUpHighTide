@@ -65,9 +65,12 @@ public class AUTO_FullLinkRunBlue extends SequentialCommandGroup {
             p_trajectories.driveTrajectory(p_trajectories.LinkRunTrajectoryBlue2)
           ),
           new SequentialCommandGroup(
-            new CMD_IntakeOn(p_intake, p_variables),
-            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
-            new CMD_IntakeElement(p_intake, p_variables, p_controller)
+            // new CMD_IntakeOn(p_intake, p_variables),
+            // new SequentialCommandGroup(
+            //   new WaitCommand(2)
+            new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
+              // new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine)    
+            // )
           )
         ),
         new ParallelCommandGroup(

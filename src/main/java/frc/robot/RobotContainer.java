@@ -9,6 +9,7 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
 import frc.robot.Constants.AutoAlignConstants.AlignPosition;
@@ -46,13 +47,14 @@ public class RobotContainer {
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
+  XboxController m_driverControllerHI = new XboxController(OIConstants.kDriverControllerPort);
   CommandXboxController m_operatorController = new CommandXboxController(OIConstants.kOperatorControllerPort);
 
   private final BooleanSupplier HasItem = () -> m_variables.getHasItem();
   private final BooleanSupplier IntakeState = () -> m_variables.getIntakeState();
 
   private final String buildInfoFilename = "buildInfo.txt";
-
+  
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -63,10 +65,10 @@ public class RobotContainer {
     // Configure default commands
     //changes blinking codes hopefully >I<
     m_blinkin.setDefaultCommand(new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables));
+    m_limelight.setDefaultCommand(new CMD_CheckShelfDistance(m_limelight, m_driverControllerHI));
     //this drives
     m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController));
   }
-
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by
@@ -89,13 +91,15 @@ public class RobotContainer {
       new CMD_ToggleIntakeState(m_variables),
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
+    
+    m_driverController.a().onTrue(new CMD_setRumble(m_driverControllerHI, 10));
     //AUTO ALIGN BABY
-    m_driverController.a().onTrue(new SequentialCommandGroup(
-      // new ConditionalCommand(
-        new SequentialCommandGroup(
-          // new CMD_SelectAlignPosition(m_variables),
-          new CMD_DriveAlignScoring(m_drivetrain, m_limelight, m_variables, m_driverController)
-        )
+    // m_driverController.a().onTrue(new SequentialCommandGroup(
+    //   // new ConditionalCommand(
+    //     new SequentialCommandGroup(
+    //       // new CMD_SelectAlignPosition(m_variables),
+    //       new CMD_DriveAlignScoring(m_drivetrain, m_limelight, m_variables, m_driverController)
+    //     )
         // new SequentialCommandGroup(
         //   new CMD_SelectAlignPosition(m_variables),
         //   new CMD_DriveAlignPicking(m_drivetrain, m_limelight, m_variables, m_driverController), 
@@ -105,7 +109,7 @@ public class RobotContainer {
         //   )
         // ),
         // HasItem) 
-    ));
+    // ));
     // toggles which shelf it will align to (left or right)
     m_driverController.y().onTrue(new CMD_TogglePickPosition(m_variables));
     // toggle which pick up mode it will do (Ground or shelf)
@@ -117,7 +121,6 @@ public class RobotContainer {
     m_driverController.pov(90).onTrue(new CMD_SyncElbowPosition(m_elbow));
     //Just in case the operator is unable toc perform
     m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
-
 
     
     m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
@@ -320,7 +323,8 @@ public class RobotContainer {
       )),
       Map.entry(GlobalConstants.kExtendStage,new SequentialCommandGroup(
       getLevelCommand,
-      new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
+      new CMD_SetStage(m_variables, GlobalConstants.kDropStage),
+      new CMD_IntakeExtraHold(m_intake, m_variables)
       )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
         new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop),

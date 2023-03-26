@@ -19,7 +19,7 @@ import frc.robot.subsystems.SUB_Elevator;
 import frc.robot.subsystems.SUB_FiniteStateMachine;
 import frc.robot.subsystems.SUB_Intake;
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// NOTE:  Cogfnsider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AUTO_BalanceStation extends SequentialCommandGroup {
@@ -37,7 +37,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode).withTimeout(3),
       new CMD_selectIntakeCommandKey(p_intake, p_variables),
       new CMD_IntakeHold(p_intake, p_variables),
-      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop),
       new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.2),
@@ -62,7 +62,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
               new CMD_CheckOnCharge(p_drivetrain).withTimeout(3)
-              ,new WaitCommand(1.06)//1.03 was St Joe // 1.73 is td
+              ,new WaitCommand(1.1)//1.03 was St Joe // 1.73 is td
             ),
             new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
         )
@@ -70,7 +70,8 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_DriveStop(p_drivetrain).withTimeout(3),
       new WaitCommand(1),
       new CMD_AdjustBalanceOutside(p_drivetrain).withTimeout(3),
-      new CMD_ResetGyro(p_drivetrain).withTimeout(3)
+      new CMD_ResetGyro(p_drivetrain).withTimeout(3),
+      new CMD_SetStage(p_variables, GlobalConstants.kExtendStage)
 
     );
   }

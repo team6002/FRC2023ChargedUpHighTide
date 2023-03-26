@@ -43,7 +43,7 @@ public class AUTO_FullLinkRunRed extends SequentialCommandGroup {
             new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
             new CMD_IntakeOn(p_intake, p_variables)
           ),
-          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryRed1),
+          // new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryRed1),
           new ParallelDeadlineGroup(
             p_trajectories.driveTrajectory(p_trajectories.LinkPlaceTrajectoryRed1),
             new SequentialCommandGroup(
@@ -58,20 +58,23 @@ public class AUTO_FullLinkRunRed extends SequentialCommandGroup {
         new CMD_IntakeStop(p_intake),
         new CMD_setDropLevel(p_variables, GlobalConstants.kElevator1stLevel),
         new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
-        new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkRunTrajectoryRed2),
+        // n0ew CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkRunTrajectoryRed2),
         new ParallelDeadlineGroup(
           new SequentialCommandGroup(
             new WaitCommand(.5),
             p_trajectories.driveTrajectory(p_trajectories.LinkRunTrajectoryRed2)
           ),
           new SequentialCommandGroup(
-            new CMD_IntakeOn(p_intake, p_variables),
-            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
-            new CMD_IntakeElement(p_intake, p_variables, p_controller)
+            // new CMD_IntakeOn(p_intake, p_variables),
+            // new SequentialCommandGroup(
+            //   new WaitCommand(2)
+            //   // new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine)    
+            // )
+            new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
           )
         ),
         new ParallelCommandGroup(
-          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryRed2),
+          // new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.LinkPlaceTrajectoryRed2),
           p_trajectories.driveTrajectory(p_trajectories.LinkPlaceTrajectoryRed2),
           new SequentialCommandGroup(
             new WaitCommand(.2),

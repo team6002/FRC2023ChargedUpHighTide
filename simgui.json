@@ -4,5 +4,29 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/AUTO": "String Chooser"
     }
+  },
+  "NetworkTables": {
+    "retained": {
+      "SmartDashboard": {
+        "AUTO": {
+          "open": true
+        },
+        "open": true
+      }
+    },
+    "transitory": {
+      "FMSInfo": {
+        "open": true
+      },
+      "LiveWindow": {
+        "open": true
+      },
+      "SmartDashboard": {
+        "open": true
+      },
+      "limelight": {
+        "open": true
+      }
+    }
   }
 }

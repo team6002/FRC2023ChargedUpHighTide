@@ -13,6 +13,7 @@ public class CMD_CheckOnCharge extends CommandBase {
   boolean m_finished = false;
   public CMD_CheckOnCharge(SUB_Drivetrain p_drivetrain) {
     m_drivetrain = p_drivetrain;
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
