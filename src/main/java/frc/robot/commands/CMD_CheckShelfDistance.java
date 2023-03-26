@@ -16,6 +16,8 @@ public class CMD_CheckShelfDistance extends CommandBase {
   XboxController m_driverController;
   double m_timer;
   double m_heartbeat;
+  double m_TagID;
+  double m_PreivousTagID;
   public CMD_CheckShelfDistance(SUB_Limelight p_limelight, XboxController p_driverContoller) {
     m_limelight = p_limelight;
     m_driverController = p_driverContoller;
@@ -31,7 +33,7 @@ public class CMD_CheckShelfDistance extends CommandBase {
 
   private void RumbleCheck(){
     if (m_limelight.getTargetX() >= -1.5){
-      m_driverController.setRumble(RumbleType.kBothRumble, 1);
+      m_driverController.setRumble(RumbleType.kBothRumble, .6);
     }else{
       m_driverController.setRumble(RumbleType.kBothRumble, 0);
     }
@@ -40,7 +42,8 @@ public class CMD_CheckShelfDistance extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_limelight.getTargetID() == 4 || m_limelight.getTargetID() == 5){    
+    m_TagID = m_limelight.getTargetID();
+    if (m_TagID == 4 || m_TagID == 5){    
     m_timer += 1;
       if (m_timer <= 25){
         RumbleCheck();
@@ -50,7 +53,13 @@ public class CMD_CheckShelfDistance extends CommandBase {
           m_timer = 0;
         }
       }
-    }else m_timer = 0;
+    }else {
+      m_timer = 0;
+    }
+    if (m_TagID != m_PreivousTagID){
+      m_driverController.setRumble(RumbleType.kBothRumble, 0);
+    }
+    m_PreivousTagID = m_TagID;
   }
 
   // Called once the command ends or is interrupted.
