@@ -6,11 +6,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.SUB_Drivetrain;
 // import frc.robot.Constants.DriveConstants;
+import frc.robot.subsystems.SUB_Limelight;
 
 public class CMD_Drive extends CommandBase {
 
   private final SUB_Drivetrain m_drivetrain;
   private final CommandXboxController controller;
+  private final SUB_Limelight m_limelight;
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   // private final SlewRateLimiter xspeedLimiter = new SlewRateLimiter(0.5);
   // private final SlewRateLimiter yspeedLimiter = new SlewRateLimiter(0.5);
@@ -20,12 +22,15 @@ public class CMD_Drive extends CommandBase {
   double y = 0;           //variable for forward/backward movement
   double x = 0;           //variable for side to side movement
   double turn = 0;        //variable for turning movement
+  final double limelightAngleThreshold = 2.0;
+  final double limelightAdjustKp = 0.02;
 
-  public CMD_Drive(SUB_Drivetrain m_drivetrain, CommandXboxController m_driverControllerTrigger) {
+  public CMD_Drive(SUB_Drivetrain m_drivetrain, CommandXboxController m_driverControllerTrigger, SUB_Limelight p_limelight) {
     this.m_drivetrain = m_drivetrain;
     addRequirements(m_drivetrain);
 
     this.controller = m_driverControllerTrigger;
+    this.m_limelight = p_limelight;
   }
 
   @Override
@@ -63,8 +68,20 @@ public class CMD_Drive extends CommandBase {
     
     // final var rot = rotLimiter.calculate(MathUtil.applyDeadband(-controller.getRightX(), deadzone));
     // final var rot = MathUtil.applyDeadband(-controller.getRightX(), deadzone);
-    final var rot = modifyAxis(MathUtil.applyDeadband(-controller.getRightX(),deadzone));
- 
+
+    var rot = modifyAxis(MathUtil.applyDeadband(-controller.getRightX(),deadzone));
+
+    /* Override driver rotation if AutoAlign is enabled. */
+    if (this.controller.a().getAsBoolean()) {
+      m_limelight.useConePipeline();
+      if (m_limelight.hasTarget()) {
+        double heading_error = m_limelight.getTargetTx();
+        if (Math.abs(heading_error) > limelightAngleThreshold) {
+          rot = -heading_error * limelightAdjustKp;
+        }
+      }
+    }
+
     // SmartDashboard.putNumber("xspeed", xSpeed);
     // SmartDashboard.putNumber("yspeed", ySpeed);
     // SmartDashboard.putNumber("rotspeed", rot);

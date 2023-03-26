@@ -15,6 +15,10 @@ import frc.robot.Constants.CameraConstants;
 import frc.robot.Constants.GlobalConstants;
 
 public class SUB_Limelight extends SubsystemBase {
+  private final int m_aprilTagPipelineId = 0;
+  private final int m_conePipelineId = 1;
+  private int m_currentPipelineId;
+
   public SUB_Limelight() {
     /*
     * 0 - Standard - Side-by-side streams if a webcam is attached to Limelight
@@ -22,6 +26,8 @@ public class SUB_Limelight extends SubsystemBase {
     * 2 - PiP Secondary - The primary camera stream is placed in the lower-right corner of the secondary camera stream
     */
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(CameraConstants.kLimelightIndex);
+
+    useConePipeline();
   }
 
   private double[] dv = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
@@ -59,6 +65,12 @@ public class SUB_Limelight extends SubsystemBase {
 
   public double getTargetID(){
     return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDouble(0);
+  }
+
+  public double getTargetTx() {
+    double tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0);
+
+    return tx;
   }
 
   public int readGrid(){
@@ -108,5 +120,15 @@ public class SUB_Limelight extends SubsystemBase {
 
   public void useSecondaryCamera(){
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(CameraConstants.kDriveCamIndex);
+  }
+
+  public void useConePipeline() {
+    if (m_currentPipelineId == m_conePipelineId) {
+      return;
+    }
+    
+    /* Switch to pipeline that uses reflective tape */
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(m_conePipelineId);
+    m_currentPipelineId = m_conePipelineId;
   }
 }
