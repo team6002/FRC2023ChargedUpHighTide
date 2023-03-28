@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GlobalConstants;
-import frc.robot.Constants.AutoAlignConstants.*;
 
 public class GlobalVariables extends SubsystemBase {
   /** Creates a new GlobalVariables. */

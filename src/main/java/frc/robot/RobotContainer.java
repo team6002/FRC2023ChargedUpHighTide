@@ -9,7 +9,6 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
 import frc.robot.Constants.AutoAlignConstants.AlignPosition;
@@ -17,8 +16,6 @@ import frc.robot.auto.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -67,7 +64,7 @@ public class RobotContainer {
     m_blinkin.setDefaultCommand(new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables));
     m_limelight.setDefaultCommand(new CMD_CheckShelfDistance(m_limelight, m_driverControllerHI));
     //this drives
-    m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController));
+    m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController, m_limelight));
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be
