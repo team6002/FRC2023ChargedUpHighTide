@@ -16,6 +16,7 @@ import frc.robot.auto.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -95,17 +96,17 @@ public class RobotContainer {
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
 
     //resets gyro to absoulute encoders
-    m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
+    m_driverController.povLeft().onTrue(new CMD_ResetGyro(m_drivetrain));
 
     
-    m_driverController.pov(180).onTrue(new SequentialCommandGroup(
+    m_driverController.povRight().onTrue(new ParallelCommandGroup(
       new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),  
       new CMD_IntakeDrop(m_intake, m_variables)
     ));
     
-    m_driverController.pov(90).onTrue(new CMD_Home(m_intake, m_elbow, m_elevator));
+    m_driverController.povDown().onTrue(new CMD_Home(m_intake, m_elbow, m_elevator));
     //Just in case the operator is unable toc perform
-    m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
+    m_driverController.povUp().onTrue(new CMD_ToggleDropLevel(m_variables));
 
     
     m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
