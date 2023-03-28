@@ -333,8 +333,7 @@ public final class Constants {
 
     public static final int kIntakeStage = 0;
     public static final int kExtendStage = 1;
-    public static final int kCheckStage = 2;
-    public static final int kDropStage = 3;
+    public static final int kDropStage = 2;
 
     public static final int kLeftPickPosition = 1;
     public static final int kRightPickPosition = 2;

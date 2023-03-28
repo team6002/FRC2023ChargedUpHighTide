@@ -90,29 +90,7 @@ public class RobotContainer {
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
     
-    m_driverController.a().onTrue(new SequentialCommandGroup(
-      new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),
-      new CMD_SetStage(m_variables, GlobalConstants.kCheckStage)
-    ));
-    //AUTO ALIGN BABY
-    // m_driverController.a().onTrue(new SequentialCommandGroup(
-    //   // new ConditionalCommand(
-    //     new SequentialCommandGroup(
-    //       // new CMD_SelectAlignPosition(m_variables),
-    //       new CMD_DriveAlignScoring(m_drivetrain, m_limelight, m_variables, m_driverController)
-    //     )
-        // new SequentialCommandGroup(
-        //   new CMD_SelectAlignPosition(m_variables),
-        //   new CMD_DriveAlignPicking(m_drivetrain, m_limelight, m_variables, m_driverController), 
-        //   new ParallelDeadlineGroup(
-        //     new CMD_IntakeCheck(m_intake, m_driverController),
-        //     new CMD_DriveForwardsSlowly(m_drivetrain)
-        //   )
-        // ),
-        // HasItem) 
-    // ));
-    // toggles which shelf it will align to (left or right)
-    m_driverController.y().onTrue(new CMD_TogglePickPosition(m_variables));
+    
     // toggle which pick up mode it will do (Ground or shelf)
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
 
@@ -337,12 +315,8 @@ public class RobotContainer {
       )),
       Map.entry(GlobalConstants.kExtendStage,new SequentialCommandGroup(
       getLevelCommand,
-      new CMD_SetStage(m_variables, GlobalConstants.kCheckStage),
+      new CMD_SetStage(m_variables, GlobalConstants.kDropStage),
       new CMD_IntakeExtraHold(m_intake, m_variables)
-      )),
-      Map.entry(GlobalConstants.kCheckStage, new SequentialCommandGroup(
-        new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1),
-        new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
       )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
         new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1),
