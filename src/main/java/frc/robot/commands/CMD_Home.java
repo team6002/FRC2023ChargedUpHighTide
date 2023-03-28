@@ -21,6 +21,7 @@ public class CMD_Home extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_IntakeStop(p_intake), 
+      new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorSecondConeLevel),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
       new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome)
     );
