@@ -25,7 +25,10 @@ public class CMD_ShelfHold extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.STOW),
-      new CMD_IntakeHold(p_intake, p_variables),
+      new SequentialCommandGroup(
+        new CMD_IntakeReadjust(p_intake, p_variables).withTimeout(.25),
+        new CMD_IntakeHold(p_intake, p_variables)   
+      ),
       new ParallelCommandGroup(
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)
