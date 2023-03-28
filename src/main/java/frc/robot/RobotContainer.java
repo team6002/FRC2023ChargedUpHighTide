@@ -17,6 +17,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SelectCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -91,7 +92,10 @@ public class RobotContainer {
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
     
-    
+    m_driverController.a().onTrue(new ParallelDeadlineGroup(
+      new CMD_IntakeCheck(m_intake, m_driverController).withTimeout(5), 
+      new CMD_DriveForwardsSlowly(m_drivetrain, m_driverController)
+      ));
     // toggle which pick up mode it will do (Ground or shelf)
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
 
