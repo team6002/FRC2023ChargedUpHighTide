@@ -32,20 +32,22 @@ public class CMD_CheckShelfDistance extends CommandBase {
   }
 
   private void RumbleCheck(){
-    if (m_limelight.getTargetX() >= -1.5){
-      m_driverController.setRumble(RumbleType.kBothRumble, .6);
+    if (m_limelight.getTargetX() >= -1.8){
+      m_timer += 1;
+      m_driverController.setRumble(RumbleType.kBothRumble, 1);
     }else{
       m_driverController.setRumble(RumbleType.kBothRumble, 0);
+      m_timer = 0;
     }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    SmartDashboard.putNumber("timer", m_timer);
     m_TagID = m_limelight.getTargetID();
     if (m_TagID == 4 || m_TagID == 5){    
-    m_timer += 1;
-      if (m_timer <= 25){
+      if (m_timer <= 35){
         RumbleCheck();
       }else {
         m_driverController.setRumble(RumbleType.kBothRumble, 0);

@@ -84,6 +84,7 @@ public class RobotContainer {
     //This command send you all the way back to the intake sequence
     m_driverController.rightBumper().onTrue(new SequentialCommandGroup(
       new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage),
+      new CMD_setHasItem(m_variables, false),
       new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)
     ));
     //changes intake 
@@ -92,7 +93,10 @@ public class RobotContainer {
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
     
-    m_driverController.a().onTrue(new CMD_setRumble(m_driverControllerHI, 10));
+    m_driverController.a().onTrue(new SequentialCommandGroup(
+      new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),
+      new CMD_SetStage(m_variables, GlobalConstants.kCheckStage)
+    ));
     //AUTO ALIGN BABY
     // m_driverController.a().onTrue(new SequentialCommandGroup(
     //   // new ConditionalCommand(
@@ -118,7 +122,13 @@ public class RobotContainer {
     //resets gyro to absoulute encoders
     m_driverController.pov(270).onTrue(new CMD_ResetGyro(m_drivetrain));
 
-    m_driverController.pov(90).onTrue(new CMD_SyncElbowPosition(m_elbow));
+    
+    m_driverController.pov(180).onTrue(new SequentialCommandGroup(
+      new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),  
+      new CMD_IntakeDrop(m_intake, m_variables)
+    ));
+    
+    m_driverController.pov(90).onTrue(new CMD_Home(m_intake, m_elbow, m_elevator));
     //Just in case the operator is unable toc perform
     m_driverController.pov(0).onTrue(new CMD_ToggleDropLevel(m_variables));
 
@@ -201,13 +211,20 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
 
-  public Command get3ElementBlue() {
-    return new AUTO_FullLinkRunBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  public Command get2ElementBlue() {
+    return new AUTO_2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
 
-  public Command get3ElementRed() {
-    return new AUTO_FullLinkRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  public Command get2ElementRed() {
+    return new AUTO_2BalanceRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
+  // public Command get3ElementBlue() {
+  //   return new AUTO_FullLinkRunBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  // }
+
+  // public Command get3ElementRed() {
+  //   return new AUTO_FullLinkRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  // }
 
   public Command get2ElementBalanceStationBlue() {
     return new AUTO_2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
@@ -323,11 +340,15 @@ public class RobotContainer {
       )),
       Map.entry(GlobalConstants.kExtendStage,new SequentialCommandGroup(
       getLevelCommand,
-      new CMD_SetStage(m_variables, GlobalConstants.kDropStage),
+      new CMD_SetStage(m_variables, GlobalConstants.kCheckStage),
       new CMD_IntakeExtraHold(m_intake, m_variables)
       )),
+      Map.entry(GlobalConstants.kCheckStage, new SequentialCommandGroup(
+        new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1),
+        new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
+      )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
-        new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop),
+        new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1),
         new CMD_IntakeDrop(m_intake, m_variables),
         new WaitCommand(.2),
         new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables),

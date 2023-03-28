@@ -28,9 +28,9 @@ public class CMD_Place3rdConeLevel extends SequentialCommandGroup {
       new CMD_setState(p_finiteStateMachine, RobotState.SCORING),
       new ParallelCommandGroup(
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorThirdConeLevel),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)    
-      )
-      
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)    
+      ),
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)    
     );
   }
 }

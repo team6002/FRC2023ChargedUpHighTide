@@ -68,7 +68,7 @@ public class AUTO_2BalanceBlue extends SequentialCommandGroup {
           ),
         new CMD_DriveStop(p_drivetrain).withTimeout(3),
         new WaitCommand(1),
-        new CMD_AdjustBalanceInside(p_drivetrain)
+        new CMD_AdjustBalanceInside(p_drivetrain).withTimeout(3)
     );
 
         

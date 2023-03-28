@@ -37,27 +37,27 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode).withTimeout(3),
       new CMD_selectIntakeCommandKey(p_intake, p_variables),
       new CMD_IntakeHold(p_intake, p_variables),
-      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop),
+      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop).withTimeout(1),
       new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
       new ParallelDeadlineGroup(
         new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
         new SequentialCommandGroup(
-          new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
           new WaitCommand(1.5),
-          new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+          new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
           new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
         )
       ),
       new ParallelDeadlineGroup(
-        new CMD_SpinInPlace(p_drivetrain, 180).withTimeout(3),
+        new CMD_SpinInPlace(p_drivetrain, 180).withTimeout(4),
         new CMD_IntakeCheck(p_intake, p_controller).withTimeout(3)
       ),
       new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.BackOnChargeStationTrajectory),
       new ParallelCommandGroup(
-        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
         //do a until hit angle and then run the set distance
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
