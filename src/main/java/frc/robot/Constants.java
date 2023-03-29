@@ -250,7 +250,6 @@ public final class Constants {
     // public static final double kElbowShelfBackPrep = 85;
   }
   
-
   public static final class LimeLightConstants{
     public static final double[] kTarget1Constants = {1, 1, 0};
     public static final double[] kTarget2Constants = {2, 2, 0};
@@ -260,7 +259,8 @@ public final class Constants {
     public static final double[] kTarget6Constants = {6, 6, 180};
     public static final double[] kTarget7Constants = {7, 7, 180};
     public static final double[] kTarget8Constants = {8, 8, 180};
-
+    public static final int kAprilTagPipeline = 0;
+    public static final int kRetroflectiveTapePipeline = 1;
     public static final double klimelightAngleThreshold = 2.0;
     public static final double klimelightAdjustRotKp = 0.01;
     public static final double klimelightAdjustRotKf = 0.03;
