@@ -26,7 +26,7 @@ public class CMD_SyncElbowPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (Math.abs(m_elbow.getElbowVelocity()) <= 1 ){
+    if (Math.abs(m_elbow.getElbowVelocity()) <= .5 ){
       m_timer += 1;
     }else m_timer = 0;
     if (m_timer >= 40){
