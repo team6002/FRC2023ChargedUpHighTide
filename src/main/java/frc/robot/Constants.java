@@ -163,7 +163,7 @@ public final class Constants {
     //intake powers
     public static final double kIntakeForwardPower = .6;// for cones
     public static final double kIntakeBackwardPower = -.6;// for cubes
-    public static final double kIntakeConeDownPower = .3;
+    public static final double kIntakeConeDownPower = .1;
     public static final double kIntakeHoldPower = .07;
     public static final double kIntakeExtraHoldPower = .5;
     public static final double kIntakeDropCone = -.6;
@@ -188,7 +188,7 @@ public final class Constants {
     public static final double kElevatorOffset = -.487;
 
     public static final double kElevatorMax = 54;
-    public static final double kElevatorShelfCone = 42;
+    public static final double kElevatorShelfCone = 41;
     public static final double kElevatorShelfCube = 39;
     public static final double kElevatorFirstConeLevel = 9;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 31; 
