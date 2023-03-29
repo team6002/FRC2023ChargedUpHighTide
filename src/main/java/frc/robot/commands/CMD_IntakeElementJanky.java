@@ -71,7 +71,7 @@ public class CMD_IntakeElementJanky extends CommandBase {
     }
 
     if (m_intake.getCurrent() >= IntakeConstants.kIntakeConeDetectedCurrent) {
-      if (m_timer == 20) {
+      if (m_timer == IntakeConstants.kIntakeDetectedtimer) {
         m_detected = true;
       } else {
         m_timer += 1;

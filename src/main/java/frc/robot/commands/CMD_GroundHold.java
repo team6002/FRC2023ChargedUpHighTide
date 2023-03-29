@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.GlobalVariables;
@@ -25,12 +26,14 @@ public class CMD_GroundHold extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.STOW),
-      new SequentialCommandGroup(
-        new CMD_IntakeReadjust(p_intake, p_variables).withTimeout(.25),
-        new CMD_IntakeHold(p_intake, p_variables)   
+      new ParallelCommandGroup(
+        new SequentialCommandGroup(
+          new CMD_IntakeReadjust(p_intake, p_variables).withTimeout(.25),
+          new CMD_IntakeHold(p_intake, p_variables)   
+        ),
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp)
       ),
-      new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp),
       new WaitCommand(.1),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)
       

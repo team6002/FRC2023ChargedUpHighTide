@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -72,15 +73,18 @@ public class CMD_Drive extends CommandBase {
     var rot = modifyAxis(MathUtil.applyDeadband(-controller.getRightX(),deadzone));
 
     /* Override driver rotation if AutoAlign is enabled. */
-    // if (this.controller.a().getAsBoolean()) {
-    //   m_limelight.useConePipeline();
-    //   if (m_limelight.hasTarget()) {
-    //     double heading_error = m_limelight.getTargetTx();
-    //     if (Math.abs(heading_error) > limelightAngleThreshold) {
-    //       rot = -heading_error * limelightAdjustKp;
-    //     }
-    //   }
-    // }
+    if (this.controller.rightTrigger().getAsBoolean()) {
+      m_limelight.useConePipeline();
+      if (m_limelight.hasTarget()) {
+        double heading_error = m_limelight.getTargetTx();
+        if (Math.abs(heading_error) > limelightAngleThreshold) {
+          rot = -heading_error * limelightAdjustKp;
+          SmartDashboard.putNumber("Auto Steer Rot", rot);
+        }
+      }
+    } else {
+      m_limelight.useAprilTagPipeline();
+    }
 
     // SmartDashboard.putNumber("xspeed", xSpeed);
     // SmartDashboard.putNumber("yspeed", ySpeed);

@@ -39,7 +39,7 @@ public class CMD_DriveShelfSlowly extends CommandBase {
   @Override
   public void execute() {
     if (m_intake.getCurrent() >= IntakeConstants.kIntakeConeDetectedCurrent) {
-      if (m_intaketimer == 20) {
+      if (m_intaketimer == IntakeConstants.kIntakeDetectedtimer) {
         m_detected = true;
       } else {
         m_intaketimer += 1;

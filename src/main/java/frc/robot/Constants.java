@@ -175,6 +175,8 @@ public final class Constants {
     public static final int kReholdCurrent = 10;
     public static final int kHoldCurrent = 5;
 
+    public static final int kIntakeDetectedtimer = 5;  
+
     public static final double kIntakeConeDetectedCurrent = 30;
 
   }
@@ -207,8 +209,8 @@ public final class Constants {
 
     public static final double kElevatorHomeCurrent = 10;
 
-    public static final double kElevatorMaxVelocity = 80;
-    public static final double kElevatorMaxAcceleration = 80;
+    public static final double kElevatorMaxVelocity = 120;
+    public static final double kElevatorMaxAcceleration = 160;
     public static final double kElevatorHomeAcceleration = 3;
     public static final double kElevatorHomeVelocity = 3;
     
@@ -222,8 +224,8 @@ public final class Constants {
     public static final double kElbowF = 0.00;
     public static final double kElbowS = 0.0062947;
     public static final double kElbowV = 0.03199;
-    public static final double kElbowMaxVelocity = 400;
-    public static final double kElbowMaxAcceleration = 400;
+    public static final double kElbowMaxVelocity = 600;
+    public static final double kElbowMaxAcceleration = 600;
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 

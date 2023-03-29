@@ -131,4 +131,14 @@ public class SUB_Limelight extends SubsystemBase {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(m_conePipelineId);
     m_currentPipelineId = m_conePipelineId;
   }
+
+  public void useAprilTagPipeline() {
+    if (m_currentPipelineId == m_aprilTagPipelineId) {
+      return;
+    }
+    
+    /* Switch to pipeline that uses reflective tape */
+    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(m_aprilTagPipelineId);
+    m_currentPipelineId = m_aprilTagPipelineId;
+  }
 }

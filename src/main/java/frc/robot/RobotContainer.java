@@ -98,8 +98,7 @@ public class RobotContainer {
 
     //resets gyro to absoulute encoders
     m_driverController.povLeft().onTrue(new SequentialCommandGroup(
-      new CMD_ResetGyro(m_drivetrain),
-      new CMD_SyncElbowPosition(m_elbow)
+      new CMD_ResetGyro(m_drivetrain)
     ));
     
     
