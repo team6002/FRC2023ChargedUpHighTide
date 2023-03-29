@@ -92,16 +92,16 @@ public class RobotContainer {
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
     
-    m_driverController.a().onTrue(new ParallelDeadlineGroup(
-      new CMD_IntakeCheck(m_intake, m_driverController).withTimeout(5), 
-      new CMD_DriveForwardsSlowly(m_drivetrain, m_driverController)
-      ));
+    m_driverController.a().onTrue(new CMD_DriveShelfSlowly(m_drivetrain, m_intake, m_driverController));
     // toggle which pick up mode it will do (Ground or shelf)
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
 
     //resets gyro to absoulute encoders
-    m_driverController.povLeft().onTrue(new CMD_ResetGyro(m_drivetrain));
-
+    m_driverController.povLeft().onTrue(new SequentialCommandGroup(
+      new CMD_ResetGyro(m_drivetrain),
+      new CMD_SyncElbowPosition(m_elbow)
+    ));
+    
     
     m_driverController.povRight().onTrue(new ParallelCommandGroup(
       new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),  
