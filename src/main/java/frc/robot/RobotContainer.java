@@ -132,6 +132,9 @@ public class RobotContainer {
     
     m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
 
+    m_operatorController.leftStick().onTrue(new CMD_LimelightSetPipeline(m_limelight, LimeLightConstants.kRetroflectiveTapePipeline));
+    m_operatorController.back().onTrue(new CMD_LimelightSetPipeline(m_limelight, LimeLightConstants.kAprilTagPipeline));
+    
     //autodrive right, bottom, numpad 1
     m_operatorController.a().onTrue(new SequentialCommandGroup(
       new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
