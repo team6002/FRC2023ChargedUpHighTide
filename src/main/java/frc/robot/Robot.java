@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.SubsystemsInit();
 
     SmartDashboard.putNumber("AUTOKEY", 0);
-    m_Chooser.setDefaultOption("nothing", m_robotContainer.getNothing());
+    m_Chooser.setDefaultOption("NOTHING!", m_robotContainer.getNothing());
     m_Chooser.addOption("test", m_robotContainer.getTest());
     SmartDashboard.putData("AUTO", m_Chooser);
 
