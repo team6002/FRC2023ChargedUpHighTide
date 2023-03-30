@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.LimeLightConstants;
 import frc.robot.subsystems.SUB_Drivetrain;
 // import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.SUB_Limelight;
@@ -23,9 +24,9 @@ public class CMD_Drive extends CommandBase {
   double y = 0;           //variable for forward/backward movement
   double x = 0;           //variable for side to side movement
   double turn = 0;        //variable for turning movement
-  final double limelightAngleThreshold = 2.0;
-  final double limelightAdjustKp = 0.02;
-
+  final double limelightAngleThreshold = LimeLightConstants.klimelightAngleThreshold;
+  final double limelightAdjustRotKp = LimeLightConstants.klimelightAdjustRotKp;
+  final double limelightAdjustStrafeKp = LimeLightConstants.klimelightAdjustStrafeKp;
   public CMD_Drive(SUB_Drivetrain m_drivetrain, CommandXboxController m_driverControllerTrigger, SUB_Limelight p_limelight) {
     this.m_drivetrain = m_drivetrain;
     addRequirements(m_drivetrain);
@@ -53,13 +54,13 @@ public class CMD_Drive extends CommandBase {
 
     // final var xSpeed = xspeedLimiter.calculate(MathUtil.applyDeadband(-controller.getLeftY(), deadzone));
     // final var xSpeed = MathUtil.applyDeadband(-controller.getLeftY(), deadzone);  
-    final var xSpeed = modifyAxis(MathUtil.applyDeadband(-controller.getLeftY(),deadzone));
+    var xSpeed = modifyAxis(MathUtil.applyDeadband(-controller.getLeftY(),deadzone));
     // Get the y speed or sideways/strafe speed. We are inverting this because
     // we want a positive value when we pull to the left. Xbox controllers
     // return positive values when you pull to the right by default.
     // final var ySpeed = yspeedLimiter.calculate(MathUtil.applyDeadband(-controller.getLeftX(), deadzone));
     // final var ySpeed = MathUtil.applyDeadband(-controller.getLeftX(), deadzone);
-    final var ySpeed = modifyAxis(MathUtil.applyDeadband(-controller.getLeftX(),deadzone));
+    var ySpeed = modifyAxis(MathUtil.applyDeadband(-controller.getLeftX(),deadzone));
  
     // Get the rate of angular rotation. We are inverting this because we want a
     // positive value when we pull to the left (remember, CCW is positive in
@@ -68,22 +69,27 @@ public class CMD_Drive extends CommandBase {
     
     
     // final var rot = rotLimiter.calculate(MathUtil.applyDeadband(-controller.getRightX(), deadzone));
-    // final var rot = MathUtil.applyDeadband(-controller.getRightX(), deadzone);
-
-    var rot = modifyAxis(MathUtil.applyDeadband(-controller.getRightX(),deadzone));
+    var rot = MathUtil.applyDeadband(-controller.getRightX(), deadzone);
 
     /* Override driver rotation if AutoAlign is enabled. */
     if (this.controller.rightTrigger().getAsBoolean()) {
-      m_limelight.useConePipeline();
+      // m_limelight.useConePipeline();
+      
       if (m_limelight.hasTarget()) {
         double heading_error = m_limelight.getTargetTx();
+        double strafe_error = m_limelight.getTargetTx();
+        
+        if (Math.abs(strafe_error) > limelightAngleThreshold) {
+          // rot = -strafe_error * limelightAdjustKp;
         if (Math.abs(heading_error) > limelightAngleThreshold) {
-          rot = -heading_error * limelightAdjustKp;
-          SmartDashboard.putNumber("Auto Steer Rot", rot);
+          rot = -heading_error * limelightAdjustRotKp;
+          // ySpeed = -strafe_error * limelightAdjustStrafeKp;
+          SmartDashboard.putNumber("YSPEED", (strafe_error * limelightAdjustStrafeKp));
+        }
         }
       }
     } else {
-      m_limelight.useAprilTagPipeline();
+      // m_limelight.useAprilTagPipeline();
     }
 
     // SmartDashboard.putNumber("xspeed", xSpeed);
