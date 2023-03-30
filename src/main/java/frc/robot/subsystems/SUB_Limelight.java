@@ -73,6 +73,13 @@ public class SUB_Limelight extends SubsystemBase {
     return tx;
   }
 
+  
+  public double getTargetTy() {
+    double ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0);
+
+    return ty;
+  }
+
   public int readGrid(){
     double m_id = getTargetID();
     if (m_id == 3 ||m_id == 8){
