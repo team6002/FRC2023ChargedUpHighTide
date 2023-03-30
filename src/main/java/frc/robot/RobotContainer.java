@@ -211,45 +211,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
 
-  public Command get2ElementBlue() {
-    return new AUTO_2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command get2ElementRed() {
-    return new AUTO_2BalanceRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-  // public Command get3ElementBlue() {
-  //   return new AUTO_FullLinkRunBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  // }
-
-  // public Command get3ElementRed() {
-  //   return new AUTO_FullLinkRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  // }
-
-  public Command get2ElementBalanceStationBlue() {
-    return new AUTO_2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command get2ElementBalanceStationRed() {
-    return new AUTO_2BalanceRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-  
-  public Command getLinkRunRed() {
-    return new AUTO_FullLinkRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command getBalanceStation() {
-    return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
-  }
-
   public Command getNothing() {
     return new AUTO_NOTHING();
   }
-  
-  public Command getWirebridge() {
-    return new AUTO_WireBridge(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
-  }
-  
+
   public void zeroHeading(){
     m_drivetrain.zeroHeading();
   }
