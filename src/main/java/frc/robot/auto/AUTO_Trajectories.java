@@ -40,8 +40,8 @@ public class AUTO_Trajectories {
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     
     public PathPlannerTrajectory ParkBlueDivider = PathPlanner.loadPath("ParkBlueDivider",
-        new PathConstraints(AutoConstants.kChargeStationSpeed,
-        AutoConstants.kChargeStationAcceleration));
+        new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+        AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
     //red
     public PathPlannerTrajectory ConeRunRedDivider = PathPlanner.loadPath("ConeRunRedDivider",
