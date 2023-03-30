@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.SUB_Elbow;
@@ -24,6 +25,8 @@ public class CMD_GroundCubeIntake extends SequentialCommandGroup {
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.INTAKE),
       new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowCushionGroundIntake),
+      new WaitCommand(.1),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowGroundCube)
       // new CMD_SyncElbowPosition(p_elbow)
       

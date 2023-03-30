@@ -32,7 +32,7 @@ public class CMD_GroundHold extends SequentialCommandGroup {
           new CMD_IntakeHold(p_intake, p_variables)   
         ),
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowUp)
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowCushionStow)
       ),
       new WaitCommand(.1),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)
