@@ -194,7 +194,7 @@ public final class Constants {
     public static final double kElevatorShelfCube = 39;
     public static final double kElevatorFirstConeLevel = 9;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 31; 
-    public static final double kElevatorThirdConeLevel = 52;
+    public static final double kElevatorThirdConeLevel = 53;
     public static final double kElevatorFirstCubeLevel = 9;// for placeing forwards
     public static final double kElevatorSecondCubeLevel = 31;  
     public static final double kElevatorThirdCubeLevel = 50;
@@ -232,6 +232,7 @@ public final class Constants {
     // public static final double kElbowLift = 149;// use to get elbow off elevator, it don't like 200 for some reason
     public static final double kElbowLifted = 125;// when the elbow is not resting on elevator
     public static final double kElbowStow = 149;
+    public static final double kElbowCushionStow = 137;// about 90 degrees up
     public static final double kElbowUp = 135;// about 90 degrees up
     public static final double kElbowForwards = 149;// stright forwards
     public static final double kElbowShelf = 133;// stright forwards
@@ -239,6 +240,7 @@ public final class Constants {
     public static final double kElbowDrop = 145;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 23;// straight back
     // public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
+    public static final double kElbowCushionGroundIntake = 3;
     public static final double kElbowGroundConeUpright = -6;// when the cone stands up straight
     // public static final double kElbowGroundConeDown = 21;// when the cone are knocked over
     public static final double kElbowGroundCube = -6;// when picking up cube
@@ -258,6 +260,10 @@ public final class Constants {
     public static final double[] kTarget6Constants = {6, 6, 180};
     public static final double[] kTarget7Constants = {7, 7, 180};
     public static final double[] kTarget8Constants = {8, 8, 180};
+
+    public static final double klimelightAngleThreshold = 2.0;
+    public static final double klimelightAdjustRotKp = 0.02;
+    public static final double klimelightAdjustStrafeKp = 0.01;
   }
 
   public static final class AutoAlignConstants{
