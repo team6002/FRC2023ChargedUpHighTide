@@ -40,8 +40,8 @@ public class AUTO_Trajectories {
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     
     public PathPlannerTrajectory ParkBlueDivider = PathPlanner.loadPath("ParkBlueDivider",
-        new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+        new PathConstraints(AutoConstants.kChargeStationSpeed,
+        AutoConstants.kChargeStationAcceleration));
 
     //red
     public PathPlannerTrajectory ConeRunRedDivider = PathPlanner.loadPath("ConeRunRedDivider",
@@ -61,10 +61,31 @@ public class AUTO_Trajectories {
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
     public PathPlannerTrajectory ParkRedDivider = PathPlanner.loadPath("ParkRedDivider",
+        new PathConstraints(AutoConstants.kChargeStationSpeed,
+        AutoConstants.kChargeStationAcceleration));
+    //charge station
+
+    //blue
+
+    public PathPlannerTrajectory CubeGrabBlueChargeStation = PathPlanner.loadPath("CubeGrabBlueChargeStation",
         new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-    //
     
+    public PathPlannerTrajectory ParkBlueChargeStation = PathPlanner.loadPath("ParkBlueChargeStation",
+        new PathConstraints(AutoConstants.kChargeStationSpeed,
+        AutoConstants.kChargeStationAcceleration));
+
+    //red
+    
+    public PathPlannerTrajectory CubeGrabRedChargeStation = PathPlanner.loadPath("CubeGrabRedChargeStation",
+        new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+        AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
+    public PathPlannerTrajectory ParkRedChargeStation = PathPlanner.loadPath("ParkRedChargeStation",
+        new PathConstraints(AutoConstants.kChargeStationSpeed,
+        AutoConstants.kChargeStationAcceleration));
+    
+
     public AUTO_Trajectories(SUB_Drivetrain drivetrain){
         m_drivetrain = drivetrain; 
     }

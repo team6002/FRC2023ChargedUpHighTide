@@ -131,8 +131,8 @@ public final class Constants {
   public static final class AutoConstants {
     public static final double kMaxSpeedMetersPerSecond = 4;
     public static final double kMaxAccelerationMetersPerSecondSquared = 8;
-    public static final double kChargeStationSpeed = 1.12;
-    public static final double kChargeStationAcceleration = 1.12;
+    public static final double kChargeStationSpeed = 4;
+    public static final double kChargeStationAcceleration = 4;
     public static final double k2LinkChargeStationSpeed = 1.5;// theres not enough time for the speed to build up for 2 link balance
     public static final double k2LinkChargeStationAcceleration = 1.5;
     public static final double kHalfSpeed = 2;
