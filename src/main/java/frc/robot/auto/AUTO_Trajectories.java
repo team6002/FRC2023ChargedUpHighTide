@@ -67,7 +67,7 @@ public class AUTO_Trajectories {
 
     //blue
 
-    public PathPlannerTrajectory CubeGrabBlueChargeStation = PathPlanner.loadPath("CubeGrabBlueChargeStation",
+    public PathPlannerTrajectory CubeRunBlueChargeStation = PathPlanner.loadPath("CubeRunBlueChargeStation",
         new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     
@@ -77,13 +77,18 @@ public class AUTO_Trajectories {
 
     //red
     
-    public PathPlannerTrajectory CubeGrabRedChargeStation = PathPlanner.loadPath("CubeGrabRedChargeStation",
+    public PathPlannerTrajectory CubeRunRedChargeStation = PathPlanner.loadPath("CubeRunRedChargeStation",
         new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
     public PathPlannerTrajectory ParkRedChargeStation = PathPlanner.loadPath("ParkRedChargeStation",
         new PathConstraints(AutoConstants.kChargeStationSpeed,
         AutoConstants.kChargeStationAcceleration));
+
+    //test
+
+    public PathPlannerTrajectory test = PathPlanner.loadPath("test",
+        new PathConstraints(1 ,1));    
     
 
     public AUTO_Trajectories(SUB_Drivetrain drivetrain){

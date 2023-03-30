@@ -215,6 +215,10 @@ public class RobotContainer {
     return new AUTO_NOTHING();
   }
 
+  public Command getTest(){
+    return new AUTO_Test(m_trajectories);
+  }
+
   public void zeroHeading(){
     m_drivetrain.zeroHeading();
   }
