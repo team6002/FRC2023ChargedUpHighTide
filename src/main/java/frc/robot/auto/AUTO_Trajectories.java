@@ -40,8 +40,8 @@ public class AUTO_Trajectories {
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
     
     public PathPlannerTrajectory ParkBlueDivider = PathPlanner.loadPath("ParkBlueDivider",
-        new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+        new PathConstraints(AutoConstants.kChargeStationSpeed,
+        AutoConstants.kChargeStationAcceleration));
 
     //red
     public PathPlannerTrajectory ConeRunRedDivider = PathPlanner.loadPath("ConeRunRedDivider",
@@ -61,36 +61,10 @@ public class AUTO_Trajectories {
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
     public PathPlannerTrajectory ParkRedDivider = PathPlanner.loadPath("ParkRedDivider",
-        new PathConstraints(AutoConstants.kChargeStationSpeed,
-        AutoConstants.kChargeStationAcceleration));
-    //charge station
-
-    //blue
-
-    public PathPlannerTrajectory CubeRunBlueChargeStation = PathPlanner.loadPath("CubeRunBlueChargeStation",
         new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+    //
     
-    public PathPlannerTrajectory ParkBlueChargeStation = PathPlanner.loadPath("ParkBlueChargeStation",
-        new PathConstraints(AutoConstants.kChargeStationSpeed,
-        AutoConstants.kChargeStationAcceleration));
-
-    //red
-    
-    public PathPlannerTrajectory CubeRunRedChargeStation = PathPlanner.loadPath("CubeRunRedChargeStation",
-        new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
-        AutoConstants.kMaxAccelerationMetersPerSecondSquared));
-
-    public PathPlannerTrajectory ParkRedChargeStation = PathPlanner.loadPath("ParkRedChargeStation",
-        new PathConstraints(AutoConstants.kChargeStationSpeed,
-        AutoConstants.kChargeStationAcceleration));
-
-    //test
-
-    public PathPlannerTrajectory test = PathPlanner.loadPath("test",
-        new PathConstraints(1 ,1));    
-    
-
     public AUTO_Trajectories(SUB_Drivetrain drivetrain){
         m_drivetrain = drivetrain; 
     }
