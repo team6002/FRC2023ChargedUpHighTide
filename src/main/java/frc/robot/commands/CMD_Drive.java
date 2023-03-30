@@ -84,7 +84,7 @@ public class CMD_Drive extends CommandBase {
         if (Math.abs(heading_error) > limelightAngleThreshold) {
           rot = -heading_error * limelightAdjustRotKp;
           // ySpeed = -strafe_error * limelightAdjustStrafeKp;
-          SmartDashboard.putNumber("YSPEED", (strafe_error * limelightAdjustStrafeKp));
+          SmartDashboard.putNumber("YSPEED", ((strafe_error * limelightAdjustStrafeKp) + Math.copySign(LimeLightConstants.klimelightAdjustRotKf, -heading_error)));
         }
         }
       }

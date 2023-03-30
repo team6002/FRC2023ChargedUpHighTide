@@ -262,7 +262,8 @@ public final class Constants {
     public static final double[] kTarget8Constants = {8, 8, 180};
 
     public static final double klimelightAngleThreshold = 2.0;
-    public static final double klimelightAdjustRotKp = 0.02;
+    public static final double klimelightAdjustRotKp = 0.01;
+    public static final double klimelightAdjustRotKf = 0.03;
     public static final double klimelightAdjustStrafeKp = 0.01;
   }
 
