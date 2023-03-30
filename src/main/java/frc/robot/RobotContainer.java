@@ -64,7 +64,10 @@ public class RobotContainer {
     // Configure default commands
     //changes blinking codes hopefully >I<
     m_blinkin.setDefaultCommand(new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables));
-    m_limelight.setDefaultCommand(new CMD_CheckShelfDistance(m_limelight, m_driverControllerHI));
+    m_limelight.setDefaultCommand(new ParallelCommandGroup(
+      new CMD_CheckShelfDistance(m_limelight, m_driverControllerHI),
+      new CMD_selectLimelightPipeline(m_limelight, m_variables))
+    );
     //this drives
     m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController, m_limelight));
   }
