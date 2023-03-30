@@ -191,7 +191,6 @@ public class AUTO_Trajectories {
             new Pose2d(Units.inchesToMeters(-140), Units.inchesToMeters(80), new Rotation2d(Units.degreesToRadians(0))),
             LinkChargeStationConfigReversed);
 
-
         LinkRunTrajectoryBlue2 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(Units.inchesToMeters(-10), Units.inchesToMeters(18), new Rotation2d(-Units.degreesToRadians(-45))),
             List.of(new Translation2d(Units.inchesToMeters(-110), Units.inchesToMeters(18))),
