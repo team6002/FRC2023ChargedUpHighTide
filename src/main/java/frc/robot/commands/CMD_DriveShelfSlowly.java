@@ -32,7 +32,7 @@ public class CMD_DriveShelfSlowly extends CommandBase {
     m_detected = false; 
     m_drivetimer = 0;
     m_intaketimer = 0;
-    m_drivetrain.drive(.1, 0, 0, false, false);
+    m_drivetrain.drive(.15, 0, 0, false, false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
