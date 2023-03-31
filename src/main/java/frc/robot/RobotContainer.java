@@ -39,9 +39,10 @@ public class RobotContainer {
   private final SUB_Elevator m_elevator = new SUB_Elevator();
   private final SUB_Elbow m_elbow = new SUB_Elbow();
   private final SUB_Intake m_intake = new SUB_Intake();
+  private final SUB_Blinkin m_blinkin = new SUB_Blinkin();
+  private final SUB_PixyCam m_pixyCam = new SUB_PixyCam();
   private final SUB_FiniteStateMachine m_finiteStateMachine = new SUB_FiniteStateMachine();
   private final GlobalVariables m_variables = new GlobalVariables();
-  private final SUB_Blinkin m_blinkin = new SUB_Blinkin();
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -102,7 +103,6 @@ public class RobotContainer {
     m_driverController.povLeft().onTrue(new SequentialCommandGroup(
       new CMD_ResetGyro(m_drivetrain)
     ));
-    
     
     m_driverController.povRight().onTrue(new ParallelCommandGroup(
       new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),  
