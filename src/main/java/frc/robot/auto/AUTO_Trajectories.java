@@ -3,6 +3,7 @@ package frc.robot.auto;
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
@@ -12,6 +13,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
@@ -87,12 +90,11 @@ public class AUTO_Trajectories {
 
     //test
 
-    public PathPlannerTrajectory test = PathPlanner.loadPath("test",
-        new PathConstraints(1 ,1));    
+    public PathPlannerTrajectory test = PathPlanner.loadPath("test", new PathConstraints(1, 1));    
     
 
     public AUTO_Trajectories(SUB_Drivetrain drivetrain){
-        m_drivetrain = drivetrain; 
+        m_drivetrain = drivetrain;
     }
   
     public Command driveTrajectory(Trajectory trajectory) {
@@ -112,4 +114,20 @@ public class AUTO_Trajectories {
         // Run path following command, then stop at the end.
         return swerveControllerCommand.andThen(() -> m_drivetrain.drive(0.0 ,0.0 ,0.0, true, false));
     }
+
+    public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> m_drivetrain.resetOdometry(traj.getInitialHolonomicPose())),
+            new PPSwerveControllerCommand(
+                traj,//trajectory
+                m_drivetrain::getPose, // Pose supplier
+                DriveConstants.kDriveKinematics, // SwerveDriveKinematics
+                new PIDController(AutoConstants.kPPPXController, 0, 0), //X positon controller
+                new PIDController(AutoConstants.kPPPYController, 0, 0), //Y position controller
+                new PIDController(AutoConstants.kPPPThetaController, 0, 0), //turn theta controller
+                m_drivetrain::setModuleStates,
+                false, //use alliance color
+                m_drivetrain)//subsystems requirements
+        );
+        }
 }

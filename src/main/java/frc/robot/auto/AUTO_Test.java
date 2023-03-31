@@ -5,14 +5,15 @@
 package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.SUB_Drivetrain;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AUTO_Test extends SequentialCommandGroup {
-  public AUTO_Test(AUTO_Trajectories p_trajectories) {
+  public AUTO_Test(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain) {
     addCommands(
-      p_trajectories.driveTrajectory(p_trajectories.test)
+      p_trajectories.followTrajectoryCommand(p_trajectories.test)
     );
   }
 }

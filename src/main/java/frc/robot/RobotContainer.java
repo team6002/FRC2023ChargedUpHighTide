@@ -114,6 +114,7 @@ public class RobotContainer {
 
     
     m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
+    m_operatorController.povLeft().onTrue(new CMD_ResetGyro(m_drivetrain));
 
     m_operatorController.leftStick().onTrue(new CMD_LimelightSetPipeline(m_limelight, LimeLightConstants.kRetroflectiveTapePipeline));
     m_operatorController.back().onTrue(new CMD_LimelightSetPipeline(m_limelight, LimeLightConstants.kAprilTagPipeline));
@@ -191,7 +192,7 @@ public class RobotContainer {
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
-   * @return the command to run in autonomous
+   * @return the command to run in autono%mous
    */
 
   public Command getNothing() {
@@ -199,7 +200,7 @@ public class RobotContainer {
   }
 
   public Command getTest(){
-    return new AUTO_Test(m_trajectories);
+    return new AUTO_Test(m_trajectories, m_drivetrain);
   }
   public void zeroHeading(){
     m_drivetrain.zeroHeading();
