@@ -15,6 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.DriveConstants;
@@ -85,6 +86,9 @@ public class SUB_Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("X", m_odometry.getPoseMeters().getX());
     SmartDashboard.putNumber("Y", m_odometry.getPoseMeters().getY());
     SmartDashboard.putNumber("Yaw", m_odometry.getPoseMeters().getRotation().getDegrees());
+
+    // m_frontLeft.telemetry();
+    
   }
 
   /**

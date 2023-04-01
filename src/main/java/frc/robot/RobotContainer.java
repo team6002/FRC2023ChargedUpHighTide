@@ -192,6 +192,22 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
 
+  public Command getFullLinkDividerBlue() {
+    return new AUTO_PPFullLinkDividerBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
+  public Command getPP2BalanceBlue() {
+    return new AUTO_PP2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
+  public Command getPP3BalanceBlue() {
+    return new AUTO_PP3BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
+  public Command getTest() {
+    return new AUTO_Test(m_trajectories, m_drivetrain);
+  }
+
   public Command get2ElementBlue() {
     return new AUTO_2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }

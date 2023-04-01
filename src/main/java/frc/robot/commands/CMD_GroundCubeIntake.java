@@ -25,8 +25,8 @@ public class CMD_GroundCubeIntake extends SequentialCommandGroup {
     addCommands(
       new CMD_setState(p_finiteStateMachine, RobotState.INTAKE),
       new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowCushionGroundIntake),
-      new WaitCommand(.1),
+      // new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowCushionGroundIntake),
+      // new WaitCommand(.1),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowGroundCube)
       // new CMD_SyncElbowPosition(p_elbow)
       

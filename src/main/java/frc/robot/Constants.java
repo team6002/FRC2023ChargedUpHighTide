@@ -89,10 +89,10 @@ public final class Constants {
     public static final double kDriveWheelFreeSpeedRps = (kDrivingMotorFreeSpeedRps * kWheelCircumferenceMeters)
         / kDrivingMotorReduction;
 
-    public static final double kDrivingEncoderPositionFactor = (kWheelDiameterMeters * Math.PI)
-        / kDrivingMotorReduction; // meters
-    public static final double kDrivingEncoderVelocityFactor = ((kWheelDiameterMeters * Math.PI)
-        / kDrivingMotorReduction) / 60.0; // meters per second
+    public static final double kDrivingEncoderPositionFactor = ((kWheelDiameterMeters * Math.PI)
+        / kDrivingMotorReduction)*0.96; // meters
+    public static final double kDrivingEncoderVelocityFactor = (((kWheelDiameterMeters * Math.PI)
+        / kDrivingMotorReduction) / 60.0)*0.96; // meters per second
 
     public static final double kTurningEncoderPositionFactor = (2 * Math.PI); // radians
     public static final double kTurningEncoderVelocityFactor = (2 * Math.PI) / 60.0; // radians per second
@@ -100,10 +100,10 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = .00008;// 0.01;
+    public static final double kDrivingP = .00004;// 0.01;
     public static final double kDrivingI = 0.0;
     public static final double kDrivingD = 0.0;
-    public static final double kDrivingFF = 0.167; //.203;
+    public static final double kDrivingFF = 0.22; //.203;
     public static final double kDrivingS = 0.1;
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
@@ -145,6 +145,11 @@ public final class Constants {
     public static final double kPYController = 1.5;
     public static final double kPThetaController = 2;
 
+    //use with pathplanner
+    public static final double kPPPXController = 3;
+    public static final double kPPPYController = 3;
+    public static final double kPPPThetaController = 1.75;
+
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
@@ -163,7 +168,7 @@ public final class Constants {
     //intake powers
     public static final double kIntakeForwardPower = .6;// for cones
     public static final double kIntakeBackwardPower = -.6;// for cubes
-    public static final double kIntakeConeDownPower = .1;
+    public static final double kIntakeConeDownPower = .3;
     public static final double kIntakeHoldPower = .07;
     public static final double kIntakeExtraHoldPower = .5;
     public static final double kIntakeDropCone = -.6;
@@ -189,12 +194,12 @@ public final class Constants {
     public static final double kElevatorF = 0.0;
     public static final double kElevatorOffset = -.487;
 
-    public static final double kElevatorMax = 54;
+    public static final double kElevatorMax = 58;
     public static final double kElevatorShelfCone = 41;
     public static final double kElevatorShelfCube = 39;
     public static final double kElevatorFirstConeLevel = 9;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 31; 
-    public static final double kElevatorThirdConeLevel = 53;
+    public static final double kElevatorThirdConeLevel = 56;
     public static final double kElevatorFirstCubeLevel = 9;// for placeing forwards
     public static final double kElevatorSecondCubeLevel = 31;  
     public static final double kElevatorThirdCubeLevel = 50;
@@ -209,8 +214,8 @@ public final class Constants {
 
     public static final double kElevatorHomeCurrent = 10;
 
-    public static final double kElevatorMaxVelocity = 120;
-    public static final double kElevatorMaxAcceleration = 160;
+    public static final double kElevatorMaxVelocity = 120;//120;
+    public static final double kElevatorMaxAcceleration = 160;//160;
     public static final double kElevatorHomeAcceleration = 3;
     public static final double kElevatorHomeVelocity = 3;
     
@@ -224,26 +229,26 @@ public final class Constants {
     public static final double kElbowF = 0.00;
     public static final double kElbowS = 0.0062947;
     public static final double kElbowV = 0.03199;
-    public static final double kElbowMaxVelocity = 600;
-    public static final double kElbowMaxAcceleration = 600;
+    public static final double kElbowMaxVelocity = 560;//600;
+    public static final double kElbowMaxAcceleration = 560;//600;
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
     // public static final double kElbowLift = 149;// use to get elbow off elevator, it don't like 200 for some reason
     public static final double kElbowLifted = 125;// when the elbow is not resting on elevator
-    public static final double kElbowStow = 149;
-    public static final double kElbowCushionStow = 137;// about 90 degrees up
+    public static final double kElbowStow = 147;//149
+    public static final double kElbowCushionStow = 140;// about 90 degrees up
     public static final double kElbowUp = 135;// about 90 degrees up
-    public static final double kElbowForwards = 149;// stright forwards
-    public static final double kElbowShelf = 133;// stright forwards
+    public static final double kElbowForwards = 147;//149// stright forwards
+    public static final double kElbowShelf = 140;// stright forwards
     public static final double kElbowPrepareDrop = 140;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowDrop = 145;// Not quite all the way forwards, allows cones to clear the pole
-    public static final double kElbowBackwards = 23;// straight back
+    public static final double kElbowBackwards = 33;// straight back
     // public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
-    public static final double kElbowCushionGroundIntake = 3;
-    public static final double kElbowGroundConeUpright = -6;// when the cone stands up straight
+    public static final double kElbowCushionGroundIntake = 5;
+    public static final double kElbowGroundConeUpright = -7;//-11;// when the cone stands up straight
     // public static final double kElbowGroundConeDown = 21;// when the cone are knocked over
-    public static final double kElbowGroundCube = -6;// when picking up cube
+    public static final double kElbowGroundCube = -7;// when picking up cube
     //depricated
     // public static final double kElbowShootCube = 210;//for shooting cubes
     // public static final double kElbowShelfBack = 95;

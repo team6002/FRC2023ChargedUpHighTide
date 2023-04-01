@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -155,6 +156,12 @@ public class SwerveModule {
     m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
 
     m_desiredState = desiredState;
+  }
+
+  public void telemetry(){
+    SmartDashboard.putNumber("Desiredspeed", m_desiredState.speedMetersPerSecond);
+    SmartDashboard.putNumber("Sparkmax set speed", m_drivingSparkMax.get());
+    SmartDashboard.putNumber("actually sped", m_drivingEncoder.getVelocity());
   }
 
   /** Zeroes all the SwerveModule encoders. */

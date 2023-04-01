@@ -31,8 +31,8 @@
     private TrapezoidProfile.State m_setpoint;
     private static double deltaTime = 0.02;
 
-    private final double mRelPosConversion = 6;
-
+    private final double mRelPosConversion = 6;//(360)/(5*5*3);// 6 is the old 3,5,5 gear ration
+    /*360 / 25*/    
     public SUB_Elbow() {
         m_elbowMotor = new CANSparkMax(ElbowConstants.kElbowMotorCanID, MotorType.kBrushless);
         m_elbowMotorPIDController = m_elbowMotor.getPIDController();
@@ -53,7 +53,7 @@
         m_elbowMotorPIDController.setFeedbackDevice(m_elbowEncoder);
 
         m_elbowMotor.setIdleMode(IdleMode.kCoast);
-        m_elbowMotor.setSmartCurrentLimit(20);
+        m_elbowMotor.setSmartCurrentLimit(30);
 
         m_elbowMotorPIDController.setPositionPIDWrappingEnabled(false);
         m_elbowMotorPIDController.setOutputRange(ElbowConstants.kElbowMinOutput, ElbowConstants.kElbowMaxOutput, 1);
