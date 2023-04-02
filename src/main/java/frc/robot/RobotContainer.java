@@ -191,13 +191,32 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+  public Command getFullLinkDividerRed() {
+    return new AUTO_PPFullLinkDividerRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
 
   public Command getFullLinkDividerBlue() {
     return new AUTO_PPFullLinkDividerBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
 
+  public Command getFullLinkSpeedBumpBlue() {
+    return new AUTO_PPFullLinkSpeedBumpBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
   public Command getPP2BalanceBlue() {
     return new AUTO_PP2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
+  public Command getPP2BalanceSpeedBumpBlue() {
+    return new AUTO_PP2BalanceSpeedBumpBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
+  public Command getPP2BalanceSpeedBumpRed() {
+    return new AUTO_PP2BalanceSpeedBumpRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
+  public Command getPP2BalanceRed() {
+    return new AUTO_PP2BalanceRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
 
   public Command getPP3BalanceBlue() {

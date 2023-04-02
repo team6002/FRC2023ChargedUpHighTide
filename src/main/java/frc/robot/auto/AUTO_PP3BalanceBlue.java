@@ -20,6 +20,7 @@ import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
 import frc.robot.commands.CMD_Place1stLevel;
 import frc.robot.commands.CMD_Place2ndLevel;
+import frc.robot.commands.CMD_Place3rdConeLevel;
 import frc.robot.commands.CMD_Place3rdCubeLevel;
 import frc.robot.commands.CMD_SetInitalOdometry;
 import frc.robot.commands.CMD_Stow;
@@ -52,7 +53,7 @@ public class AUTO_PP3BalanceBlue extends SequentialCommandGroup {
       new CMD_setPickUpMode(p_variables, GlobalConstants.kPickBackGroundMode).withTimeout(3),
       new CMD_IntakeHold(p_intake, p_variables).withTimeout(3),
       new CMD_selectIntakeCommandKey(p_intake, p_variables).withTimeout(3),
-      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
+      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
       new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunBlueDivider),
@@ -88,7 +89,7 @@ public class AUTO_PP3BalanceBlue extends SequentialCommandGroup {
           new ParallelDeadlineGroup(
             new SequentialCommandGroup(
               new CMD_CheckOnCharge(p_drivetrain),
-              new WaitCommand(1)  
+              new WaitCommand(1.1)  
             ),
             m_trajectories.followTrajectoryCommand(m_trajectories.ConeParkBlueDivider)
             )

@@ -199,7 +199,7 @@ public final class Constants {
     public static final double kElevatorShelfCube = 39;
     public static final double kElevatorFirstConeLevel = 9;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 31; 
-    public static final double kElevatorThirdConeLevel = 56;
+    public static final double kElevatorThirdConeLevel = 50;
     public static final double kElevatorFirstCubeLevel = 9;// for placeing forwards
     public static final double kElevatorSecondCubeLevel = 31;  
     public static final double kElevatorThirdCubeLevel = 50;

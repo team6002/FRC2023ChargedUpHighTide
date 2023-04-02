@@ -38,10 +38,10 @@ import frc.robot.subsystems.SUB_Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AUTO_PP2BalanceBlue extends SequentialCommandGroup {
+public class AUTO_PP2BalanceRed extends SequentialCommandGroup {
   /** Creates a new AUTO_PPFullLinkDivider. */
   AUTO_Trajectories m_trajectories;
-  public AUTO_PP2BalanceBlue(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
+  public AUTO_PP2BalanceRed(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
   SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables, SUB_Intake p_intake, CommandXboxController p_controller){
     m_trajectories = p_trajectories;
     // Add your commands in the addCommands() call, e.g.
@@ -56,18 +56,18 @@ public class AUTO_PP2BalanceBlue extends SequentialCommandGroup {
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
-      new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunBlueDivider),
+      new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunRedDivider),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
       new ParallelCommandGroup(
         new SequentialCommandGroup(
           new WaitCommand(.4),
-          m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunBlueDivider)
+          m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunRedDivider)
         ),
         new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
         new CMD_IntakeOn(p_intake, p_variables)
       ),
       new ParallelCommandGroup(
-        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceBlueDivider),
+        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedDivider),
         new SequentialCommandGroup(    
         new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
         new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
@@ -83,7 +83,7 @@ public class AUTO_PP2BalanceBlue extends SequentialCommandGroup {
               new CMD_CheckOnCharge(p_drivetrain),
               new WaitCommand(1.05)  
             ),
-            m_trajectories.followTrajectoryCommand(m_trajectories.ParkBlueDivider)
+            m_trajectories.followTrajectoryCommand(m_trajectories.ParkRedDivider)
             )
         ),
         new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)

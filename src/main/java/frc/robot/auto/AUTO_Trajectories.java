@@ -214,9 +214,53 @@
             config);
             
         }
-            //divider trajectories
+        //SpeedBump Trajectories
+        //Blue
+        public PathPlannerTrajectory CubeRunBlueSpeedBump = PathPlanner.loadPath("CubeRunBlueSpeedBump",
+            new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared));
 
-            //blue
+        public PathPlannerTrajectory CubePlaceBlueSpeedBump = PathPlanner.loadPath("CubePlaceBlueSpeedBump",
+            new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
+
+        public PathPlannerTrajectory ConeRunBlueSpeedBump = PathPlanner.loadPath("ConeRunBlueSpeedBump",
+            new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
+        public PathPlannerTrajectory ConePlaceBlueSpeedBump = PathPlanner.loadPath("ConePlaceBlueSpeedBump",
+            new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
+        public PathPlannerTrajectory ParkBlueSpeedBump = PathPlanner.loadPath("ParkBlueSpeedBump",
+        new PathConstraints(AutoConstants.kHalfSpeed,
+        AutoConstants.kHalfAcceleration));
+
+        //Red
+        public PathPlannerTrajectory CubeRunRedSpeedBump = PathPlanner.loadPath("CubeRunRedSpeedBump",
+            new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
+        public PathPlannerTrajectory CubePlaceRedSpeedBump = PathPlanner.loadPath("CubePlaceRedSpeedBump",
+            new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
+
+        public PathPlannerTrajectory ConeRunRedSpeedBump = PathPlanner.loadPath("ConeRunRedSpeedBump",
+            new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
+        public PathPlannerTrajectory ConePlaceRedSpeedBump = PathPlanner.loadPath("ConePlaceRedSpeedBump",
+            new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
+            AutoConstants.kMaxAccelerationMetersPerSecondSquared));
+
+        public PathPlannerTrajectory ParkRedSpeedBump = PathPlanner.loadPath("ParkRedSpeedBump",
+        new PathConstraints(AutoConstants.kHalfSpeed,
+        AutoConstants.kHalfAcceleration));
+
+        //divider trajectories
+        //blue
         public PathPlannerTrajectory ConeRunBlueDivider = PathPlanner.loadPath("ConeRunBlueDivider",
         new PathConstraints(AutoConstants.kMaxSpeedMetersPerSecond,
         AutoConstants.kMaxAccelerationMetersPerSecondSquared));

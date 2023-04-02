@@ -50,7 +50,12 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("WireBridge", m_robotContainer.getWirebridge());
     m_Chooser.addOption("PPFullLinkBlue", m_robotContainer.getFullLinkDividerBlue());
     m_Chooser.addOption("PP2BalanceBlue", m_robotContainer.getPP2BalanceBlue());
-    m_Chooser.addOption("TEST", m_robotContainer.getTest());
+    m_Chooser.addOption("PPFullSpeedBumpBlue", m_robotContainer.getFullLinkSpeedBumpBlue());
+    m_Chooser.addOption("PP2BalanceSpeedBumpBlue", m_robotContainer.getPP2BalanceSpeedBumpBlue());
+    m_Chooser.addOption("PPFullLinkRed", m_robotContainer.getFullLinkDividerRed());
+    m_Chooser.addOption("PP2BalanceRed", m_robotContainer.getPP2BalanceRed());
+    m_Chooser.addOption("PP2BalanceSpeedBumpRed", m_robotContainer.getPP2BalanceSpeedBumpRed());
+    // m_Chooser.addOption("TEST", m_robotContainer.getTest());
     m_Chooser.addOption("PP3BalanceRISKYBlue", m_robotContainer.getPP3BalanceBlue());
     // m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
