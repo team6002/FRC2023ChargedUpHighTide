@@ -87,17 +87,16 @@ public class SUB_Elevator extends SubsystemBase {
   public void periodic() {
       // updates elevator telemetry
       telemetry(); 
+
+      var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
+      m_setpoint = profile.calculate(deltaTime);
       
-      if (m_elevatorOn){
-        var profile = new TrapezoidProfile(m_constraints, m_goal, m_setpoint);
-        m_setpoint = profile.calculate(deltaTime);
-        
-        m_elevatorMotorPIDController.setReference(
-          m_setpoint.position, 
-          CANSparkMax.ControlType.kPosition,(1)
-          // m_feedForward.calculate(m_setpoint.velocity)
-        );
-      }
+      m_elevatorMotorPIDController.setReference(
+        m_setpoint.position, 
+        CANSparkMax.ControlType.kPosition,(1)
+        // m_feedForward.calculate(m_setpoint.velocity)
+      );
+    
     }
 
   public void setPower(double p_power){

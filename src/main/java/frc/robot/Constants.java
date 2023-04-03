@@ -204,7 +204,7 @@ public final class Constants {
     public static final double kElevatorSecondCubeLevel = 31;  
     public static final double kElevatorThirdCubeLevel = 50;
     public static final double kElevatorHome = 0;
-    public static final double kElevatorStow = 0;
+    public static final double kElevatorStow = 9;
     public static final double kElevatorGround = 0;
     public static final double kElevatorPrep = 19;//Position for safely moving elbow to score
     public static final double kElevatorSafety = 12;//maximum value to check if moving elbow endagers robot
@@ -223,14 +223,14 @@ public final class Constants {
 
   public static final class ElbowConstants{
     public static final int kElbowMotorCanID = 11;
-    public static final double kElbowP = 0.04;//.008;
+    public static final double kElbowP = 0.6;//.008;
     public static final double kElbowI = 0;
-    public static final double kElbowD = 0.0049261;
+    public static final double kElbowD = 0.029261;
     public static final double kElbowF = 0.00;
-    public static final double kElbowS = 0.0062947;
+    public static final double kElbowS = 0.0062947;//0.0062947;
     public static final double kElbowV = 0.03199;
-    public static final double kElbowMaxVelocity = 560;//600;
-    public static final double kElbowMaxAcceleration = 560;//600;
+    public static final double kElbowMaxVelocity = 560;//300;//600;
+    public static final double kElbowMaxAcceleration = 560;//300;//600;
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
@@ -246,9 +246,9 @@ public final class Constants {
     public static final double kElbowBackwards = 33;// straight back
     // public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
     public static final double kElbowCushionGroundIntake = 5;
-    public static final double kElbowGroundConeUpright = -7;//-11;// when the cone stands up straight
+    public static final double kElbowGroundConeUpright = -6;//-11;// when the cone stands up straight
     // public static final double kElbowGroundConeDown = 21;// when the cone are knocked over
-    public static final double kElbowGroundCube = -7;// when picking up cube
+    public static final double kElbowGroundCube = -6;// when picking up cube
     //depricated
     // public static final double kElbowShootCube = 210;//for shooting cubes
     // public static final double kElbowShelfBack = 95;

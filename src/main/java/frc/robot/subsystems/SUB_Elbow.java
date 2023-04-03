@@ -140,21 +140,22 @@
     public void telemetry(){
 
         SmartDashboard.putNumber("elbow setpoint position", m_setpoint.position);
+        SmartDashboard.putNumber("ElbowVelocity", m_elbowEncoder.getVelocity());
         SmartDashboard.putNumber("elbow position", m_elbowEncoder.getPosition());
         SmartDashboard.putNumber("absoluteElbow postion", m_elbowAbsoluteEncoder.getPosition());
         SmartDashboard.putNumber("elbow current", m_elbowMotor.getOutputCurrent());
-      m_P = SmartDashboard.getNumber("P", m_P);
+    //   m_P = SmartDashboard.getNumber("P", m_P);
     //   m_I = SmartDashboard.getNumber("I", m_I);
-      m_D = SmartDashboard.getNumber("D", m_D);
+    //   m_D = SmartDashboard.getNumber("D", m_D);
     //   m_S = SmartDashboard.getNumber("S", m_S);
     //   m_V = SmartDashboard.getNumber("V", m_V);
     //   m_acceleration = SmartDashboard.getNumber("acceleration", m_acceleration);
     //   m_velocity = SmartDashboard.getNumber("velocity", m_velocity);
     //   m_wantedPosition = SmartDashboard.getNumber("wantedPosition", m_wantedPosition);
 
-      SmartDashboard.putNumber("P", m_P);
+    //   SmartDashboard.putNumber("P", m_P);
     //   SmartDashboard.putNumber("I", m_I);
-      SmartDashboard.putNumber("D", m_D);
+    //   SmartDashboard.putNumber("D", m_D);
     //   SmartDashboard.putNumber("S", m_S);
     //   SmartDashboard.putNumber("V", m_V);
     //   SmartDashboard.putNumber("acceleration", m_acceleration);
