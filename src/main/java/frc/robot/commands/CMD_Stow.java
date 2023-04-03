@@ -30,7 +30,7 @@ public class CMD_Stow extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new SequentialCommandGroup(
           new WaitCommand(.1),
-          new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround)
+          new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorHome)
         ),
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowCushionStow)    
       ),

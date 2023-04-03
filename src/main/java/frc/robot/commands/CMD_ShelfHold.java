@@ -30,7 +30,7 @@ public class CMD_ShelfHold extends SequentialCommandGroup {
           new CMD_IntakeReadjust(p_intake, p_variables).withTimeout(.25),
           new CMD_IntakeHold(p_intake, p_variables)   
         ),
-        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorGround),
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorStow),
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)
       ),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)    
