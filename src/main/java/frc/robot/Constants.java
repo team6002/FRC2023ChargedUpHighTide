@@ -223,7 +223,7 @@ public final class Constants {
 
   public static final class ElbowConstants{
     public static final int kElbowMotorCanID = 11;
-    public static final double kElbowP = 0.6;//.008;
+    public static final double kElbowP = 0.5;//.008;
     public static final double kElbowI = 0;
     public static final double kElbowD = 0.029261;
     public static final double kElbowF = 0.00;
@@ -246,9 +246,9 @@ public final class Constants {
     public static final double kElbowBackwards = 33;// straight back
     // public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
     public static final double kElbowCushionGroundIntake = 5;
-    public static final double kElbowGroundConeUpright = -6;//-11;// when the cone stands up straight
+    public static final double kElbowGroundConeUpright = -7;//-11;// when the cone stands up straight
     // public static final double kElbowGroundConeDown = 21;// when the cone are knocked over
-    public static final double kElbowGroundCube = -6;// when picking up cube
+    public static final double kElbowGroundCube = -7;// when picking up cube
     //depricated
     // public static final double kElbowShootCube = 210;//for shooting cubes
     // public static final double kElbowShelfBack = 95;
