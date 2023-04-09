@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.ElevatorConstants;
@@ -19,28 +18,18 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CMD_GroundHold extends SequentialCommandGroup {
+public class CMD_Place2ndConeLevel extends SequentialCommandGroup {
   /** Creates a new GroundIntake. */
-  public CMD_GroundHold(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
+  public CMD_Place2ndConeLevel(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new CMD_setState(p_finiteStateMachine, RobotState.STOW),
+      new CMD_setState(p_finiteStateMachine, RobotState.SCORING),
       new ParallelCommandGroup(
-        new SequentialCommandGroup(
-          new CMD_IntakeReadjust(p_intake, p_variables).withTimeout(.5),
-          new CMD_IntakeHold(p_intake, p_variables)   
-        ),
-        new SequentialCommandGroup(
-          new WaitCommand(.2),
-          new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorStow)  
-        ),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)
-        // new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowCushionStow)
-      )
-      // new WaitCommand(.1),
-      // new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowStow)
-      
+        new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorSecondConeLevel),
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)    
+      ),
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowSecondDrop)    
     );
   }
 }

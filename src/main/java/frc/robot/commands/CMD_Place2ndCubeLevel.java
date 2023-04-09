@@ -18,9 +18,9 @@ import frc.robot.subsystems.SUB_FiniteStateMachine.RobotState;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CMD_Place2ndLevel extends SequentialCommandGroup {
+public class CMD_Place2ndCubeLevel extends SequentialCommandGroup {
   /** Creates a new GroundIntake. */
-  public CMD_Place2ndLevel(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
+  public CMD_Place2ndCubeLevel(SUB_Intake p_intake, SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -29,7 +29,7 @@ public class CMD_Place2ndLevel extends SequentialCommandGroup {
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorSecondConeLevel),
         new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)    
       ),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)    
+      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop)    
     );
   }
 }

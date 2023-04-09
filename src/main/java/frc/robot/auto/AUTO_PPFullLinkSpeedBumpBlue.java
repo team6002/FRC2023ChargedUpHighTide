@@ -17,7 +17,7 @@ import frc.robot.commands.CMD_IntakeDrop;
 import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
 import frc.robot.commands.CMD_Place1stLevel;
-import frc.robot.commands.CMD_Place2ndLevel;
+import frc.robot.commands.CMD_Place2ndConeLevel;
 import frc.robot.commands.CMD_Place3rdConeLevel;
 import frc.robot.commands.CMD_Place3rdCubeLevel;
 import frc.robot.commands.CMD_SetInitalOdometry;
@@ -55,23 +55,23 @@ public class AUTO_PPFullLinkSpeedBumpBlue extends SequentialCommandGroup {
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
-      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunBlueSpeedBump),
       new ParallelCommandGroup(
         m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunBlueSpeedBump),
         new SequentialCommandGroup(
           new WaitCommand(2),
           new ParallelCommandGroup(
-            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
             new CMD_IntakeOn(p_intake, p_variables)    
           )
         )
       ),
       new ParallelCommandGroup(
         m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceBlueSpeedBump), 
-        new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
+        new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
       ),
-      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
       new ParallelCommandGroup(
@@ -79,15 +79,15 @@ public class AUTO_PPFullLinkSpeedBumpBlue extends SequentialCommandGroup {
         new SequentialCommandGroup(
           new ParallelDeadlineGroup(
             new WaitCommand(1.5),
-            new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
+            new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
             ),
           new ParallelCommandGroup(
-            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
             new CMD_IntakeOn(p_intake, p_variables)    
           )
         )
       ),
-      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
+      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
     );
   }
 }

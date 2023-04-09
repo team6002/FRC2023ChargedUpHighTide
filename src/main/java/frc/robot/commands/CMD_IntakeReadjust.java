@@ -12,6 +12,7 @@ public class CMD_IntakeReadjust extends CommandBase {
   SUB_Intake m_intake;
   GlobalVariables m_variables;
   boolean m_finished;
+  double m_timer;
   public CMD_IntakeReadjust(SUB_Intake p_intake, GlobalVariables p_variables) {
     m_intake = p_intake;
     m_variables = p_variables;
@@ -21,6 +22,7 @@ public class CMD_IntakeReadjust extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_timer = 0;
     m_finished = false;
     if (m_variables.getHasItem() == false){
       m_finished = true;
@@ -36,7 +38,10 @@ public class CMD_IntakeReadjust extends CommandBase {
   @Override
   public void execute() {
     if (m_intake.getCurrent() >= IntakeConstants.kIntakeConeDetectedCurrent){
-      m_finished = true;
+      m_timer += 1;
+      if (m_timer >= 30){
+        m_finished = true;
+      }
     }else m_finished = false;
   }
 

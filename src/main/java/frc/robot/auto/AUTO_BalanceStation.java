@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.GlobalVariables;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.commands.*;
@@ -62,7 +63,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
               new CMD_CheckOnCharge(p_drivetrain).withTimeout(3)
-              ,new WaitCommand(1.1)//1.03 was St Joe // 1.73 is td
+              ,new WaitCommand(AutoConstants.AutoBalanceTimer)//1.1)//1.03 was St Joe // 1.73 is td
             ),
             new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)
         )

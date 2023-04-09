@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.GlobalVariables;
 import frc.robot.commands.CMD_AdjustBalanceOutside;
@@ -19,7 +20,7 @@ import frc.robot.commands.CMD_IntakeDrop;
 import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
 import frc.robot.commands.CMD_Place1stLevel;
-import frc.robot.commands.CMD_Place2ndLevel;
+import frc.robot.commands.CMD_Place2ndConeLevel;
 import frc.robot.commands.CMD_Place3rdConeLevel;
 import frc.robot.commands.CMD_Place3rdCubeLevel;
 import frc.robot.commands.CMD_SetInitalOdometry;
@@ -63,17 +64,17 @@ public class AUTO_PP3BalanceBlue extends SequentialCommandGroup {
           new WaitCommand(.4),
           m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunBlueDivider)
         ),
-        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
         new CMD_IntakeOn(p_intake, p_variables)
       ),
       new ParallelCommandGroup(
         m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceBlueDivider),
         new SequentialCommandGroup(    
-        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
         new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
         )
       ),
-      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
       new ParallelCommandGroup(
@@ -89,12 +90,12 @@ public class AUTO_PP3BalanceBlue extends SequentialCommandGroup {
           new ParallelDeadlineGroup(
             new SequentialCommandGroup(
               new CMD_CheckOnCharge(p_drivetrain),
-              new WaitCommand(1.1)  
+              new WaitCommand(AutoConstants.AutoBalanceTimer)  
             ),
             m_trajectories.followTrajectoryCommand(m_trajectories.ConeParkBlueDivider)
             )
         ),
-        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
+        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
       ),
       new WaitCommand(1),
       new CMD_AdjustBalanceOutside(p_drivetrain)

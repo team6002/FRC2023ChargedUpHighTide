@@ -5,11 +5,15 @@
 package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.GlobalVariables;
+import frc.robot.commands.CMD_AdjustBalanceInside;
+import frc.robot.commands.CMD_CheckOnCharge;
 import frc.robot.commands.CMD_GroundCubeIntake;
 import frc.robot.commands.CMD_GroundHold;
 import frc.robot.commands.CMD_IntakeDrop;
@@ -35,10 +39,10 @@ import frc.robot.subsystems.SUB_Intake;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AUTO_PPFullLinkDividerBlue extends SequentialCommandGroup {
+public class AUTO_PP2SpeedBumpRed extends SequentialCommandGroup {
   /** Creates a new AUTO_PPFullLinkDivider. */
   AUTO_Trajectories m_trajectories;
-  public AUTO_PPFullLinkDividerBlue(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
+  public AUTO_PP2SpeedBumpRed(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
   SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables, SUB_Intake p_intake, CommandXboxController p_controller){
     m_trajectories = p_trajectories;
     // Add your commands in the addCommands() call, e.g.
@@ -53,44 +57,28 @@ public class AUTO_PPFullLinkDividerBlue extends SequentialCommandGroup {
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
-      new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunBlueDivider),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
+      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunRedSpeedBump),
       new ParallelCommandGroup(
+        m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunRedSpeedBump),
         new SequentialCommandGroup(
-          new WaitCommand(.6),
-          m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunBlueDivider)
-        ),
-        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
-        new CMD_IntakeOn(p_intake, p_variables)
+          new WaitCommand(2),
+          new ParallelCommandGroup(
+            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
+            new CMD_IntakeOn(p_intake, p_variables)    
+          )
+        )
       ),
       new ParallelCommandGroup(
-        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceBlueDivider),
-        new SequentialCommandGroup(    
-        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
+        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedSpeedBump), 
         new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
-        )
       ),
-      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      new CMD_IntakeDrop(p_intake, p_variables),
-      new WaitCommand(.2),
-      new ParallelCommandGroup(
-        new SequentialCommandGroup(
-        new WaitCommand(.4),
-        m_trajectories.followTrajectoryCommand(m_trajectories.ConeRunBlueDivider)
-      ),
-        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
-        new CMD_IntakeOn(p_intake, p_variables)
-      ),
-      new ParallelCommandGroup(
-        m_trajectories.followTrajectoryCommand(m_trajectories.ConePlaceBlueDivider),
-        new SequentialCommandGroup(
-          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),      
-          new CMD_Place2ndConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3) 
-        )
-      ),
+      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
       new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
+      
     );
   }
 }

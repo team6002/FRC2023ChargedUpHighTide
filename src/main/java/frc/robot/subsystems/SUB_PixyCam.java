@@ -42,7 +42,7 @@ public class SUB_PixyCam extends SubsystemBase {
   
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("PiXy", getSomething());
+    // SmartDashboard.putNumber("PiXy", getSomething());
     // This method will be called once per scheduler run
   }
 }

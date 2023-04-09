@@ -16,6 +16,7 @@ import frc.robot.auto.*;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -51,6 +52,7 @@ public class RobotContainer {
 
   private final BooleanSupplier HasItem = () -> m_variables.getHasItem();
   private final BooleanSupplier IntakeState = () -> m_variables.getIntakeState();
+  private final BooleanSupplier GroundLevel = () -> (m_variables.getDropLevel() == 1);
 
   private final String buildInfoFilename = "buildInfo.txt";
   
@@ -211,6 +213,10 @@ public class RobotContainer {
     return new AUTO_PP2BalanceSpeedBumpBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
 
+  public Command getPP2SpeedBumpRed() {
+    return new AUTO_PP2SpeedBumpRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+  }
+
   public Command getPP2BalanceSpeedBumpRed() {
     return new AUTO_PP2BalanceSpeedBumpRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
@@ -334,16 +340,47 @@ public class RobotContainer {
   );
 
   
-  public final Command getLevelCommand =
+  public final Command getConeLevelCommand =
   new SelectCommand(
     Map.ofEntries(
       Map.entry(GlobalConstants.kElevator1stLevel, new CMD_Place1stLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
-      Map.entry(GlobalConstants.kElevator2ndLevel, new CMD_Place2ndLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kElevator2ndLevel, new CMD_Place2ndConeLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
       Map.entry(GlobalConstants.kElevator3rdLevel, new CMD_Place3rdConeLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables))
     ), 
     this::getDropLevel
   );
+
+  public final Command getCubeLevelCommand =
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kElevator1stLevel, new CMD_Place1stLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kElevator2ndLevel, new CMD_Place2ndCubeLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables)),
+      Map.entry(GlobalConstants.kElevator3rdLevel, new CMD_Place3rdCubeLevel(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables))
+    ), 
+    this::getDropLevel
+  );
+
+  public final Command getConeElbowDropCommand =
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kElevator1stLevel, new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1)),
+      Map.entry(GlobalConstants.kElevator2ndLevel, new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowSecondDrop).withTimeout(1)),
+      Map.entry(GlobalConstants.kElevator3rdLevel, new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1))
+    ), 
+    this::getDropLevel
+  );
   
+  public final Command getCubeElbowDropCommand =
+  new SelectCommand(
+    Map.ofEntries(
+      Map.entry(GlobalConstants.kElevator1stLevel, new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1)),
+      Map.entry(GlobalConstants.kElevator2ndLevel, new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1)),
+      Map.entry(GlobalConstants.kElevator3rdLevel, new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1))
+    ), 
+    this::getDropLevel
+  );
+  
+
   public final Command getCycleCommand =
   new SelectCommand(
     Map.ofEntries(
@@ -356,15 +393,21 @@ public class RobotContainer {
       )),
       Map.entry(GlobalConstants.kExtendStage,new SequentialCommandGroup(
       new ParallelCommandGroup(
-        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables),
+        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(2),
         new CMD_IntakeExtraHold(m_intake, m_variables),
-        getLevelCommand
+        new ConditionalCommand(
+          getConeLevelCommand, 
+          getCubeLevelCommand, 
+          IntakeState)
       ),
       new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
       )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
-        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables),
-        new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowDrop).withTimeout(1),
+        // new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables),
+        new ConditionalCommand(
+          getConeElbowDropCommand,
+          getCubeElbowDropCommand,
+          IntakeState),
         new CMD_IntakeDrop(m_intake, m_variables),
         new WaitCommand(.2),
         new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables),

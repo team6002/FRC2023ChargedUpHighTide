@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("PP2BalanceSpeedBumpBlue", m_robotContainer.getPP2BalanceSpeedBumpBlue());
     m_Chooser.addOption("PPFullLinkRed", m_robotContainer.getFullLinkDividerRed());
     m_Chooser.addOption("PP2BalanceRed", m_robotContainer.getPP2BalanceRed());
+    m_Chooser.addOption("PP2SpeedBumpRed", m_robotContainer.getPP2SpeedBumpRed());
     m_Chooser.addOption("PP2BalanceSpeedBumpRed", m_robotContainer.getPP2BalanceSpeedBumpRed());
     // m_Chooser.addOption("TEST", m_robotContainer.getTest());
     m_Chooser.addOption("PP3BalanceRISKYBlue", m_robotContainer.getPP3BalanceBlue());

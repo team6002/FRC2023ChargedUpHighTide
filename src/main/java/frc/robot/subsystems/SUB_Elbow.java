@@ -31,7 +31,7 @@
     private TrapezoidProfile.State m_setpoint;
     private static double deltaTime = 0.02;
     private static double p_S;
-    private final double mRelPosConversion = 6;//(360)/(5*5*3);// 6 is the old 3,5,5 gear ration
+    private final double mRelPosConversion = 3;//(360)/(5*5*5);// 6 is the old 3,5,5 gear ration
     /*360 / 25*/    
     public SUB_Elbow() {
         m_elbowMotor = new CANSparkMax(ElbowConstants.kElbowMotorCanID, MotorType.kBrushless);
@@ -68,8 +68,6 @@
         // SmartDashboard.putNumber("Elbow D", ElbowConstants.kElbowD);
         // SmartDashboard.putNumber("Elbow F", ElbowConstants.kElbowF);
 
-        m_feedForward = new SimpleMotorFeedforward(ElbowConstants.kElbowS, ElbowConstants.kElbowV);
-        m_constraints = new TrapezoidProfile.Constraints(ElbowConstants.kElbowMaxVelocity, ElbowConstants.kElbowMaxAcceleration);
         m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
         m_goal = m_setpoint;
 
@@ -79,6 +77,8 @@
     }
 
     public void elbowInit(){
+        m_feedForward = new SimpleMotorFeedforward(ElbowConstants.kElbowS, ElbowConstants.kElbowV);
+        m_constraints = new TrapezoidProfile.Constraints(ElbowConstants.kElbowMaxVelocity, ElbowConstants.kElbowMaxAcceleration);
         m_elbowEncoder.setPosition(getAbsolutePosition());
         m_setpoint = new TrapezoidProfile.State(getPosition(), 0); 
         m_goal = m_setpoint;
@@ -124,8 +124,8 @@
 
         m_elbowMotorPIDController.setReference(
             m_setpoint.position,
-            CANSparkMax.ControlType.kPosition, (1),
-            m_feedForward.calculate(m_setpoint.velocity)
+            CANSparkMax.ControlType.kPosition, (1)
+            // m_feedForward.calculate(m_setpoint.velocity)
         );
     }
 
@@ -143,7 +143,10 @@
         SmartDashboard.putNumber("ElbowVelocity", m_elbowEncoder.getVelocity());
         SmartDashboard.putNumber("elbow position", m_elbowEncoder.getPosition());
         SmartDashboard.putNumber("absoluteElbow postion", m_elbowAbsoluteEncoder.getPosition());
-        SmartDashboard.putNumber("elbow current", m_elbowMotor.getOutputCurrent());
+        SmartDashboard.putNumber("ElbowOutput", m_elbowMotor.get());
+        SmartDashboard.putNumber("ElbowVoltage", m_elbowMotor.getBusVoltage());
+        SmartDashboard.putNumber("ElbowStuff", m_elbowMotor.getAppliedOutput());
+        // SmartDashboard.putNumber("elbow current", m_elbowMotor.getOutputCurrent());
     //   m_P = SmartDashboard.getNumber("P", m_P);
     //   m_I = SmartDashboard.getNumber("I", m_I);
     //   m_D = SmartDashboard.getNumber("D", m_D);
@@ -169,6 +172,6 @@
     //   m_constraints = new TrapezoidProfile.Constraints(m_velocity, m_acceleration);
     //   m_goal = new TrapezoidProfile.State(m_wantedPosition, 0);
         
-      SmartDashboard.putNumber("output", m_elbowMotor.getAppliedOutput());//   SmartDashboard.putNumber("elbowSetpoint", m_wantedPosition);
+    //   SmartDashboard.putNumber("output", m_elbowMotor.getAppliedOutput());//   SmartDashboard.putNumber("elbowSetpoint", m_wantedPosition);
     }
     }

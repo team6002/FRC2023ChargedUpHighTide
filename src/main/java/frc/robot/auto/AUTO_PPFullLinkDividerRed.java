@@ -16,7 +16,7 @@ import frc.robot.commands.CMD_IntakeDrop;
 import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
 import frc.robot.commands.CMD_Place1stLevel;
-import frc.robot.commands.CMD_Place2ndLevel;
+import frc.robot.commands.CMD_Place2ndConeLevel;
 import frc.robot.commands.CMD_Place3rdConeLevel;
 import frc.robot.commands.CMD_Place3rdCubeLevel;
 import frc.robot.commands.CMD_SetInitalOdometry;
@@ -57,38 +57,38 @@ public class AUTO_PPFullLinkDividerRed extends SequentialCommandGroup {
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
       new ParallelCommandGroup(
         new SequentialCommandGroup(
-          new WaitCommand(.4),
+          new WaitCommand(.6),
           m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunRedDivider)
         ),
-        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
         new CMD_IntakeOn(p_intake, p_variables)
       ),
       new ParallelCommandGroup(
         m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedDivider),
         new SequentialCommandGroup(    
-        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
         new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
         )
       ),
-      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
+      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(.2),
       new ParallelCommandGroup(
         new SequentialCommandGroup(
         new WaitCommand(.4),
         m_trajectories.followTrajectoryCommand(m_trajectories.ConeRunRedDivider)
       ),
-        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
-        new CMD_IntakeOn(p_intake, p_variables)
+        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
+        new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
       ),
       new ParallelCommandGroup(
         m_trajectories.followTrajectoryCommand(m_trajectories.ConePlaceRedDivider),
         new SequentialCommandGroup(
-          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),      
-          new CMD_Place2ndLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables) 
+          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),      
+          new CMD_Place2ndConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3) 
         )
       ),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(.2),
       new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
     );

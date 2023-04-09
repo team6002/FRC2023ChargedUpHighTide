@@ -41,16 +41,16 @@ public class SUB_Limelight extends SubsystemBase {
   }
 
   public void telemetry(){
-    SmartDashboard.putBoolean("DO YOU SEE ANYTHING ", hasTarget());
+    // SmartDashboard.putBoolean("DO YOU SEE ANYTHING ", hasTarget());
 
     if (hasTarget()) {
       SmartDashboard.putNumber("target ID", getTargetID());
-      SmartDashboard.putNumber("target x", getTargetX());
-      SmartDashboard.putNumber("target Y", getTargetY());
-      SmartDashboard.putNumber("target Z", getTargetZ());
-      SmartDashboard.putNumber("target pitch", getTargetPitch());
-      SmartDashboard.putNumber("target yaw", getTargetYaw());
-      SmartDashboard.putNumberArray("botpose", botpose);
+      // SmartDashboard.putNumber("target x", getTargetX());
+      // SmartDashboard.putNumber("target Y", getTargetY());
+      // SmartDashboard.putNumber("target Z", getTargetZ());
+      // SmartDashboard.putNumber("target pitch", getTargetPitch());
+      // SmartDashboard.putNumber("target yaw", getTargetYaw());
+      // SmartDashboard.putNumberArray("botpose", botpose);
     }
   }
 
@@ -93,8 +93,8 @@ public class SUB_Limelight extends SubsystemBase {
   }
 
   public Pose2d getRobotPoseInTargetSpace() {
-    System.out.println("botpose[4]= " + botpose[4]);
-    System.out.println(Rotation2d.fromDegrees(botpose[4]));
+    // System.out.println("botpose[4]= " + botpose[4]);
+    // System.out.println(Rotation2d.fromDegrees(botpose[4]));
     // Pose2d pose = new Pose2d(botpose[2], -botpose[0], Rotation2d.fromDegrees(0));
     Pose2d pose = new Pose2d(-botpose[2], botpose[0], Rotation2d.fromDegrees(-botpose[4]));
 

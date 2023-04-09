@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.GlobalVariables;
 import frc.robot.commands.CMD_AdjustBalanceInside;
@@ -19,7 +20,7 @@ import frc.robot.commands.CMD_IntakeDrop;
 import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
 import frc.robot.commands.CMD_Place1stLevel;
-import frc.robot.commands.CMD_Place2ndLevel;
+import frc.robot.commands.CMD_Place2ndConeLevel;
 import frc.robot.commands.CMD_Place3rdConeLevel;
 import frc.robot.commands.CMD_Place3rdCubeLevel;
 import frc.robot.commands.CMD_SetInitalOdometry;
@@ -57,31 +58,31 @@ public class AUTO_PP2BalanceSpeedBumpRed extends SequentialCommandGroup {
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
-      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunRedSpeedBump),
       new ParallelCommandGroup(
         m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunRedSpeedBump),
         new SequentialCommandGroup(
           new WaitCommand(2),
           new ParallelCommandGroup(
-            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
             new CMD_IntakeOn(p_intake, p_variables)    
           )
         )
       ),
       new ParallelCommandGroup(
         m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedSpeedBump), 
-        new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
+        new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
       ),
-      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
       new ParallelCommandGroup(
         new SequentialCommandGroup(
           new ParallelDeadlineGroup(
             new SequentialCommandGroup(
-              new CMD_CheckOnCharge(p_drivetrain),
-              new WaitCommand(1.05)  
+              new CMD_CheckOnCharge(p_drivetrain).withTimeout(3),
+              new WaitCommand(AutoConstants.AutoBalanceTimer)  
             ),
             m_trajectories.followTrajectoryCommand(m_trajectories.ParkRedSpeedBump)
             )

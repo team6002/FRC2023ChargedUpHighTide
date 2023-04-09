@@ -22,9 +22,9 @@ public class CMD_AdjustBalanceInside extends CommandBase {
     m_timer.start();
     m_timer.reset();
     if (Math.abs(m_drivetrain.getRoll()) < 5){
-      m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.04);  
+      m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.03);  
     } else{ 
-    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.07);  
+    m_timeLimit = Math.abs(m_drivetrain.getRoll() * 0.06);  
     }
   }
 
