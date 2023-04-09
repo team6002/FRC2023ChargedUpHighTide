@@ -225,14 +225,14 @@ public final class Constants {
 
   public static final class ElbowConstants{
     public static final int kElbowMotorCanID = 11;
-    public static final double kElbowP = 0.5;//.008;
+    public static final double kElbowP = .1;//0.5;
     public static final double kElbowI = 0;
     public static final double kElbowD = 0.029261;
     public static final double kElbowF = 0.00;
     public static final double kElbowS = 0.0062947;//0.0062947;
     public static final double kElbowV = 0.03199;
-    public static final double kElbowMaxVelocity = 300;//620;//300;//600;
-    public static final double kElbowMaxAcceleration = 200;//1000;//300;//600;
+    public static final double kElbowMaxVelocity = 350;//620;//300;//600;
+    public static final double kElbowMaxAcceleration = 850;//1000;//300;//600;
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
@@ -248,10 +248,10 @@ public final class Constants {
     public static final double kElbowDrop = 145;// Not quite all the way forwards, allows cones to clear the pole
     public static final double kElbowBackwards = 33;// straight back
     // public static final double kElbowThrow = 60;//for throwing the cubes for MAXIMUM distance
-    public static final double kElbowCushionGroundIntake = 15;
-    public static final double kElbowGroundConeUpright = 15;//-11;// when the cone stands up straight
+    public static final double kElbowCushionGroundIntake = 20;
+    public static final double kElbowGroundConeUpright = 20;//-11;// when the cone stands up straight
     // public static final double kElbowGroundConeDown = 21;// when the cone are knocked over
-    public static final double kElbowGroundCube = 15;// when picking up cube
+    public static final double kElbowGroundCube = 20;// when picking up cube
     //depricated
     // public static final double kElbowShootCube = 210;//for shooting cubes
     // public static final double kElbowShelfBack = 95;
