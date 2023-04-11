@@ -117,76 +117,23 @@ public class RobotContainer {
     m_driverController.povUp().onTrue(new CMD_ToggleDropLevel(m_variables));
 
     
-    m_operatorController.povDown().onTrue(new CMD_ToggleIntakeState(m_variables));
+    /* ==================OPERATOR CONTROLS GO================== */
+    //first level
+    m_operatorController.a().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel));
+    //second level
+    m_operatorController.b().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel));
+    //third level
+    m_operatorController.y().onTrue(new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel));
+    //changes intake state
+    m_operatorController.x().onTrue(new CMD_ToggleIntakeState(m_variables));
+    // offsets the auto align to the left
+    m_operatorController.leftBumper().onTrue(new CMD_setRetroflectiveAlignPosition(m_variables, GlobalConstants.kLeftRetroflectiveAlignPosition));
+    // offsets the auto align to the right
+    m_operatorController.rightBumper().onTrue(new CMD_setRetroflectiveAlignPosition(m_variables, GlobalConstants.kRightRetroflectiveAlignPosition));
+    // set the offset back to the middle
+    m_operatorController.back().onTrue(new CMD_setRetroflectiveAlignPosition(m_variables, GlobalConstants.kMiddleRetroflectiveAlignPositon));
 
-    //autodrive right, bottom, numpad 1
-    m_operatorController.a().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
-      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHTSCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
-
-    //autodrive middle, bottom, numpad 2
-    m_operatorController.b().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
-      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLESCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
-
-    //autodrive left, bottom, numpad 3
-    m_operatorController.x().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator1stLevel),
-      new CMD_setAlignPosition(m_variables, AlignPosition.LEFTSCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
-
-    //autodrive right, 2nd level, numpad 4
-    m_operatorController.rightBumper().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kConeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHTSCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
-
-    //autodrive middle, 2nd level, numpad 5
-    m_operatorController.leftBumper().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kCubeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLESCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
-
-    //autodrive left, 2nd level, numpad 6
-    m_operatorController.y().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator2ndLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kConeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.LEFTSCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
-
-    //autodrive right, 3rd level, numpad 7
-    m_operatorController.povRight().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kConeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.RIGHTSCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
-
-    //autodrive middle, 3rd level, numpad 8
-    m_operatorController.povUp().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kCubeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.MIDDLESCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
-
-    //autodrive left, 3rd level, numpad 9
-    m_operatorController.povLeft().onTrue(new SequentialCommandGroup(
-      new CMD_setDropLevel(m_variables, GlobalConstants.kElevator3rdLevel),
-      new CMD_setIntakeState(m_variables, GlobalConstants.kConeMode),
-      new CMD_setAlignPosition(m_variables, AlignPosition.LEFTSCORE),
-      new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
-    ));
+  
     /* ==================OPERATOR CONTROLS END================== */
   }
   /**
