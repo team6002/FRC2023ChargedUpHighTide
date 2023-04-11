@@ -44,6 +44,7 @@ public class RobotContainer {
   private final SUB_PixyCam m_pixyCam = new SUB_PixyCam();
   private final SUB_FiniteStateMachine m_finiteStateMachine = new SUB_FiniteStateMachine();
   private final GlobalVariables m_variables = new GlobalVariables();
+  private final SUB_IntakeCamera m_intakeCam = new SUB_IntakeCamera();
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -71,7 +72,7 @@ public class RobotContainer {
       new CMD_selectLimelightPipeline(m_limelight, m_variables))
     );
     //this drives
-    m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController, m_limelight));
+    m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController, m_limelight, m_intakeCam));
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -233,6 +234,7 @@ public class RobotContainer {
     m_variables.setAutoKey(p_key);
   }
   public void SubsystemsInit(){
+    m_intakeCam.init();
     m_elbow.elbowInit();
     m_elevator.elevatorInit();
     m_intake.intakeInit();

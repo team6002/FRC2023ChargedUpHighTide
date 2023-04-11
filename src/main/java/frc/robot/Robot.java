@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.SUB_IntakeCamera;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -60,7 +61,6 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("PP3BalanceRISKYBlue", m_robotContainer.getPP3BalanceBlue());
     // m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
-
     // DataLogger.log("robotInit() done");
   }
 

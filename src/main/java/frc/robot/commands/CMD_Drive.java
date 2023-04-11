@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LimeLightConstants;
 import frc.robot.subsystems.SUB_Drivetrain;
+import frc.robot.subsystems.SUB_IntakeCamera;
 // import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.SUB_Limelight;
 
@@ -15,6 +16,7 @@ public class CMD_Drive extends CommandBase {
   private final SUB_Drivetrain m_drivetrain;
   private final CommandXboxController controller;
   private final SUB_Limelight m_limelight;
+  private final SUB_IntakeCamera m_intakeCam;
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   // private final SlewRateLimiter xspeedLimiter = new SlewRateLimiter(0.5);
   // private final SlewRateLimiter yspeedLimiter = new SlewRateLimiter(0.5);
@@ -27,12 +29,14 @@ public class CMD_Drive extends CommandBase {
   final double limelightAngleThreshold = LimeLightConstants.klimelightAngleThreshold;
   final double limelightAdjustRotKp = LimeLightConstants.klimelightAdjustRotKp;
   final double limelightAdjustStrafeKp = LimeLightConstants.klimelightAdjustStrafeKp;
-  public CMD_Drive(SUB_Drivetrain m_drivetrain, CommandXboxController m_driverControllerTrigger, SUB_Limelight p_limelight) {
+
+  public CMD_Drive(SUB_Drivetrain m_drivetrain, CommandXboxController m_driverControllerTrigger, SUB_Limelight p_limelight, SUB_IntakeCamera p_intakeCam) {
     this.m_drivetrain = m_drivetrain;
     addRequirements(m_drivetrain);
 
     this.controller = m_driverControllerTrigger;
     this.m_limelight = p_limelight;
+    this.m_intakeCam = p_intakeCam;
   }
 
   @Override
@@ -88,8 +92,17 @@ public class CMD_Drive extends CommandBase {
         }
         }
       }
-    } else {
-      // m_limelight.useAprilTagPipeline();
+    } else if (this.controller.leftTrigger().getAsBoolean()) {
+      /* TODO: ALSO CHECK THAT WE'RE IN CUBE GROUND INTAKING STATE */
+      if (m_intakeCam.hasTarget()) {
+        double heading_error = m_intakeCam.getTxZero() - m_intakeCam.getTargetTx();
+
+        if (Math.abs(heading_error) > 5) {
+          rot = heading_error * 0.002;
+
+          SmartDashboard.putNumber("IntakeCamSpeed", rot);
+        }
+      }
     }
 
     // SmartDashboard.putNumber("xspeed", xSpeed);
