@@ -216,6 +216,8 @@ public final class Constants {
 
     public static final double kElevatorHomeCurrent = 10;
 
+    public static final float kElevatorMaxLimit = 56;
+    public static final float kElevatorMinLimit = 0;
     public static final double kElevatorMaxVelocity = 120;//120;
     public static final double kElevatorMaxAcceleration = 160;//160;
     public static final double kElevatorHomeAcceleration = 3;

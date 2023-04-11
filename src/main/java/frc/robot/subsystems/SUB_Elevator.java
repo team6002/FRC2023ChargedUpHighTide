@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants.ElevatorConstants;
@@ -33,6 +34,8 @@ public class SUB_Elevator extends SubsystemBase {
       m_elevatorEncoder.setPositionConversionFactor(.731);
       m_elevatorEncoder.setVelocityConversionFactor(0.731/60);
       m_elevatorMotor.setInverted(false);
+      m_elevatorMotor.setSoftLimit(SoftLimitDirection.kForward, ElevatorConstants.kElevatorMaxLimit);
+      m_elevatorMotor.setSoftLimit(SoftLimitDirection.kReverse, ElevatorConstants.kElevatorMinLimit);
       m_elevatorMotorPIDController.setP(ElevatorConstants.kElevatorP,1);
       m_elevatorMotorPIDController.setI(ElevatorConstants.kElevatorI,1);
       m_elevatorMotorPIDController.setD(ElevatorConstants.kElevatorD,1);
