@@ -225,7 +225,7 @@ public final class Constants {
 
   public static final class ElbowConstants{
     public static final int kElbowMotorCanID = 11;
-    public static final double kElbowP = .1;//0.5;
+    public static final double kElbowP = .01;//0.5;
     public static final double kElbowI = 0;
     public static final double kElbowD = 0.029261;
     public static final double kElbowF = 0.00;
@@ -270,7 +270,7 @@ public final class Constants {
     public static final double[] kTarget8Constants = {8, 8, 180};
 
     public static final double klimelightAngleThreshold = 2.0;
-    public static final double klimelightAdjustRotKp = 0.01;
+    public static final double klimelightAdjustRotKp = 0.015;
     public static final double klimelightAdjustRotKf = 0.03;
     public static final double klimelightAdjustStrafeKp = 0.01;
   }
