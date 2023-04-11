@@ -125,7 +125,7 @@
         m_elbowMotorPIDController.setReference(
             m_setpoint.position,
             CANSparkMax.ControlType.kPosition, (1)
-            // m_feedForward.calculate(m_setpoint.velocity)
+            ,m_feedForward.calculate(m_setpoint.velocity)
         );
     }
 
