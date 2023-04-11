@@ -365,7 +365,9 @@ public final class Constants {
     public static final int kMiddleGrid = 2;
     public static final int kLeftGrid = 3;
 
-    
+    public static final int kLeftRetroflectiveAlignPosition = 1;
+    public static final int kMiddleRetroflectiveAlignPositon = 0;
+    public static final int kRightRetroflectiveAlignPosition = 2;    
   }
 
   public static final class BlinkinConstants {

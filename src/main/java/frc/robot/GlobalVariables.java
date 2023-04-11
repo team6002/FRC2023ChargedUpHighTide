@@ -22,6 +22,7 @@ public class GlobalVariables extends SubsystemBase {
   private int m_extendKey = -1;
   private int m_PickAlignPosition = -1;
   private int m_PlaceAlignPosition = -1;
+  private int m_RetroflectiveAlignPosition = 0;// 0 is middle, 1 is left, 2 is right 
 
   private Constants.AutoAlignConstants.AlignPosition m_AlignPosition;
 
@@ -130,6 +131,14 @@ public class GlobalVariables extends SubsystemBase {
     m_extendKey = p_extendKey;
   }
 
+  public int getRetoflectiveAlignPosition(){
+    return m_RetroflectiveAlignPosition;
+  }
+
+  public void setRetroflectiveAlignPosition(int p_RetroflectiveAlignPosition){
+    m_RetroflectiveAlignPosition = p_RetroflectiveAlignPosition;
+  }
+
   
   @Override
   public void periodic() {
@@ -140,35 +149,5 @@ public class GlobalVariables extends SubsystemBase {
     SmartDashboard.putNumber("DropLevel", m_dropLevel);
     SmartDashboard.putNumber("StowLocation", m_stowLocation);
     SmartDashboard.putNumber("PickMode", m_pickMode);
-
-    if (m_hasItem == true){
-      if (getPlaceAlignPosition() == GlobalConstants.kLeftPlacePosition){
-        SmartDashboard.putString("AlignPosition", "LeftPlace");  
-      }else 
-        if (getPlaceAlignPosition() == GlobalConstants.kMiddlePlacePosition){
-        SmartDashboard.putString("AlignPosition", "MiddlePlace");  
-      }else
-        if (getPlaceAlignPosition() == GlobalConstants.kRightPlacePosition){
-        SmartDashboard.putString("AlignPosition", "RightPlace");  
-        }
-      }else {
-      if (getPickUpAlignPosition() == GlobalConstants.kLeftPickPosition){
-        SmartDashboard.putString("AlignPosition", "LeftPick");
-      }else
-        if (getPickUpAlignPosition() == GlobalConstants.kRightPickPosition){
-        SmartDashboard.putString("AlignPosition", "RightPick");  
-        }
-      else {
-        SmartDashboard.putString("AlignPosition", "No Pick");
-      }
-    }
-    if (m_gridposition == GlobalConstants.kLeftGrid){
-      SmartDashboard.putString("GoalPosition", "LeftGrid");
-    }else if (m_gridposition == GlobalConstants.kMiddleGrid){
-      SmartDashboard.putString("GoalPosition", "MiddleGrid");
-    }else if (m_gridposition == GlobalConstants.kRightGrid){
-      SmartDashboard.putString("GoalPosition", "RightGrid");
-    }
-
   }
 }

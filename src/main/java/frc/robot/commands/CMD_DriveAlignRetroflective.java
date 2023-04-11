@@ -21,6 +21,7 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   double rot;
   double heading_error;
   boolean m_finished;
+  double m_offset;
   final double limelightAngleThreshold = LimeLightConstants.klimelightAngleThreshold;
   final double limelightAdjustRotKp = LimeLightConstants.klimelightAdjustRotKp;
   final double limelightAdjustStrafeKp = LimeLightConstants.klimelightAdjustStrafeKp;
@@ -36,6 +37,13 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kLeftRetroflectiveAlignPosition){
+      m_offset = 2;
+    }else if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kRightRetroflectiveAlignPosition){
+      m_offset = -2;
+    }else {
+      m_offset = 0;
+    }
     if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
       m_finished = true;
     }else {
@@ -52,11 +60,11 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
       return;
     }
     if (m_limelight.hasTarget()) {
-      heading_error = m_limelight.getTargetTx();
+      heading_error = m_limelight.getTargetTx() + m_offset;
       
         // rot = -strafe_error * limelightAdjustKp;
       if (Math.abs(heading_error) > limelightAngleThreshold) {
-        rot = (-heading_error * limelightAdjustRotKp) + Math.copySign(LimeLightConstants.klimelightAdjustRotKf, -heading_error);
+        rot = ((-heading_error) * limelightAdjustRotKp) + Math.copySign(LimeLightConstants.klimelightAdjustRotKf, -heading_error);
       }
     }else {
       m_finished = true;
