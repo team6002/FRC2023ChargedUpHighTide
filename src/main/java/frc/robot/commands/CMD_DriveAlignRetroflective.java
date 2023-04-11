@@ -38,9 +38,9 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   @Override
   public void initialize() {
     if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kLeftRetroflectiveAlignPosition){
-      m_offset = 2;
+      m_offset = -4;
     }else if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kRightRetroflectiveAlignPosition){
-      m_offset = -2;
+      m_offset = 7;
     }else {
       m_offset = 0;
     }
@@ -74,7 +74,9 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_variables.setRetroflectiveAlignPosition(GlobalConstants.kMiddleRetroflectiveAlignPositon);
+  }
 
   // Returns true when the command should end.
   @Override

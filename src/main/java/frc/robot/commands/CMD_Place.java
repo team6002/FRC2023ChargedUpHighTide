@@ -28,6 +28,7 @@ public class CMD_Place extends CommandBase {
   boolean m_elbowSafe;//if the elbow is able to move down safety
   boolean m_elbowDone;// if the elbow is at the correct spot
   boolean m_elevatorDone;
+  boolean m_autodrop;
   double m_wantedElbowPosition;
   double m_wantedElevatorPosition;
   double m_debounceTimer;
@@ -96,14 +97,13 @@ public class CMD_Place extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_autodrop = m_variables.getAutoDrop();
     m_debounceTimer = 0;
     m_finished = false;
     if (m_variables.getIntakeState() == GlobalConstants.kConeMode){
       m_getConeExtend();
-      m_elevator.setReference(m_wantedElevatorPosition);
     }else {
       m_getCubeExtend();
-      m_elevator.setReference(m_wantedElevatorPosition);
     }
     m_previousState = m_state;
   }
@@ -146,6 +146,9 @@ public class CMD_Place extends CommandBase {
         m_elevatorDone = true;
       }else{
       }
+    }
+    if (m_autodrop && m_elbowDone && m_elevatorDone){
+      m_finished = true;
     }
   m_previousDropLevel = m_dropLevel;  
   m_previousState = m_state; 

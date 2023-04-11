@@ -132,8 +132,10 @@ public class RobotContainer {
     m_operatorController.rightBumper().onTrue(new CMD_setRetroflectiveAlignPosition(m_variables, GlobalConstants.kRightRetroflectiveAlignPosition));
     // set the offset back to the middle
     m_operatorController.back().onTrue(new CMD_setRetroflectiveAlignPosition(m_variables, GlobalConstants.kMiddleRetroflectiveAlignPositon));
-
-  
+    // sets autodrop true
+    m_operatorController.povLeft().onTrue(new CMD_setAutoDrop(m_variables, true));
+    // sets autodrop false
+    m_operatorController.povRight().onTrue(new CMD_setAutoDrop(m_variables, false));
     /* ==================OPERATOR CONTROLS END================== */
   }
   /**
@@ -351,7 +353,7 @@ public class RobotContainer {
       // new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
       // )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
-        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables),
+        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(1),
         new ConditionalCommand(
           new CMD_Place(m_elbow, m_elevator, m_variables, m_driverController),
           getCubeLevelCommand,
