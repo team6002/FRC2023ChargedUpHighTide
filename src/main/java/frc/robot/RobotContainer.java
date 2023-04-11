@@ -107,6 +107,7 @@ public class RobotContainer {
     ));
     
     m_driverController.povRight().onTrue(new ParallelCommandGroup(
+      new CMD_ElevatorSetPosition(m_elevator, ElevatorConstants.kElevatorFirstConeLevel),
       new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),  
       new CMD_IntakeDrop(m_intake, m_variables)
     ));
@@ -389,24 +390,24 @@ public class RobotContainer {
         getIntakeCommand,
         new CMD_IntakeElementJanky(m_intake, m_elbow, m_variables, m_driverController),
         getHoldCommand,
-        new CMD_SetStage(m_variables, GlobalConstants.kExtendStage)
+        new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
       )),
-      Map.entry(GlobalConstants.kExtendStage,new SequentialCommandGroup(
-      new ParallelCommandGroup(
-        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(2),
-        new CMD_IntakeExtraHold(m_intake, m_variables),
-        new ConditionalCommand(
-          getConeLevelCommand, 
-          getCubeLevelCommand, 
-          IntakeState)
-      ),
-      new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
-      )),
+      // Map.entry(GlobalConstants.kExtendStage,new SequentialCommandGroup(
+      // new ParallelCommandGroup(
+      //   new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(2),
+      //   new CMD_IntakeExtraHold(m_intake, m_variables),
+      //   new ConditionalCommand(
+      //     getConeLevelCommand, 
+      //     getCubeLevelCommand, 
+      //     IntakeState)
+      // ),
+      // new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
+      // )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
-        // new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables),
+        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables),
         new ConditionalCommand(
-          getConeElbowDropCommand,
-          getCubeElbowDropCommand,
+          new CMD_Place(m_elbow, m_elevator, m_variables, m_driverController),
+          getCubeLevelCommand,
           IntakeState),
         new CMD_IntakeDrop(m_intake, m_variables),
         new WaitCommand(.2),
