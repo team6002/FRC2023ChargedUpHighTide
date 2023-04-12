@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.GlobalVariables;
 import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
+import frc.robot.subsystems.SUB_Limelight;
 import frc.robot.Constants.ElbowConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.GlobalConstants;
@@ -18,6 +19,7 @@ public class CMD_Place extends CommandBase {
   /** Creates a new CMD_SpagethiPlace. */
   SUB_Elbow m_elbow;
   SUB_Elevator m_elevator;
+  SUB_Limelight m_limelight;
   GlobalVariables m_variables;
   CommandXboxController m_driverController;
   boolean m_finished = false;
@@ -33,9 +35,10 @@ public class CMD_Place extends CommandBase {
   double m_wantedElevatorPosition;
   double m_debounceTimer;
   double m_elevatorTimer;
-  public CMD_Place(SUB_Elbow p_elbow, SUB_Elevator p_elevator, GlobalVariables p_variables, CommandXboxController p_driverController) {
+  public CMD_Place(SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Limelight p_limelight, GlobalVariables p_variables, CommandXboxController p_driverController) {
     m_elbow = p_elbow;
     m_elevator = p_elevator;
+    m_limelight = p_limelight;
     m_variables = p_variables;
     m_driverController = p_driverController;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -147,7 +150,7 @@ public class CMD_Place extends CommandBase {
       }else{
       }
     }
-    if (m_autodrop && m_elbowDone && m_elevatorDone){
+    if (m_autodrop && m_elbowDone && m_elevatorDone && m_limelight.hasTarget()){
       m_finished = true;
     }
   m_previousDropLevel = m_dropLevel;  
