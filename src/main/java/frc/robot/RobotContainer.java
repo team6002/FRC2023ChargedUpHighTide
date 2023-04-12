@@ -355,7 +355,7 @@ public class RobotContainer {
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
         new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(1),
         new ConditionalCommand(
-          new CMD_Place(m_elbow, m_elevator, m_variables, m_driverController),
+          new CMD_Place(m_elbow, m_elevator, m_limelight, m_variables, m_driverController),
           getCubeLevelCommand,
           IntakeState),
         new CMD_IntakeDrop(m_intake, m_variables),
