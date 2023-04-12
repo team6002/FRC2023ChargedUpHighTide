@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.subsystems.SUB_Blinkin;
 import frc.robot.GlobalVariables;
@@ -27,7 +28,20 @@ public class CMD_BlinkinSetIntakeSignal extends CommandBase {
     state = m_variables.getIntakeState();
     
     if (m_variables.getHasItem() == true){
-      m_blinkin.set(Constants.BlinkinConstants.kBlinkinHasItem);
+      switch (m_variables.getDropLevel()){
+        case GlobalConstants.kElevator1stLevel:
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinFirstLevel);
+        break;
+        case GlobalConstants.kElevator2ndLevel:
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinSecondLevel);
+        break;
+        case GlobalConstants.kElevator3rdLevel:
+          m_blinkin.set(Constants.BlinkinConstants.kBlinkinThirdLevel);
+        break;
+        default: 
+        m_blinkin.set(Constants.BlinkinConstants.kBlinkinHasItem);
+        break;
+      }
     }else {
       switch(m_variables.getPickMode()) {  
         /* GROUND */

@@ -388,7 +388,10 @@ public final class Constants {
     public static final double kBlinkinCubeShelf = 0.31; // Color 2 Pattern Breath Fast
     public static final double kBlinkinCubeBackShelf = 0.19; // Color 2 Pattern Larson Scanner
 
-    public static final double kBlinkinHasItem = 0.77;
+    public static final double kBlinkinHasItem = 0.99;
+    public static final double kBlinkinFirstLevel = 0.59;
+    public static final double kBlinkinSecondLevel = 0.81;
+    public static final double kBlinkinThirdLevel = 0.93;
 
     public static final double kBlinkinBalanceCelebrate = -0.57; // Fire Large, flexing, use only when balanced
 
