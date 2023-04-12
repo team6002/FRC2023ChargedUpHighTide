@@ -27,9 +27,8 @@ public class CMD_Place1stLevel extends SequentialCommandGroup {
       new CMD_setState(p_finiteStateMachine, RobotState.SCORING),
       new ParallelCommandGroup(
         new CMD_ElevatorSetPosition(p_elevator, ElevatorConstants.kElevatorFirstConeLevel),
-        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowLifted)    
-      ),
-      new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)    
+        new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowPrepareDrop)       
+      )
     );
   }
 }
