@@ -54,13 +54,13 @@ public class CMD_Drive extends CommandBase {
 
     // final var xSpeed = xspeedLimiter.calculate(MathUtil.applyDeadband(-controller.getLeftY(), deadzone));
     // final var xSpeed = MathUtil.applyDeadband(-controller.getLeftY(), deadzone);  
-    var xSpeed = modifyAxis(MathUtil.applyDeadband(-controller.getLeftY(),deadzone));
+    var xSpeed = MathUtil.applyDeadband(-controller.getLeftY(),deadzone);
     // Get the y speed or sideways/strafe speed. We are inverting this because
     // we want a positive value when we pull to the left. Xbox controllers
     // return positive values when you pull to the right by default.
     // final var ySpeed = yspeedLimiter.calculate(MathUtil.applyDeadband(-controller.getLeftX(), deadzone));
     // final var ySpeed = MathUtil.applyDeadband(-controller.getLeftX(), deadzone);
-    var ySpeed = modifyAxis(MathUtil.applyDeadband(-controller.getLeftX(),deadzone));
+    var ySpeed = MathUtil.applyDeadband(-controller.getLeftX(),deadzone);
  
     // Get the rate of angular rotation. We are inverting this because we want a
     // positive value when we pull to the left (remember, CCW is positive in
@@ -69,7 +69,7 @@ public class CMD_Drive extends CommandBase {
     
     
     // final var rot = rotLimiter.calculate(MathUtil.applyDeadband(-controller.getRightX(), deadzone));
-    var rot = MathUtil.applyDeadband(-controller.getRightX(), deadzone);
+    var rot = modifyAxis(MathUtil.applyDeadband(-controller.getRightX(), deadzone));
 
     /* Override driver rotation if AutoAlign is enabled. */
     if (this.controller.rightTrigger().getAsBoolean()) {
@@ -123,14 +123,15 @@ public class CMD_Drive extends CommandBase {
   // }
 
   private static double modifyAxis(double value) {
+    double modifedValue;
     // Deadband
     // value = deadband(value, 0.2);
 
     // Square the axis
-    // value = value * value * value;
-    value = Math.copySign(value, value);
+    modifedValue = value * value;
+    modifedValue = Math.copySign(value, value);
 
-    return value;
+    return modifedValue;
   }
 
 }
