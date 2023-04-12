@@ -110,9 +110,6 @@ public class RobotContainer {
       new CMD_ElevatorSetPosition(m_elevator, ElevatorConstants.kElevatorFirstConeLevel),
       new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),  
       new CMD_IntakeDrop(m_intake, m_variables)
-
-    
-    ));
     
     m_driverController.povDown().onTrue(new CMD_Home(m_intake, m_elbow, m_elevator));
     //Just in case the operator is unable toc perform
@@ -138,6 +135,9 @@ public class RobotContainer {
     m_operatorController.povLeft().onTrue(new CMD_setAutoDrop(m_variables, true));
     // sets autodrop false
     m_operatorController.povRight().onTrue(new CMD_setAutoDrop(m_variables, false));
+    //KIRBY go WHOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+    m_operatorController.povUp().onTrue(new CMD_IntakeElementJanky(m_intake, m_elbow, m_variables, m_driverController));
+
     /* ==================OPERATOR CONTROLS END================== */
   }
   /**
