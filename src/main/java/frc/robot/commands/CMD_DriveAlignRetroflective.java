@@ -37,14 +37,26 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kLeftRetroflectiveAlignPosition){
-      m_offset = -4;
-    }else if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kRightRetroflectiveAlignPosition){
-      m_offset = 7;
+    if (m_variables.getDropLevel() == GlobalConstants.kElevator3rdLevel){
+      if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kLeftRetroflectiveAlignPosition){
+        m_offset = -2;
+      }else if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kRightRetroflectiveAlignPosition){
+        m_offset = 2;
+      }else {
+        m_offset = 0;
+      }
+    }else if (m_variables.getDropLevel() == GlobalConstants.kElevator2ndLevel){
+      if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kLeftRetroflectiveAlignPosition){
+        m_offset = -4;
+      }else if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kRightRetroflectiveAlignPosition){
+        m_offset = 4;
+      }else {
+        m_offset = 0;
+      }
     }else {
       m_offset = 0;
     }
-    if (m_variables.getIntakeState() == GlobalConstants.kCubeMode){
+    if (m_variables.getIntakeState() == GlobalConstants.kCubeMode || m_variables.getDropLevel() == GlobalConstants.kElevator1stLevel){
       m_finished = true;
     }else {
       m_finished = false;

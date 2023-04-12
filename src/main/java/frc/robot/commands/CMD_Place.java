@@ -97,6 +97,12 @@ public class CMD_Place extends CommandBase {
     }else m_elbowSafe = false;
     return m_ElevatorThere;
   }
+
+  private boolean CheckElbow(double p_wantedElbowPosition){
+    boolean m_ElbowThere = false;
+    m_ElbowThere = Math.abs(m_elbow.getPosition() - p_wantedElbowPosition) < ElevatorConstants.kElevatorTolerance;
+    return m_ElbowThere;
+  }
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
@@ -150,7 +156,7 @@ public class CMD_Place extends CommandBase {
       }else{
       }
     }
-    if (m_autodrop && m_elbowDone && m_elevatorDone && m_limelight.hasTarget()){
+    if (m_autodrop && CheckElbow(m_wantedElbowPosition) && m_elevatorDone && m_limelight.hasTarget()){
       m_finished = true;
     }
   m_previousDropLevel = m_dropLevel;  
@@ -160,7 +166,6 @@ public class CMD_Place extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("Placed");
   }
 
   // Returns true when the command should end.
