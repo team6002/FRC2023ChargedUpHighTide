@@ -22,7 +22,6 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private final SendableChooser<Command> m_Chooser = new SendableChooser<Command>();
   private RobotContainer m_robotContainer;
-  private SUB_IntakeCamera m_intakeCam;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -62,11 +61,6 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("PP3BalanceRISKYBlue", m_robotContainer.getPP3BalanceBlue());
     // m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
-
-    m_intakeCam = new SUB_IntakeCamera();
-    m_intakeCam.setDaemon(true);
-    m_intakeCam.start();
-
     // DataLogger.log("robotInit() done");
   }
 
