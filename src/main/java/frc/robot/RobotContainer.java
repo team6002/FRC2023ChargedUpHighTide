@@ -98,7 +98,8 @@ public class RobotContainer {
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
     
-    m_driverController.a().onTrue(new CMD_DriveShelfSlowly(m_drivetrain, m_intake, m_driverController));
+    m_driverController.a().onTrue(new CMD_AutoPickCube(m_intakeCam, m_drivetrain, m_variables));
+      //new CMD_DriveShelfSlowly(m_drivetrain, m_intake, m_driverController));
     // toggle which pick up mode it will do (Ground or shelf)
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
 
@@ -148,7 +149,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getFullLinkDividerRed() {
-    return new AUTO_PPFullLinkDividerRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+    return new AUTO_PPFullLinkDividerRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_intakeCam, m_driverController);
   }
 
   public Command getFullLinkDividerBlue() {
