@@ -84,11 +84,12 @@ public class CMD_Drive extends CommandBase {
         double strafe_error = m_limelight.getTargetTx();
         
         if (Math.abs(strafe_error) > limelightAngleThreshold) {
-            // rot = -strafe_error * limelightAdjustKp;
-          if (Math.abs(heading_error) > limelightAngleThreshold) {
-            rot = -heading_error * limelightAdjustRotKp;
-            // ySpeed = -strafe_error * limelightAdjustStrafeKp;
-          }
+          // rot = -strafe_error * limelightAdjustKp;
+        if (Math.abs(heading_error) > limelightAngleThreshold) {
+          rot = -heading_error * limelightAdjustRotKp;
+          // ySpeed = -strafe_error * limelightAdjustStrafeKp;
+          SmartDashboard.putNumber("YSPEED", ((strafe_error * limelightAdjustStrafeKp) + Math.copySign(LimeLightConstants.klimelightAdjustRotKf, -heading_error)));
+        }
         }
       }
     } else if (this.controller.leftTrigger().getAsBoolean()) {
@@ -99,6 +100,7 @@ public class CMD_Drive extends CommandBase {
         if (Math.abs(heading_error) > 5) {
           rot = heading_error * 0.002;
 
+          SmartDashboard.putNumber("IntakeCamSpeed", rot);
         }
       }
     }

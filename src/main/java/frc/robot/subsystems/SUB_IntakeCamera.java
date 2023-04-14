@@ -56,7 +56,7 @@ public class SUB_IntakeCamera extends SubsystemBase {
         targetPose = new Pose2d();
 
         selectedStage = Stage.FINAL;
-        threshold = 155;//175;
+        threshold = 175;
 
         threadStarted = false;
     }
@@ -231,10 +231,10 @@ public class SUB_IntakeCamera extends SubsystemBase {
                     applyThreshold(convertedMat, processedMat);
 
                     morphMask(processedMat, processedMat);
-                    // morphMask(processedMat, processedMat);
-                    // morphMask(processedMat, processedMat);
-                    // morphMask(processedMat, processedMat);
-                    // morphMask(processedMat, processedMat);
+                    morphMask(processedMat, processedMat);
+                    morphMask(processedMat, processedMat);
+                    morphMask(processedMat, processedMat);
+                    morphMask(processedMat, processedMat);
 
                     List<MatOfPoint> contours = filterContours(processedMat);
 
