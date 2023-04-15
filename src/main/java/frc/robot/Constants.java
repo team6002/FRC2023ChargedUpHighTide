@@ -239,7 +239,7 @@ public final class Constants {
     public static final double kElbowMaxOutput = 1;
 
     // public static final double kElbowLift = 149;// use to get elbow off elevator, it don't like 200 for some reason
-    public static final double kElbowLifted = 125;// when the elbow is not resting on elevator
+    public static final double kElbowLifted = 115;// when the elbow is not resting on elevator
     public static final double kElbowStow = 140;//149
     public static final double kElbowCushionStow = 140;// about 90 degrees up
     public static final double kElbowUp = 135;// about 90 degrees up
