@@ -11,9 +11,12 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.GlobalVariables;
+import frc.robot.commands.CMD_AUTOGroundCubeIntake;
+import frc.robot.commands.CMD_AutoPickCube;
 import frc.robot.commands.CMD_GroundCubeIntake;
 import frc.robot.commands.CMD_GroundHold;
 import frc.robot.commands.CMD_IntakeDrop;
+import frc.robot.commands.CMD_IntakeElementJanky;
 import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
 import frc.robot.commands.CMD_Place1stLevel;
@@ -21,6 +24,7 @@ import frc.robot.commands.CMD_Place2ndConeLevel;
 import frc.robot.commands.CMD_Place3rdConeLevel;
 import frc.robot.commands.CMD_Place3rdCubeLevel;
 import frc.robot.commands.CMD_SetInitalOdometry;
+import frc.robot.commands.CMD_SetStage;
 import frc.robot.commands.CMD_Stow;
 import frc.robot.commands.CMD_selectIntakeCommandKey;
 import frc.robot.commands.CMD_setDropLevel;
@@ -32,6 +36,7 @@ import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
 import frc.robot.subsystems.SUB_FiniteStateMachine;
 import frc.robot.subsystems.SUB_Intake;
+import frc.robot.subsystems.SUB_IntakeCamera;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -40,7 +45,7 @@ public class AUTO_PPFullLinkSpeedBumpBlue extends SequentialCommandGroup {
   /** Creates a new AUTO_PPFullLinkDivider. */
   AUTO_Trajectories m_trajectories;
   public AUTO_PPFullLinkSpeedBumpBlue(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
-  SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables, SUB_Intake p_intake, CommandXboxController p_controller){
+  SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables, SUB_Intake p_intake,SUB_IntakeCamera p_intakeCamera, CommandXboxController p_controller){
     m_trajectories = p_trajectories;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -55,39 +60,51 @@ public class AUTO_PPFullLinkSpeedBumpBlue extends SequentialCommandGroup {
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
-      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunBlueSpeedBump),
       new ParallelCommandGroup(
-        m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunBlueSpeedBump),
         new SequentialCommandGroup(
-          new WaitCommand(2),
-          new ParallelCommandGroup(
-            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
-            new CMD_IntakeOn(p_intake, p_variables)    
-          )
-        )
+          new WaitCommand(.2),
+          m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunBlueSpeedBump)
+        ),
+        new CMD_AUTOGroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(1.5),
+        new CMD_IntakeOn(p_intake, p_variables)
+      ),
+      new ParallelDeadlineGroup(  
+      new CMD_AutoPickCube(p_intakeCamera, p_drivetrain, p_variables).withTimeout(.5)
+      ,new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
       ),
       new ParallelCommandGroup(
-        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceBlueSpeedBump), 
-        new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
-      ),
-      new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      new CMD_IntakeDrop(p_intake, p_variables),
-      new WaitCommand(.2),
-      new ParallelCommandGroup(
-        m_trajectories.followTrajectoryCommand(m_trajectories.ConeRunBlueSpeedBump),
         new SequentialCommandGroup(
-          new ParallelDeadlineGroup(
-            new WaitCommand(1.5),
-            new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
-            ),
-          new ParallelCommandGroup(
-            new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
-            new CMD_IntakeOn(p_intake, p_variables)    
-          )
+          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new WaitCommand(.1),
+          new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new CMD_IntakeDrop(p_intake, p_variables),
+          new WaitCommand(.2)
+        ),
+        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceBlueSpeedBump)
+      ),
+      
+      new ParallelCommandGroup(
+        m_trajectories.followTrajectoryCommand(m_trajectories.ConeRunBlueSpeedBump).withTimeout(1),
+        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+        new CMD_IntakeOn(p_intake, p_variables)   
+      ),
+      new ParallelDeadlineGroup(
+        new CMD_AutoPickCube(p_intakeCamera, p_drivetrain, p_variables).withTimeout(.5), 
+        new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
+      ),
+      new ParallelCommandGroup(
+        m_trajectories.followTrajectoryCommand(m_trajectories.ConePlaceBlueSpeedBump),
+        new SequentialCommandGroup(
+          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new WaitCommand(.2),
+          new CMD_Place2ndConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new CMD_IntakeDrop(p_intake, p_variables),
+          new WaitCommand(.2)   
         )
       ),
-      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
+      new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+      new CMD_SetStage(p_variables, GlobalConstants.kIntakeStage)
     );
   }
 }

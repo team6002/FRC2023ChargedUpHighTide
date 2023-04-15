@@ -19,16 +19,15 @@ import frc.robot.subsystems.SUB_Elbow;
 import frc.robot.subsystems.SUB_Elevator;
 import frc.robot.subsystems.SUB_FiniteStateMachine;
 import frc.robot.subsystems.SUB_Intake;
-import frc.robot.subsystems.SUB_IntakeCamera;
 
 // NOTE:  Cogfnsider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AUTO_BalanceStation extends SequentialCommandGroup {
+public class AUTO_BalanceStationNoPick extends SequentialCommandGroup {
   /** Creates a new AUTO_BalanceStation. */
-  public AUTO_BalanceStation(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain,
+  public AUTO_BalanceStationNoPick(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain,
     SUB_Elbow p_elbow, SUB_Elevator p_elevator, SUB_Intake p_intake, 
-    SUB_FiniteStateMachine p_finiteStateMachine,GlobalVariables p_variables, SUB_IntakeCamera p_intakeCam,
+    SUB_FiniteStateMachine p_finiteStateMachine,GlobalVariables p_variables,
     CommandXboxController p_controller) {
 
     // Add your commands in the addCommands() call, e.g.
@@ -44,26 +43,22 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
-      new ParallelDeadlineGroup(
-        new AUTO_DriveOverChargingStation(p_trajectories, p_drivetrain),
+      new ParallelDeadlineGroup(  
         new SequentialCommandGroup(
-          new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-          new WaitCommand(1.5),
-          new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
-          new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
+          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.OverChargeStationTrajectory),
+          p_trajectories.driveTrajectory(p_trajectories.OverChargeStationTrajectory),
+          new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.OverChargeStationTrajectory2),
+          p_trajectories.driveTrajectory(p_trajectories.OverChargeStationTrajectoryNoPick)
+        ),
+        new SequentialCommandGroup(
+          new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
         )
       ),
-      new ParallelDeadlineGroup (
-        new CMD_AutoPickCube(p_intakeCam, p_drivetrain, p_variables),
-        new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
-      ),
       new ParallelDeadlineGroup(
-        new CMD_SpinInPlace(p_drivetrain, 180).withTimeout(4),
-        new CMD_IntakeCheck(p_intake, p_controller).withTimeout(3)
+        new CMD_SpinInPlace(p_drivetrain, 180).withTimeout(4)
       ),
       new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.BackOnChargeStationTrajectory),
       new ParallelCommandGroup(
-        new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
         //do a until hit angle and then run the set distance
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
@@ -75,10 +70,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       ),
       new CMD_DriveStop(p_drivetrain).withTimeout(3),
       new WaitCommand(1),
-      // new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
-      // new CMD_IntakeDrop(p_intake, p_variables),
       new CMD_AdjustBalanceOutside(p_drivetrain).withTimeout(3),
-      // new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
       new CMD_ResetGyro(p_drivetrain).withTimeout(3),
       new CMD_SetStage(p_variables, GlobalConstants.kExtendStage)
 

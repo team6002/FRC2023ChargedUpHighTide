@@ -98,7 +98,7 @@ public class RobotContainer {
       new CMD_BlinkinSetIntakeSignal(m_blinkin, m_variables)
     ));
     
-    m_driverController.a().onTrue(new CMD_AutoPickCube(m_intakeCam, m_drivetrain, m_variables));
+    m_driverController.a().onTrue(new CMD_AutoPickCubeTelop(m_intakeCam, m_drivetrain, m_driverController, m_variables));
       //new CMD_DriveShelfSlowly(m_drivetrain, m_intake, m_driverController));
     // toggle which pick up mode it will do (Ground or shelf)
     m_driverController.x().onTrue(new CMD_TogglePickMode(m_variables));
@@ -153,78 +153,39 @@ public class RobotContainer {
   }
 
   public Command getFullLinkDividerBlue() {
-    return new AUTO_PPFullLinkDividerBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+    return new AUTO_PPFullLinkDividerBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_intakeCam, m_driverController);
   }
 
   public Command getFullLinkSpeedBumpBlue() {
-    return new AUTO_PPFullLinkSpeedBumpBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
+    return new AUTO_PPFullLinkSpeedBumpBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_intakeCam, m_driverController);
   }
 
+  public Command getFullLinkSpeedBumpRed() {
+    return new AUTO_PPFullLinkSpeedBumpRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_intakeCam, m_driverController);
+  }
+  
   public Command getPP2BalanceBlue() {
     return new AUTO_PP2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command getPP2BalanceSpeedBumpBlue() {
-    return new AUTO_PP2BalanceSpeedBumpBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
 
   public Command getPP2SpeedBumpRed() {
     return new AUTO_PP2SpeedBumpRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
 
-  public Command getPP2BalanceSpeedBumpRed() {
-    return new AUTO_PP2BalanceSpeedBumpRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command getPP2BalanceRed() {
-    return new AUTO_PP2BalanceRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command getPP3BalanceBlue() {
-    return new AUTO_PP3BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command getTest() {
-    return new AUTO_Test(m_trajectories, m_drivetrain);
-  }
-
-  public Command get2ElementBlue() {
-    return new AUTO_2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command get2ElementRed() {
-    return new AUTO_2BalanceRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-  // public Command get3ElementBlue() {
-  //   return new AUTO_FullLinkRunBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  // }
-
-  // public Command get3ElementRed() {
-  //   return new AUTO_FullLinkRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  // }
-
-  public Command get2ElementBalanceStationBlue() {
-    return new AUTO_2BalanceBlue(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-
-  public Command get2ElementBalanceStationRed() {
-    return new AUTO_2BalanceRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
-  }
-  
   public Command getLinkRunRed() {
     return new AUTO_FullLinkRunRed(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_finiteStateMachine, m_variables, m_intake, m_driverController);
   }
 
   public Command getBalanceStation() {
-    return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
+    return new AUTO_BalanceStation(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_intakeCam, m_driverController);
+  }
+
+  public Command getBalanceStationNoPick() {
+    return new AUTO_BalanceStationNoPick(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
   }
 
   public Command getNothing() {
     return new AUTO_NOTHING();
-  }
-  
-  public Command getWirebridge() {
-    return new AUTO_WireBridge(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
   }
   
   public void zeroHeading(){

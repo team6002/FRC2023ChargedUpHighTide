@@ -33,6 +33,7 @@
     public Trajectory OverChargeStationTrajectory;
     public Trajectory BackOnChargeStationTrajectory;
     public Trajectory OverChargeStationTrajectory2;
+    public Trajectory OverChargeStationTrajectoryNoPick;
 
     public Trajectory LinkRunTrajectoryRed1;
     public Trajectory LinkPlaceTrajectoryRed1;
@@ -119,13 +120,20 @@
         OverChargeStationTrajectory2 = TrajectoryGenerator.generateTrajectory(
             new Pose2d(Units.inchesToMeters(-120), 0, new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(-220), Units.inchesToMeters(0), new Rotation2d(0)),
+            new Pose2d(Units.inchesToMeters(-150), Units.inchesToMeters(0), new Rotation2d(0)),
             configReversed);
 
-        BackOnChargeStationTrajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(Units.inchesToMeters(-220), 0, new Rotation2d(Units.degreesToRadians(180))),
+        OverChargeStationTrajectoryNoPick = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(Units.inchesToMeters(-120), 0, new Rotation2d(0)),
             List.of(),
-            new Pose2d(Units.inchesToMeters(-70), 0, new Rotation2d(Units.degreesToRadians(180))),
+            new Pose2d(Units.inchesToMeters(-170), Units.inchesToMeters(0), new Rotation2d(0)),
+            configReversed);
+
+
+        BackOnChargeStationTrajectory = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(Units.inchesToMeters(-170), 0, new Rotation2d(Units.degreesToRadians(180))),
+            List.of(),
+            new Pose2d(Units.inchesToMeters(-40), 0, new Rotation2d(Units.degreesToRadians(180))),
             ChargeStationConfigReversed); //-68 was twisted devil -86 was strykforce
         
         
@@ -348,6 +356,7 @@
         // Run path following command, then stop at the end.
         return swerveControllerCommand.andThen(() -> m_drivetrain.drive(0.0 ,0.0 ,0.0, true, false));
     }
+
     public Command followTrajectoryCommand(PathPlannerTrajectory traj) {
         return new SequentialCommandGroup(
             new PPSwerveControllerCommand(
@@ -359,6 +368,20 @@
                 new PIDController(AutoConstants.kPPPThetaController, 0, 0), //turn theta controller
                 m_drivetrain::setModuleStates,
                 false, //use alliance color
+                m_drivetrain)//subsystems requirements
+        );
+    }
+    public Command followTrajectoryAllianceColorCommand(PathPlannerTrajectory traj) {
+        return new SequentialCommandGroup(
+            new PPSwerveControllerCommand(
+                traj,//trajectory
+                m_drivetrain::getPose, // Pose supplier
+                DriveConstants.kDriveKinematics, // SwerveDriveKinematics
+                new PIDController(AutoConstants.kPPPXController, 0, 0), //X positon controller
+                new PIDController(AutoConstants.kPPPYController, 0, 0), //Y position controller
+                new PIDController(AutoConstants.kPPPThetaController, 0, 0), //turn theta controller
+                m_drivetrain::setModuleStates,
+                true, //use alliance color
                 m_drivetrain)//subsystems requirements
         );
     }

@@ -46,19 +46,13 @@ public class Robot extends TimedRobot {
 
     SmartDashboard.putNumber("AUTOKEY", 0);
     m_Chooser.setDefaultOption("ChargeStation", m_robotContainer.getBalanceStation());
-    m_Chooser.addOption("CubeRunRed", m_robotContainer.getLinkRunRed());
     m_Chooser.addOption("NOTHING!", m_robotContainer.getNothing());
-    m_Chooser.addOption("WireBridge", m_robotContainer.getWirebridge());
-    m_Chooser.addOption("PPFullLinkBlue", m_robotContainer.getFullLinkDividerBlue());
-    m_Chooser.addOption("PP2BalanceBlue", m_robotContainer.getPP2BalanceBlue());
+    m_Chooser.addOption("PPRightBlue", m_robotContainer.getFullLinkDividerBlue());
     m_Chooser.addOption("PPFullSpeedBumpBlue", m_robotContainer.getFullLinkSpeedBumpBlue());
-    m_Chooser.addOption("PP2BalanceSpeedBumpBlue", m_robotContainer.getPP2BalanceSpeedBumpBlue());
-    m_Chooser.addOption("PPFullLinkRed", m_robotContainer.getFullLinkDividerRed());
-    m_Chooser.addOption("PP2BalanceRed", m_robotContainer.getPP2BalanceRed());
-    m_Chooser.addOption("PP2SpeedBumpRed", m_robotContainer.getPP2SpeedBumpRed());
-    m_Chooser.addOption("PP2BalanceSpeedBumpRed", m_robotContainer.getPP2BalanceSpeedBumpRed());
+    m_Chooser.addOption("PPRightRed", m_robotContainer.getFullLinkDividerRed());
+    m_Chooser.addOption("PPFullSpeedBumpRed", m_robotContainer.getFullLinkSpeedBumpRed());
+    m_Chooser.addOption("NoPickBalance", m_robotContainer.getBalanceStationNoPick());
     // m_Chooser.addOption("TEST", m_robotContainer.getTest());
-    m_Chooser.addOption("PP3BalanceRISKYBlue", m_robotContainer.getPP3BalanceBlue());
     // m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);
     // DataLogger.log("robotInit() done");

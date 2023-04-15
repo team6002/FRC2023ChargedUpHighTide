@@ -20,8 +20,8 @@ public class AUTO_Test extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.test),
-      m_trajectories.followTrajectoryCommand(m_trajectories.test)
+      new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.test)
+      // m_trajectories.followTrajectoryAllianceColorCommand(m_trajectories.test)
     );
   }
 }

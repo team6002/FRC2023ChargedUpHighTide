@@ -6,7 +6,6 @@ package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -14,12 +13,9 @@ import frc.robot.Constants.GlobalConstants;
 import frc.robot.GlobalVariables;
 import frc.robot.commands.CMD_AUTOGroundCubeIntake;
 import frc.robot.commands.CMD_AutoPickCube;
-import frc.robot.commands.CMD_CheckIntakeCameraTarget;
-import frc.robot.commands.CMD_DriveStop;
 import frc.robot.commands.CMD_GroundCubeIntake;
 import frc.robot.commands.CMD_GroundHold;
 import frc.robot.commands.CMD_IntakeDrop;
-import frc.robot.commands.CMD_IntakeElement;
 import frc.robot.commands.CMD_IntakeElementJanky;
 import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
@@ -45,11 +41,11 @@ import frc.robot.subsystems.SUB_IntakeCamera;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AUTO_PPFullLinkDividerRed extends SequentialCommandGroup {
+public class AUTO_PPFullLinkSpeedBumpRed extends SequentialCommandGroup {
   /** Creates a new AUTO_PPFullLinkDivider. */
   AUTO_Trajectories m_trajectories;
-  public AUTO_PPFullLinkDividerRed(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
-  SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables, SUB_Intake p_intake, SUB_IntakeCamera p_intakeCam, CommandXboxController p_controller){
+  public AUTO_PPFullLinkSpeedBumpRed(AUTO_Trajectories p_trajectories, SUB_Drivetrain p_drivetrain, SUB_Elbow p_elbow, SUB_Elevator p_elevator,
+  SUB_FiniteStateMachine p_finiteStateMachine, GlobalVariables p_variables, SUB_Intake p_intake,SUB_IntakeCamera p_intakeCamera, CommandXboxController p_controller){
     m_trajectories = p_trajectories;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -63,57 +59,50 @@ public class AUTO_PPFullLinkDividerRed extends SequentialCommandGroup {
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_IntakeDrop(p_intake, p_variables),
       new WaitCommand(.2),
-      new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunRedDivider),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
-      new ParallelCommandGroup(
-        new SequentialCommandGroup(
-          // new ParallelDeadlineGroup(
-          //   new CMD_CheckIntakeCameraTarget(p_intakeCam),
-        new WaitCommand(.2),
-        m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunRedDivider).withTimeout(2)
-          // )
-        ),
-        new CMD_AUTOGroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
-        new CMD_IntakeOn(p_intake, p_variables)
-      ),
-      new ParallelDeadlineGroup(  
-        new CMD_AutoPickCube(p_intakeCam, p_drivetrain, p_variables).withTimeout(.5)
-        ,new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
-      ),
-      new ParallelCommandGroup(
-        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedDivider),
-        new SequentialCommandGroup(    
-        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-        new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
-      )
-      ),
-      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
-      new WaitCommand(.2),
+      new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunRedSpeedBump),
       new ParallelCommandGroup(
         new SequentialCommandGroup(
           new WaitCommand(.2),
-        new ParallelDeadlineGroup(
-          // new CMD_CheckIntakeCameraTarget(p_intakeCam),
-          m_trajectories.followTrajectoryCommand(m_trajectories.ConeRunRedDivider).withTimeout(1.5)
-        )
-      ),
-        new CMD_AUTOGroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
-        new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
+          m_trajectories.followTrajectoryCommand(m_trajectories.CubeRunRedSpeedBump)
+        ),
+        new CMD_AUTOGroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(1.5),
+        new CMD_IntakeOn(p_intake, p_variables)
       ),
       new ParallelDeadlineGroup(  
-        new CMD_AutoPickCube(p_intakeCam, p_drivetrain, p_variables).withTimeout(.65)
-        , new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
+      new CMD_AutoPickCube(p_intakeCamera, p_drivetrain, p_variables).withTimeout(.5)
+      ,new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
       ),
       new ParallelCommandGroup(
-        m_trajectories.followTrajectoryCommand(m_trajectories.ConePlaceRedDivider),
         new SequentialCommandGroup(
-          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),      
-          new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3) 
+          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new WaitCommand(.1),
+          new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new CMD_IntakeDrop(p_intake, p_variables),
+          new WaitCommand(.2)
+        ),
+        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedSpeedBump)
+      ),
+      
+      new ParallelCommandGroup(
+        m_trajectories.followTrajectoryCommand(m_trajectories.ConeRunRedSpeedBump).withTimeout(1.1),
+        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine),
+        new CMD_IntakeOn(p_intake, p_variables)   
+      ),
+      new ParallelDeadlineGroup(
+        new CMD_AutoPickCube(p_intakeCamera, p_drivetrain, p_variables).withTimeout(.5), 
+        new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
+      ),
+      new ParallelCommandGroup(
+        m_trajectories.followTrajectoryCommand(m_trajectories.ConePlaceRedSpeedBump),
+        new SequentialCommandGroup(
+          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new WaitCommand(.2),
+          new CMD_Place2ndConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
+          new CMD_IntakeDrop(p_intake, p_variables),
+          new WaitCommand(.2)   
         )
       ),
-      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
-      new WaitCommand(.2),
       new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
       new CMD_SetStage(p_variables, GlobalConstants.kIntakeStage)
     );
