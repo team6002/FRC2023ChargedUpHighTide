@@ -5,6 +5,7 @@
 package frc.robot.auto;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -68,39 +69,42 @@ public class AUTO_PPFullLinkDividerRed extends SequentialCommandGroup {
         new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
         new CMD_IntakeOn(p_intake, p_variables)
       ),
-      new ParallelCommandGroup(  
-      new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller),
-      new CMD_AutoPickCube(p_intakeCam, p_drivetrain, p_variables)
+      new ParallelDeadlineGroup(  
+        new CMD_AutoPickCube(p_intakeCam, p_drivetrain, p_variables).withTimeout(.75)
+        , new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
       ),
+      new ParallelCommandGroup(
+        m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedDivider),
+        new SequentialCommandGroup(    
+        new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
+        new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
+      )
+      ),
+      new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
+      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
+      new WaitCommand(.2),
+      new ParallelCommandGroup(
+        new SequentialCommandGroup(
+        new WaitCommand(.4),
+        m_trajectories.followTrajectoryCommand(m_trajectories.ConeRunRedDivider)
+      ),
+        new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
+        new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
+      ),
+      new ParallelDeadlineGroup(  
+        new CMD_AutoPickCube(p_intakeCam, p_drivetrain, p_variables).withTimeout(.65)
+        , new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
+      ),
+      new ParallelCommandGroup(
+        m_trajectories.followTrajectoryCommand(m_trajectories.ConePlaceRedDivider),
+        new SequentialCommandGroup(
+          new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),      
+          new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3) 
+        )
+      ),
+      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
+      new WaitCommand(.2),
       new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
-      // new ParallelCommandGroup(
-        // m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedDivider),AW
-      //   new SequentialCommandGroup(    
-      //   new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      //   new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
-      //   )
-      // ),
-      // new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      // new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
-      // new WaitCommand(.2),
-      // new ParallelCommandGroup(
-      //   new SequentialCommandGroup(
-      //   new WaitCommand(.4),
-      //   m_trajectories.followTrajectoryCommand(m_trajectories.ConeRunRedDivider)
-      // ),
-      //   new CMD_GroundCubeIntake(p_intake, p_elbow, p_elevator, p_finiteStateMachine).withTimeout(3),
-      //   new CMD_IntakeOn(p_intake, p_variables).withTimeout(3)
-      // ),
-      // new ParallelCommandGroup(
-      //   m_trajectories.followTrajectoryCommand(m_trajectories.ConePlaceRedDivider),
-      //   new SequentialCommandGroup(
-      //     new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),      
-      //     new CMD_Place2ndConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3) 
-      //   )
-      // ),
-      // new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
-      // new WaitCommand(.2),
-      // new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
     );
   }
 }
