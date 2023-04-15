@@ -41,7 +41,7 @@ public class CMD_AutoPickCube extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    xSpeed = -.1;
+    xSpeed = -.3;
     m_finished = false;
     rot = 0;
   }
@@ -54,7 +54,7 @@ public class CMD_AutoPickCube extends CommandBase {
       double heading_error = m_intakeCam.getTxZero() - m_intakeCam.getTargetTx();
 
       if (Math.abs(heading_error) > 5) {
-        rot = heading_error * 0.001 + Math.copySign(rotf, heading_error);
+        rot = heading_error * 0.00225 + Math.copySign(rotf, heading_error);
       }
       
     }else {
