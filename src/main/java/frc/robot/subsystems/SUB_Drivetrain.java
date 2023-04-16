@@ -27,22 +27,26 @@ public class SUB_Drivetrain extends SubsystemBase {
   private final SwerveModule m_frontLeft = new SwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
-      DriveConstants.kFrontLeftChassisAngularOffset);
+      DriveConstants.kFrontLeftChassisAngularOffset,
+      "Front Left ");
 
   private final SwerveModule m_frontRight = new SwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
-      DriveConstants.kFrontRightChassisAngularOffset);
+      DriveConstants.kFrontRightChassisAngularOffset,
+      "Front Right ");
 
   private final SwerveModule m_rearLeft = new SwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
-      DriveConstants.kBackLeftChassisAngularOffset);
+      DriveConstants.kBackLeftChassisAngularOffset,
+      "Rear Left ");
 
   private final SwerveModule m_rearRight = new SwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
-      DriveConstants.kBackRightChassisAngularOffset);
+      DriveConstants.kBackRightChassisAngularOffset,
+      "Rear Right" );
 
   // The gyro sensor
   private final AHRS m_gyro = new AHRS(Port.kMXP);
@@ -87,8 +91,10 @@ public class SUB_Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Y", m_odometry.getPoseMeters().getY());
     SmartDashboard.putNumber("Yaw", m_odometry.getPoseMeters().getRotation().getDegrees());
 
-    // m_frontLeft.telemetry();
-    
+    m_frontLeft.telemetry();
+    m_frontRight.telemetry();
+    m_rearLeft.telemetry();
+    m_rearRight.telemetry();
   }
 
   /**
@@ -271,4 +277,22 @@ public class SUB_Drivetrain extends SubsystemBase {
     // return r; 
    return m_gyro.getRoll();
   }
+
+  
+  //ONLY FOR TESTING
+  public void setDrivePower(double power){
+    m_frontLeft.setDrivePower(power);
+    m_frontRight.setDrivePower(power);
+    m_rearLeft.setDrivePower(power);
+    m_rearRight.setDrivePower(power);
+  }
+
+  //ONLY FOR TESTING
+  public void setTurnPower(double power){
+    m_frontLeft.setTurnPower(power);
+    m_frontRight.setTurnPower(power);
+    m_rearLeft.setTurnPower(power);
+    m_rearRight.setTurnPower(power);
+  }
+
 }
