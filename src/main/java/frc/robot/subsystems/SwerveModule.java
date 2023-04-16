@@ -19,6 +19,7 @@ import com.revrobotics.RelativeEncoder;
 import frc.robot.Constants.ModuleConstants;
 
 public class SwerveModule {
+  
   private final CANSparkMax m_drivingSparkMax;
   private final CANSparkMax m_turningSparkMax;
 
@@ -31,13 +32,15 @@ public class SwerveModule {
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
 
+  private String m_moduleChannel;//module channel is for telemetry 
+
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
    * encoder, and PID controller. This configuration is specific to the REV
    * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
    * Encoder.
    */
-  public SwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
+  public SwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, String p_moduleChannel) {
     m_drivingSparkMax = new CANSparkMax(drivingCANId, MotorType.kBrushless);
     m_turningSparkMax = new CANSparkMax(turningCANId, MotorType.kBrushless);
 
@@ -109,6 +112,8 @@ public class SwerveModule {
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
     m_drivingEncoder.setPosition(0);
+
+    m_moduleChannel = p_moduleChannel;
   }
 
   /**
@@ -159,9 +164,10 @@ public class SwerveModule {
   }
 
   public void telemetry(){
-    SmartDashboard.putNumber("Desiredspeed", m_desiredState.speedMetersPerSecond);
-    SmartDashboard.putNumber("Sparkmax set speed", m_drivingSparkMax.get());
-    SmartDashboard.putNumber("actually sped", m_drivingEncoder.getVelocity());
+    // SmartDashboard.putNumber(m_moduleChannel + "Desiredspeed", m_desiredState.speedMetersPerSecond);
+    // SmartDashboard.putNumber(m_moduleChannel + "Sparkmax set speed", m_drivingSparkMax.get());
+    SmartDashboard.putNumber(m_moduleChannel + "Drive sped", m_drivingEncoder.getVelocity());
+    SmartDashboard.putNumber(m_moduleChannel + "Turn Sped", m_turningEncoder.getVelocity());
   }
 
   /** Zeroes all the SwerveModule encoders. */
@@ -171,5 +177,15 @@ public class SwerveModule {
   
   public double getVelocity(){
     return m_drivingEncoder.getVelocity();
-  }  
+  } 
+
+  // DO NOT USE IN NORMAL USE ONLY TESTING
+  public void setDrivePower(double power){
+    m_drivingSparkMax.set(power);
+  }
+
+  // DO NOT USE IN NORMAL USE ONLY TESTING
+  public void setTurnPower(double power){
+    m_turningSparkMax.set(power);
+  }
 }
