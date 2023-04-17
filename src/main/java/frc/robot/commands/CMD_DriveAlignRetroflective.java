@@ -22,10 +22,12 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   double heading_error;
   boolean m_finished;
   double m_offset;
+  double m_robotAngle;
   final double limelightAngleThreshold = LimeLightConstants.klimelightAngleThreshold;
   final double limelightAdjustRotKp = LimeLightConstants.klimelightAdjustRotKp;
   final double limelightAdjustStrafeKp = LimeLightConstants.klimelightAdjustStrafeKp;
   CommandXboxController m_driverController;
+  double m_finishTimer;
   public CMD_DriveAlignRetroflective(SUB_Limelight p_limelight, SUB_Drivetrain p_drivetrain, CommandXboxController p_driverController, GlobalVariables p_variables) {
     m_limelight = p_limelight;
     m_drivetrain = p_drivetrain;
@@ -37,6 +39,7 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_finishTimer = 0;
     if (m_variables.getDropLevel() == GlobalConstants.kElevator3rdLevel){
       if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kLeftRetroflectiveAlignPosition){
         m_offset = -2;
@@ -66,6 +69,7 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_robotAngle = m_drivetrain.getAngle();
     if (Math.abs(m_driverController.getLeftY()) > AutoAlignConstants.kAbortThreshold || Math.abs(m_driverController.getLeftX()) > AutoAlignConstants.kAbortThreshold || Math.abs(m_driverController.getRightX()) > AutoAlignConstants.kAbortThreshold) {
       m_finished = true;
       System.out.println("Aborted by driver");
@@ -73,15 +77,26 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
     }
     if (m_limelight.hasTarget()) {
       heading_error = m_limelight.getTargetTx() + m_offset;
-      
         // rot = -strafe_error * limelightAdjustKp;
       if (Math.abs(heading_error) > limelightAngleThreshold) {
         rot = ((-heading_error) * limelightAdjustRotKp) + Math.copySign(LimeLightConstants.klimelightAdjustRotKf, -heading_error);
+      }else {
+        m_offset += m_robotAngle * .1;
       }
     }else {
+
       m_finished = true;
     }
     m_drivetrain.drive(0, 0, rot, false, false);
+    if (Math.abs(heading_error) < 1.5){
+      m_finishTimer += 1;
+      if (m_finishTimer == 20){
+        m_finished = true;
+      }
+    }else{ 
+      m_finishTimer = 0;
+    }
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -93,6 +108,6 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(heading_error) < 1.5) || m_finished;
+    return m_finished;
   }
 }
