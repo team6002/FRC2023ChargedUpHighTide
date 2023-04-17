@@ -197,8 +197,8 @@ public final class Constants {
     public static final double kElevatorOffset = -.487;
 
     public static final double kElevatorMax = 58;
-    public static final double kElevatorShelfCone = 45;//41.5;
-    public static final double kElevatorShelfCube = 43;
+    public static final double kElevatorShelfCone = 43.5;//41.5;
+    public static final double kElevatorShelfCube = 39;
     public static final double kElevatorFirstConeLevel = 11;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 28; 
     public static final double kElevatorThirdConeLevel = 52;
@@ -238,6 +238,7 @@ public final class Constants {
     public static final double kElbowMinOutput = -1;
     public static final double kElbowMaxOutput = 1;
 
+    // 154 should be absoulte resting angle
     // public static final double kElbowLift = 149;// use to get elbow off elevator, it don't like 200 for some reason
     public static final double kElbowLifted = 125;// when the elbow is not resting on elevator
     public static final double kElbowStow = 145;//149
@@ -276,6 +277,11 @@ public final class Constants {
     public static final double klimelightAdjustRotKp = 0.015;
     public static final double klimelightAdjustRotKf = 0.03;
     public static final double klimelightAdjustStrafeKp = 0.01;
+
+    
+    public static final int kAprilTagPipelineId = 0;
+    public static final int kCone2ndPipelineId = 1;// use for placing 2nd level
+    public static final int kCone3rdPipelineId = 2;//use for placing 3rd level
   }
 
   public static final class AutoAlignConstants{
