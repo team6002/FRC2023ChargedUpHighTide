@@ -73,6 +73,7 @@ public class RobotContainer {
     );
     //this drives
     m_drivetrain.setDefaultCommand(new CMD_Drive(m_drivetrain, m_driverController, m_limelight, m_intakeCam));
+    // m_drivetrain.setDefaultCommand(new CMD_setSPEEDtoModules(m_drivetrain, m_driverController));//ONLY FOR TESTING
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -320,11 +321,13 @@ public class RobotContainer {
       // new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
       // )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
-        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(1),
-        new ConditionalCommand(
-          new CMD_Place(m_elbow, m_elevator, m_limelight, m_variables, m_driverController),
-          getCubeLevelCommand,
-          IntakeState),
+        new ParallelCommandGroup(
+          new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(1),
+          new ConditionalCommand(
+            new CMD_Place(m_elbow, m_elevator, m_limelight, m_variables, m_driverController),
+            getCubeLevelCommand,
+            IntakeState)
+        ),
         new CMD_IntakeDrop(m_intake, m_variables),
         new WaitCommand(.2),
         new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables),
