@@ -13,10 +13,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CameraConstants;
 import frc.robot.Constants.GlobalConstants;
+import frc.robot.Constants.LimeLightConstants;
 
 public class SUB_Limelight extends SubsystemBase {
-  private final int m_aprilTagPipelineId = 0;
-  private final int m_conePipelineId = 1;
+  
+  private final int m_aprilTagPipelineId = LimeLightConstants.kAprilTagPipelineId;
+  private final int m_cone2ndPipelineId = LimeLightConstants.kCone2ndPipelineId;
+  private final int m_cone3rdPipelineId = LimeLightConstants.kCone3rdPipelineId;
   private int m_currentPipelineId;
 
   public SUB_Limelight() {
@@ -27,7 +30,7 @@ public class SUB_Limelight extends SubsystemBase {
     */
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(CameraConstants.kLimelightIndex);
 
-    useConePipeline();
+    setPipeline(m_cone2ndPipelineId);
   }
 
   private double[] dv = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
@@ -129,23 +132,12 @@ public class SUB_Limelight extends SubsystemBase {
     NetworkTableInstance.getDefault().getTable("limelight").getEntry("stream").setNumber(CameraConstants.kDriveCamIndex);
   }
 
-  public void useConePipeline() {
-    if (m_currentPipelineId == m_conePipelineId) {
-      return;
-    }
-    
-    /* Switch to pipeline that uses reflective tape */
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(m_conePipelineId);
-    m_currentPipelineId = m_conePipelineId;
-  }
 
-  public void useAprilTagPipeline() {
-    if (m_currentPipelineId == m_aprilTagPipelineId) {
+  public void setPipeline(double m_wantedPipeline) {
+    if (m_currentPipelineId == m_wantedPipeline){
       return;
+    }else {
+      NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(m_wantedPipeline);
     }
-    
-    /* Switch to pipeline that uses reflective tape */
-    NetworkTableInstance.getDefault().getTable("limelight").getEntry("pipeline").setNumber(m_aprilTagPipelineId);
-    m_currentPipelineId = m_aprilTagPipelineId;
   }
 }

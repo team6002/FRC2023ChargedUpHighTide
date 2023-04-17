@@ -6,6 +6,9 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.GlobalVariables;
+import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.GlobalConstants;
+import frc.robot.Constants.LimeLightConstants;
 import frc.robot.subsystems.SUB_Limelight;
 
 public class CMD_selectLimelightPipeline extends CommandBase {
@@ -22,9 +25,13 @@ public class CMD_selectLimelightPipeline extends CommandBase {
 
   public void changePipeline(){
     if (m_item == true){
-      m_limelight.useConePipeline();
+      m_limelight.setPipeline(LimeLightConstants.kCone2ndPipelineId);;
     }else {
-      m_limelight.useAprilTagPipeline();
+      if (m_variables.getDropLevel() == GlobalConstants.kElevator2ndLevel){
+        m_limelight.setPipeline(LimeLightConstants.kCone2ndPipelineId);
+      }else {
+        m_limelight.setPipeline(LimeLightConstants.kCone3rdPipelineId);
+      }
     }
   }
   // Called when the command is initially scheduled.
