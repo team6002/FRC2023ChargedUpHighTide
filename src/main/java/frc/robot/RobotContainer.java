@@ -320,15 +320,14 @@ public class RobotContainer {
       // ),
       // new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
       // )),
-      Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
-        new ParallelCommandGroup(
-          new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(1),
-          new ConditionalCommand(
+      Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(  
+        new ConditionalCommand(
             new CMD_Place(m_elbow, m_elevator, m_limelight, m_variables, m_driverController),
             getCubeLevelCommand,
-            IntakeState)
+            IntakeState
         ),
-        new CMD_IntakeDrop(m_intake, m_variables),
+        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(1),
+        new CMD_IntakeDropTeleop(m_intake, m_variables, m_driverController),
         new WaitCommand(.2),
         new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables),
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage)

@@ -13,6 +13,7 @@ public class GlobalVariables extends SubsystemBase {
   private boolean m_intakeState = true;// true for cone mode, false for cube mode
   private boolean m_hasItem = false;//false is no item true is has item
   private boolean m_AutoDrop = true;// automatically drops it once its good or not
+  private boolean m_autoDropGood = false;
   private int m_dropLevel = 2;// 1 is ground, 2 is second level, 3 is third level
   private int m_stowLocation = 1;// 0 is ground, 1 is shelf
   private int m_gridposition = -1;
@@ -147,6 +148,14 @@ public class GlobalVariables extends SubsystemBase {
 
   public void setAutoDrop(boolean p_autodrop){
     m_AutoDrop = p_autodrop;
+  }
+
+  public boolean getAutoDropGood(){
+    return m_autoDropGood;
+  }
+
+  public void setAutoDropGood(boolean p_autodropgood){
+    m_autoDropGood = p_autodropgood;
   }
   
   @Override

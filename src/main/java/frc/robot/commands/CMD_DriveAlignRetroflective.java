@@ -40,6 +40,8 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   @Override
   public void initialize() {
     m_finishTimer = 0;
+    m_variables.setAutoDropGood(false);
+
     if (m_variables.getDropLevel() == GlobalConstants.kElevator3rdLevel){
       if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kLeftRetroflectiveAlignPosition){
         m_offset = -2;
@@ -91,6 +93,7 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
     if (Math.abs(heading_error) < 1.5){
       m_finishTimer += 1;
       if (m_finishTimer == 20){
+        m_variables.setAutoDropGood(true);
         m_finished = true;
       }
     }else{ 
