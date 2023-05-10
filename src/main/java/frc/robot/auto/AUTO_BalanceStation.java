@@ -41,7 +41,7 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
       new CMD_IntakeHold(p_intake, p_variables),
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop).withTimeout(1),
-      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
+      new CMD_IntakeDropAuto(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
       new ParallelDeadlineGroup(
@@ -54,20 +54,19 @@ public class AUTO_BalanceStation extends SequentialCommandGroup {
         )
       ),
       new ParallelDeadlineGroup (
-        new CMD_AutoPickCube(p_intakeCam, p_drivetrain, p_variables),
+        new CMD_AutoPickCube(p_intakeCam, p_drivetrain, p_variables).withTimeout(2),
         new CMD_IntakeElementJanky(p_intake, p_elbow, p_variables, p_controller)
       ),
       new ParallelDeadlineGroup(
         new CMD_SpinInPlace(p_drivetrain, 180).withTimeout(4),
-        new CMD_IntakeCheck(p_intake, p_controller).withTimeout(3)
+        new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
       ),
       new CMD_SetInitalOdometry(p_drivetrain, p_trajectories.BackOnChargeStationTrajectory),
       new ParallelCommandGroup(
-        new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
         //do a until hit angle and then run the set distance
         new ParallelDeadlineGroup(
             new SequentialCommandGroup(    
-              new CMD_CheckOnCharge(p_drivetrain).withTimeout(3)
+              new CMD_CheckOnCharge(p_drivetrain)
               ,new WaitCommand(AutoConstants.AutoBalanceTimer)//1.1)//1.03 was St Joe // 1.73 is td
             ),
             new AUTO_DriveBackOnChargeStation(p_trajectories, p_drivetrain)

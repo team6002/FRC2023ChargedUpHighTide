@@ -29,7 +29,7 @@ public class AUTO_2BalanceRed extends SequentialCommandGroup {
           new CMD_selectIntakeCommandKey(p_intake, p_variables).withTimeout(3),
           new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop).withTimeout(3),
-          new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
+          new CMD_IntakeDropAuto(p_intake, p_variables).withTimeout(3),
           new WaitCommand(.3),
           new CMD_IntakeStop(p_intake).withTimeout(3),
           new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel).withTimeout(3),
@@ -51,7 +51,7 @@ public class AUTO_2BalanceRed extends SequentialCommandGroup {
             )
           ),
           new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-          new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
+          new CMD_IntakeDropAuto(p_intake, p_variables).withTimeout(3),
           new WaitCommand(.3)
         ),
         new CMD_IntakeStop(p_intake).withTimeout(3),

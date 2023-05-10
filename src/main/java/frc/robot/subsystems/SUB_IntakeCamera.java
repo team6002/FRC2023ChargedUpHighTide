@@ -203,7 +203,7 @@ public class SUB_IntakeCamera extends SubsystemBase {
             camera.setResolution(camWidth, camHeight);
 
             CvSink cvSink = CameraServer.getVideo();
-            CvSource outputStream = CameraServer.putVideo("Rectangle", camWidth, camHeight);
+            // CvSource outputStream = CameraServer.putVideo("Rectangle", camWidth, camHeight);
 
             /*
              * NOTE: All calls to OpenCV library must be made below this line (after the CameraServer.getVideo() call).
@@ -262,7 +262,7 @@ public class SUB_IntakeCamera extends SubsystemBase {
 
                     detectionTime = Timer.getFPGATimestamp() - start;
 
-                    outputStream.putFrame(selectOutputMat(selectedStage));
+                    // outputStream.putSFrame(selectOutputMat(selectedStage));
 
                     /* Sleep to avoid overruning the RoboRio */
                     Thread.sleep(50);

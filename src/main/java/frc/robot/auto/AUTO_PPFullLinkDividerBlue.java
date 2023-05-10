@@ -18,7 +18,7 @@ import frc.robot.commands.CMD_CheckIntakeCameraTarget;
 import frc.robot.commands.CMD_DriveStop;
 import frc.robot.commands.CMD_GroundCubeIntake;
 import frc.robot.commands.CMD_GroundHold;
-import frc.robot.commands.CMD_IntakeDrop;
+import frc.robot.commands.CMD_IntakeDropAuto;
 import frc.robot.commands.CMD_IntakeElement;
 import frc.robot.commands.CMD_IntakeElementJanky;
 import frc.robot.commands.CMD_IntakeHold;
@@ -61,7 +61,7 @@ public class AUTO_PPFullLinkDividerBlue extends SequentialCommandGroup {
       new CMD_IntakeHold(p_intake, p_variables).withTimeout(3),
       new CMD_selectIntakeCommandKey(p_intake, p_variables).withTimeout(3),
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_IntakeDropAuto(p_intake, p_variables),
       new WaitCommand(.2),
       new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunBlueDivider),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
@@ -88,7 +88,7 @@ public class AUTO_PPFullLinkDividerBlue extends SequentialCommandGroup {
       )
       ),
       new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
+      new CMD_IntakeDropAuto(p_intake, p_variables).withTimeout(3),
       new WaitCommand(.2),
       new ParallelCommandGroup(
         new SequentialCommandGroup(
@@ -112,7 +112,7 @@ public class AUTO_PPFullLinkDividerBlue extends SequentialCommandGroup {
           new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3) 
         )
       ),
-      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
+      new CMD_IntakeDropAuto(p_intake, p_variables).withTimeout(3),
       new WaitCommand(.2),
       new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
       new CMD_SetStage(p_variables, GlobalConstants.kIntakeStage)

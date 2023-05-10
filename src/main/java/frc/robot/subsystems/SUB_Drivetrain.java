@@ -91,10 +91,10 @@ public class SUB_Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Y", m_odometry.getPoseMeters().getY());
     SmartDashboard.putNumber("Yaw", m_odometry.getPoseMeters().getRotation().getDegrees());
 
-    m_frontLeft.telemetry();
-    m_frontRight.telemetry();
-    m_rearLeft.telemetry();
-    m_rearRight.telemetry();
+    // m_frontLeft.telemetry();
+    // m_frontRight.telemetry();
+    // m_rearLeft.telemetry();
+    // m_rearRight.telemetry();
   }
 
   /**

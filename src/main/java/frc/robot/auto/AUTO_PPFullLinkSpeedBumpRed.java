@@ -15,7 +15,7 @@ import frc.robot.commands.CMD_AUTOGroundCubeIntake;
 import frc.robot.commands.CMD_AutoPickCube;
 import frc.robot.commands.CMD_GroundCubeIntake;
 import frc.robot.commands.CMD_GroundHold;
-import frc.robot.commands.CMD_IntakeDrop;
+import frc.robot.commands.CMD_IntakeDropAuto;
 import frc.robot.commands.CMD_IntakeElementJanky;
 import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
@@ -57,7 +57,7 @@ public class AUTO_PPFullLinkSpeedBumpRed extends SequentialCommandGroup {
       new CMD_IntakeHold(p_intake, p_variables).withTimeout(3),
       new CMD_selectIntakeCommandKey(p_intake, p_variables).withTimeout(3),
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_IntakeDropAuto(p_intake, p_variables),
       new WaitCommand(.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
       new CMD_setInitialOdometeryHolonomic(p_drivetrain, m_trajectories.CubeRunRedSpeedBump),
@@ -78,7 +78,7 @@ public class AUTO_PPFullLinkSpeedBumpRed extends SequentialCommandGroup {
           new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
           new WaitCommand(.1),
           new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
-          new CMD_IntakeDrop(p_intake, p_variables),
+          new CMD_IntakeDropAuto(p_intake, p_variables),
           new WaitCommand(.2)
         ),
         m_trajectories.followTrajectoryCommand(m_trajectories.CubePlaceRedSpeedBump)
@@ -99,7 +99,7 @@ public class AUTO_PPFullLinkSpeedBumpRed extends SequentialCommandGroup {
           new CMD_GroundHold(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
           new WaitCommand(.2),
           new CMD_Place2ndConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
-          new CMD_IntakeDrop(p_intake, p_variables),
+          new CMD_IntakeDropAuto(p_intake, p_variables),
           new WaitCommand(.2)   
         )
       ),

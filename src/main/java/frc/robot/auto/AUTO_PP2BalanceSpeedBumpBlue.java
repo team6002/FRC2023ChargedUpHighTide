@@ -16,7 +16,7 @@ import frc.robot.commands.CMD_AdjustBalanceInside;
 import frc.robot.commands.CMD_CheckOnCharge;
 import frc.robot.commands.CMD_GroundCubeIntake;
 import frc.robot.commands.CMD_GroundHold;
-import frc.robot.commands.CMD_IntakeDrop;
+import frc.robot.commands.CMD_IntakeDropAuto;
 import frc.robot.commands.CMD_IntakeHold;
 import frc.robot.commands.CMD_IntakeOn;
 import frc.robot.commands.CMD_Place1stLevel;
@@ -55,7 +55,7 @@ public class AUTO_PP2BalanceSpeedBumpBlue extends SequentialCommandGroup {
       new CMD_IntakeHold(p_intake, p_variables).withTimeout(3),
       new CMD_selectIntakeCommandKey(p_intake, p_variables).withTimeout(3),
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_IntakeDropAuto(p_intake, p_variables),
       new WaitCommand(.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode),
       new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
@@ -75,7 +75,7 @@ public class AUTO_PP2BalanceSpeedBumpBlue extends SequentialCommandGroup {
         new CMD_Place1stLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3)
       ),
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_IntakeDropAuto(p_intake, p_variables),
       new WaitCommand(.2),
       new ParallelCommandGroup(
         new SequentialCommandGroup(

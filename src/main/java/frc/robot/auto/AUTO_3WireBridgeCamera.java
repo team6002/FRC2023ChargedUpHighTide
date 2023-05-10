@@ -7,7 +7,7 @@ package frc.robot.auto;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.GlobalVariables;
 import frc.robot.Constants.GlobalConstants;
-import frc.robot.commands.CMD_IntakeDrop;
+import frc.robot.commands.CMD_IntakeDropAuto;
 import frc.robot.commands.CMD_Place3rdConeLevel;
 import frc.robot.commands.CMD_Stow;
 import frc.robot.commands.CMD_selectIntakeCommandKey;
@@ -29,7 +29,7 @@ public class AUTO_3WireBridgeCamera extends SequentialCommandGroup {
       new CMD_setIntakeState(p_variables, GlobalConstants.kConeMode),
       new CMD_selectIntakeCommandKey(p_intake, p_variables),
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
-      new CMD_IntakeDrop(p_intake, p_variables),
+      new CMD_IntakeDropAuto(p_intake, p_variables),
       new CMD_Stow(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables)
     );
   }

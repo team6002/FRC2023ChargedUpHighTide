@@ -157,7 +157,7 @@ public final class Constants {
     public static final int kBalanceStationKey = 0;
     public static final int kCubeRunKey = 1;
 
-    public static final double AutoBalanceTimer = 1.13;//1.03 was STATES
+    public static final double AutoBalanceTimer = .68;//1.03 was STATES
   }
 
   public static final class NeoMotorConstants {
@@ -198,13 +198,13 @@ public final class Constants {
 
     public static final double kElevatorMax = 58;
     public static final double kElevatorShelfCone = 43.5;//41.5;
-    public static final double kElevatorShelfCube = 39;
+    public static final double kElevatorShelfCube = 40;
     public static final double kElevatorFirstConeLevel = 11;// for placeing forwards
     public static final double kElevatorSecondConeLevel = 28; 
-    public static final double kElevatorThirdConeLevel = 52;
+    public static final double kElevatorThirdConeLevel = 50;
     public static final double kElevatorFirstCubeLevel = 11;// for placeing forwards
     public static final double kElevatorSecondCubeLevel = 31;  
-    public static final double kElevatorThirdCubeLevel = 52;
+    public static final double kElevatorThirdCubeLevel = 48;
     public static final double kElevatorHome = 0;
     public static final double kElevatorStow = 9;
     public static final double kElevatorGround = 2;
@@ -262,7 +262,7 @@ public final class Constants {
     // public static final double kElbowShelfBackPrep = 85;
   }
   
-
+//http://172.22.11.2:5801/ CORD PORT
   public static final class LimeLightConstants{
     public static final double[] kTarget1Constants = {1, 1, 0};
     public static final double[] kTarget2Constants = {2, 2, 0};
@@ -273,9 +273,9 @@ public final class Constants {
     public static final double[] kTarget7Constants = {7, 7, 180};
     public static final double[] kTarget8Constants = {8, 8, 180};
 
-    public static final double klimelightAngleThreshold = 2.0;
-    public static final double klimelightAdjustRotKp = 0.015;
-    public static final double klimelightAdjustRotKf = 0.03;
+    public static final double klimelightAngleThreshold = 8.0;
+    public static final double klimelightAdjustRotKp = 0.005;
+    public static final double klimelightAdjustRotKf = 0.015;
     public static final double klimelightAdjustStrafeKp = 0.01;
 
     

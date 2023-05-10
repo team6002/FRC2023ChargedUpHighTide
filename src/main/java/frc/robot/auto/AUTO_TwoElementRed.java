@@ -29,7 +29,7 @@ public class AUTO_TwoElementRed extends SequentialCommandGroup {
           new CMD_selectIntakeCommandKey(p_intake, p_variables),
           new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
           new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop),
-          new CMD_IntakeDrop(p_intake, p_variables),
+          new CMD_IntakeDropAuto(p_intake, p_variables),
           new WaitCommand(.3),
           new CMD_IntakeStop(p_intake),
           new CMD_setDropLevel(p_variables, GlobalConstants.kElevator3rdLevel),
@@ -51,7 +51,7 @@ public class AUTO_TwoElementRed extends SequentialCommandGroup {
             )
           ),
           new CMD_Place3rdCubeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables),
-          new CMD_IntakeDrop(p_intake, p_variables),
+          new CMD_IntakeDropAuto(p_intake, p_variables),
           new WaitCommand(.3)
         ),
         new CMD_IntakeStop(p_intake),

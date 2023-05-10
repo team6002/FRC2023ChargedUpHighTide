@@ -29,9 +29,10 @@ public class CMD_selectLimelightPipeline extends CommandBase {
     }else {
       if (m_variables.getDropLevel() == GlobalConstants.kElevator2ndLevel){
         m_limelight.setPipeline(LimeLightConstants.kCone2ndPipelineId);
-      }else {
-        m_limelight.setPipeline(LimeLightConstants.kCone3rdPipelineId);
       }
+      // else {
+      //   m_limelight.setPipeline(LimeLightConstants.kCone3rdPipelineId);
+      // }
     }
   }
   // Called when the command is initially scheduled.

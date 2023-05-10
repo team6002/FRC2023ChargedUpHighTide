@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
     m_Chooser.addOption("PPRightRed", m_robotContainer.getFullLinkDividerRed());
     m_Chooser.addOption("PPFullSpeedBumpRed", m_robotContainer.getFullLinkSpeedBumpRed());
     m_Chooser.addOption("NoPickBalance", m_robotContainer.getBalanceStationNoPick());
+    m_Chooser.addOption("Place", m_robotContainer.getPlace());
     // m_Chooser.addOption("TEST", m_robotContainer.getTest());
     // m_Chooser.addOption("CubeRunBlue", m_robotContainer.getCubeRunBlue());
     SmartDashboard.putData("AUTO", m_Chooser);

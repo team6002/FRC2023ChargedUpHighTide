@@ -112,7 +112,7 @@ public class RobotContainer {
     m_driverController.povRight().onTrue(new ParallelCommandGroup(
       new CMD_ElevatorSetPosition(m_elevator, ElevatorConstants.kElevatorFirstConeLevel),
       new CMD_ElbowSetPosition(m_elbow, ElbowConstants.kElbowLifted),  
-      new CMD_IntakeDrop(m_intake, m_variables)
+      new CMD_IntakeDropAuto(m_intake, m_variables)
       ));
     
     m_driverController.povDown().onTrue(new CMD_Home(m_intake, m_elbow, m_elevator));
@@ -185,6 +185,9 @@ public class RobotContainer {
     return new AUTO_BalanceStationNoPick(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_driverController);
   }
 
+  public Command getPlace(){
+    return new AUTO_Place(m_trajectories, m_drivetrain, m_elbow, m_elevator, m_intake, m_finiteStateMachine, m_variables, m_intakeCam, m_driverController);
+  }
   public Command getNothing() {
     return new AUTO_NOTHING();
   }
@@ -321,14 +324,13 @@ public class RobotContainer {
       // new CMD_SetStage(m_variables, GlobalConstants.kDropStage)
       // )),
       Map.entry(GlobalConstants.kDropStage, new SequentialCommandGroup(
-        new ParallelCommandGroup(
-          new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(1),
-          new ConditionalCommand(
-            new CMD_Place(m_elbow, m_elevator, m_limelight, m_variables, m_driverController),
-            getCubeLevelCommand,
-            IntakeState)
-        ),
-        new CMD_IntakeDrop(m_intake, m_variables),
+        // new ParallelCommandGroup(
+        new ConditionalCommand(
+          new CMD_Place(m_elbow, m_elevator, m_limelight, m_variables, m_driverController),
+          getCubeLevelCommand,
+          IntakeState),
+        new CMD_DriveAlignRetroflective(m_limelight, m_drivetrain, m_driverController, m_variables).withTimeout(3),
+        new CMD_IntakeDropTeleop(m_intake, m_variables, m_driverController),
         new WaitCommand(.2),
         new CMD_Stow(m_intake, m_elbow, m_elevator, m_finiteStateMachine, m_variables),
         new CMD_SetStage(m_variables, GlobalConstants.kIntakeStage)

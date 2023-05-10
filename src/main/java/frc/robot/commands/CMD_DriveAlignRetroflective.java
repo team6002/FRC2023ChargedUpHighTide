@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.GlobalVariables;
@@ -40,6 +41,8 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   @Override
   public void initialize() {
     m_finishTimer = 0;
+    m_variables.setDropGood(false);
+    System.out.println(m_variables.getDropGood());  
     if (m_variables.getDropLevel() == GlobalConstants.kElevator3rdLevel){
       if (m_variables.getRetoflectiveAlignPosition() == GlobalConstants.kLeftRetroflectiveAlignPosition){
         m_offset = -2;
@@ -78,19 +81,30 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
     if (m_limelight.hasTarget()) {
       heading_error = m_limelight.getTargetTx() + m_offset;
         // rot = -strafe_error * limelightAdjustKp;
+      
       if (Math.abs(heading_error) > limelightAngleThreshold) {
-        rot = ((-heading_error) * limelightAdjustRotKp) + Math.copySign(LimeLightConstants.klimelightAdjustRotKf, -heading_error);
+        SmartDashboard.putNumber("Heading Error", heading_error);
+        double m_rot;
+        m_rot = (-heading_error) * limelightAdjustRotKp + Math.copySign(LimeLightConstants.klimelightAdjustRotKf, -heading_error);
+        if ((Math.abs(m_rot) >= .2)){
+          rot = Math.copySign(.2, -heading_error);
+        }else {
+          rot = m_rot;
+        }
       }else {
-        m_offset += m_robotAngle * .1;
       }
     }else {
-
-      m_finished = true;
+      m_finishTimer += 1;
+      if (m_finishTimer >= 20){
+        System.out.println("Lost Target");
+        m_finished = true;  
+      }else m_finishTimer = 0;
     }
     m_drivetrain.drive(0, 0, rot, false, false);
-    if (Math.abs(heading_error) < 1.5){
+    if (Math.abs(heading_error) < limelightAngleThreshold){
       m_finishTimer += 1;
       if (m_finishTimer == 20){
+        m_variables.setDropGood(true);
         m_finished = true;
       }
     }else{ 
@@ -102,6 +116,7 @@ public class CMD_DriveAlignRetroflective extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    System.out.println(m_variables.getDropGood());
     m_variables.setRetroflectiveAlignPosition(GlobalConstants.kMiddleRetroflectiveAlignPositon);
   }
 

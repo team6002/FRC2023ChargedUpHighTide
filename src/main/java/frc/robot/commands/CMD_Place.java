@@ -156,11 +156,12 @@ public class CMD_Place extends CommandBase {
       }else{
       }
     }
-    if (m_autodrop && CheckElbow(m_wantedElbowPosition) && m_elevatorDone && m_limelight.hasTarget()){
+    if (CheckElbow(m_wantedElbowPosition) && m_elevatorDone){
       m_finished = true;
     }
   m_previousDropLevel = m_dropLevel;  
   m_previousState = m_state; 
+
   }
 
   // Called once the command ends or is interrupted.

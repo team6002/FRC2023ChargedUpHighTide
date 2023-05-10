@@ -40,7 +40,7 @@ public class AUTO_BalanceStationNoPick extends SequentialCommandGroup {
       new CMD_IntakeHold(p_intake, p_variables),
       new CMD_Place3rdConeLevel(p_intake, p_elbow, p_elevator, p_finiteStateMachine, p_variables).withTimeout(3),
       new CMD_ElbowSetPosition(p_elbow, ElbowConstants.kElbowDrop).withTimeout(1),
-      new CMD_IntakeDrop(p_intake, p_variables).withTimeout(3),
+      new CMD_IntakeDropAuto(p_intake, p_variables).withTimeout(3),
       new WaitCommand(0.2),
       new CMD_setIntakeState(p_variables, GlobalConstants.kCubeMode).withTimeout(3),
       new ParallelDeadlineGroup(  
